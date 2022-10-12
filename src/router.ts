@@ -1,15 +1,14 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { modulesRouter } from "./modules/modules.router";
 
-// const routes: Array<RouteRecordRaw> =
 const routes: Array<RouteRecordRaw> = [
-  // { path: "/", component: () => import("./modules/home/Home.vue") },
   {
     path: "/",
     name: "index",
     redirect: {
-      name: "home",
+      name: "module:home",
       params: {
-        locale : 'en',
+        locale: "en",
       },
     },
   },
@@ -19,21 +18,23 @@ const routes: Array<RouteRecordRaw> = [
     redirect: {
       name: "home",
       params: {
-        locale : 'en',
+        locale: "en",
       },
     },
   },
   {
-    path: "/:locale/",
-    name: "home",
-    component: () => import("./modules/home/Home.vue"),
+    path: "/:locale/home",
+    name: "module:home",
+    component: () => import("./modules/home/home.page.vue"),
     meta: {
-      layout: "menu-tab-default",
+      layout: "home.tab",
     },
   },
 ];
 
+export const mergeRouter = [...routes, ...modulesRouter];
+
 export const router = createRouter({
-    history: createWebHistory(),
-    routes: routes,
+  history: createWebHashHistory(),
+  routes: mergeRouter,
 });

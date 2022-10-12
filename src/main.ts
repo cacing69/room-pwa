@@ -1,23 +1,26 @@
 import { createApp } from 'vue'
 import { router } from './router';
 
-import App from './App.vue'
+import app from './app.vue'
 import "./style.css";
 
 // vant components
 import { Button, CellGroup, Col, Field, Form, Row, Space } from "vant";
 
+import { VueQueryPlugin } from "vue-query";
 
-const app = createApp(App);
+const vApp = createApp(app);
 
-app.use(Button);
-app.use(CellGroup);
-app.use(Col);
-app.use(Field);
-app.use(Form);
-app.use(Row);
-app.use(Space);
+vApp.use(Button);
+vApp.use(CellGroup);
+vApp.use(Col);
+vApp.use(Field);
+vApp.use(Form);
+vApp.use(Row);
+vApp.use(Space);
 
-app.use(router);
+vApp.use(router);
 
-app.mount('#app')
+vApp.use(VueQueryPlugin);
+
+vApp.mount('#app')
