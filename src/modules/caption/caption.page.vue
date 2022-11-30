@@ -62,7 +62,7 @@
   <van-row>
     <van-col span="24">
       <van-collapse v-model="active">
-        <van-collapse-item title="Generated caption" name="1">{{generatedCaption}}</van-collapse-item>
+        <van-collapse-item title="Generated caption" name="1"><div v-html="generatedCaption.replace(/\n/g,'<br />')"></div></van-collapse-item>
       </van-collapse>
     </van-col>
   </van-row>
@@ -133,8 +133,8 @@ const columns = [
 
     const altName = `${categoryObject?.value?.meta?.altTag || ''}`.trim().toUpperCase()
 
-    const header = `BISMILLAHIRRAHMANIRRAHIM
-CEK READY STOK ${categoryObject?.value?.meta?.readyHashtag || '#roomthrift'}
+    const header = `BISMILLAHIRRAHMANIRRAHIM <br>
+CEK READY STOK ${categoryObject?.value?.meta?.readyHashtag || '#roomthrift'} <br>
 
 ITEM : ${altName} ${brand?.value?.toUpperCase()} ${design?.value?.toUpperCase() || ''}
 CATEGORY : ${categoryObject?.value?.text?.toUpperCase() || '-'}
