@@ -8,7 +8,7 @@
   /> -->
   <van-row style="padding-top: 2vh;">
     <van-col span="24">
-      <van-form @submit="">
+      <van-form>
       <van-cell-group inset>
         <!-- <van-field
           v-model="categoryLabel"
