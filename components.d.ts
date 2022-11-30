@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Home: typeof import('./src/components/Home.vue')['default']
+    'Refresh.pwa': typeof import('./src/components/refresh.pwa.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VanButton: typeof import('vant/es')['Button']
@@ -17,6 +18,9 @@ declare module '@vue/runtime-core' {
     VanField: typeof import('vant/es')['Field']
     VanForm: typeof import('vant/es')['Form']
     VanIcon: typeof import('vant/es')['Icon']
+    VanNavBar: typeof import('vant/es')['NavBar']
+    VanPicker: typeof import('vant/es')['Picker']
+    VanPopup: typeof import('vant/es')['Popup']
     VanRow: typeof import('vant/es')['Row']
     VanSpace: typeof import('vant/es')['Space']
     VanTabbar: typeof import('vant/es')['Tabbar']

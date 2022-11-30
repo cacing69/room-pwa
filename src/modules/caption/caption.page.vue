@@ -1,9 +1,161 @@
 
 <template>
-  <van-row gutter="10" style="padding:3vw;">
-    this is caption
+  <!-- <van-nav-bar
+        title="Home"
+        left-text="Back"
+        left-arrow
+        @click-left="() => {}"
+  /> -->
+  <van-row style="padding-top: 2vh;">
+    <van-col span="24">
+      <van-form @submit="">
+      <van-cell-group inset>
+        <van-field
+          v-model="categoryLabel"
+          is-link
+          readonly
+          name="category"
+          label="Category"
+          placeholder="Select Category"
+          @click="showCategory = true"
+        />
+        <van-popup v-model:show="showCategory" position="bottom">
+          <van-picker
+            :columns="columns"
+            @confirm="onConfirm"
+            @cancel="showCategory = false"
+          />
+        </van-popup>
+        <van-field
+          v-model="brand"
+          name="brand"
+          label="Brand"
+          placeholder=""
+          :rules="[{ required: false, message: 'brand is required' }]"
+        />
+        <van-field
+          v-model="design"
+          name="design"
+          label="Design"
+          placeholder=""
+        />
+      </van-cell-group>
+      <div style="margin: 16px;">
+        <van-button round block type="primary" native-type="submit" size="small" @click="onCopy">
+          Copy
+        </van-button>
+      </div>
+    </van-form>
+    </van-col>
   </van-row>
+  <van-row>
+    <van-col span="24">
+      <van-cell-group inset>
+  <van-field
+    type="textarea"
+    v-model="generatedCaption"
+    rows="15"
+  />
+</van-cell-group>
+    </van-col>
+  </van-row>
+
 </template>
 <script setup lang="ts">
+  import { computed, reactive, ref } from 'vue';
 
+  const columns = [
+    {
+      value: 'headgear',
+      text: 'Headgear',
+      meta: {
+        readyHashtag: "thriftcapready",
+      }
+    },
+  ];
+  const showCategory = ref(false);
+  const brand : any = ref("");
+  const design : any = ref("");
+  const categoryLabel : any = ref("");
+  const categoryObject: any = reactive({});
+
+  const pattern = {
+    headgear: [
+      "topi#brand#",
+      "topi#brand#second",
+      "topi#brand#vintage",
+      "topi#design#",
+      "snapback#design#",
+      "snapback#brand#",
+      "snapback#brand#second",
+      "cap#brand#",
+      "cap#brand#second",
+      "cap#design#",
+      "5panel#brand#",
+      "5panel#brand#second",
+      "trucker#brand#",
+      "trucker#brand#second",
+      "trucker#brand#",
+      "trucker#design#",
+      "snapbackvintage",
+      "truckersecond",
+      "truckerbekas",
+      "topivintage",
+      "capsvintage",
+      "topisecondbranded",
+      "topisecond",
+      "topibekas",
+      "5panelbekas",
+      "5panelsecond",
+      "snapbackbekas",
+      "snapbacksecond",
+      "capsecond",
+    ]
+  }
+  const generatedCaption = computed(() => {
+    const replaceBrand = brand?.value?.replace(" ", "") || 'thrift';
+    const replaceDesign = design?.value?.replace(" ", "");
+
+
+    const getPattern = (pattern as any)[categoryObject?.value?.value]?.map((e: string) => {
+      return `#${e.replace('#brand#', replaceBrand).replace('#design#', replaceDesign || 'thrift')}`;
+    }).join(" ");
+
+
+
+    const header = `BISMILLAHIRRAHMANIRRAHIM
+CEK READY STOK ${categoryObject?.value?.meta?.readyHashtag || '#roomthrift'}
+
+ITEM : ${brand?.toUppercase || 'TOPI THRIFT'} ${replaceDesign?.toUppercase || ''}
+CATEGORY : ${categoryObject?.value?.Headgear?.toUppercase || '-'}
+SIZE : -
+IDR : ASK
+
+DETAIL GESER SAMPAI UJUNG -->
+
+ROOM THRIFT
+LOKASI : Jl. Adisucipto KM 15.3, Desa Limbung, Dusun Limbung Jaya, Gg. Seruat Sambas No. 06
+
+JIKA BERMINAT HUBUNGI
+WA : +62 895-2933-8675
+INSYAALLAH AMANAH
+
+NB : BIASAKAN BACA CAPTION
+- TANYAKAN STOK TERLEBIH DAHULU
+- BARANG YANG SUDAH DIBELI TIDAK DAPAT DIKEMBALIKAN
+- TELITI SEBELUM MEMBELI, TANYAKAN SEDETAIL MUNGKIN
+- ONGKOS KIRIM DI TANGGUNG PEMBELI`;
+
+    return `${header} \n\n ${getPattern || ""}`;
+  })
+
+    const onCopy = () => {
+      navigator.clipboard.writeText(generatedCaption.value);
+    }
+
+  const onConfirm = ({selectedOptions} : any) => {
+      categoryLabel.value = selectedOptions[0]?.text;
+      categoryObject.value = selectedOptions[0];
+    showCategory.value = false;
+  };
 </script>
