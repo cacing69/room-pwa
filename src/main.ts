@@ -31,12 +31,12 @@ import { VueQueryPlugin } from "vue-query";
 import { Locale } from "vant";
 import enUS from "vant/es/locale/lang/en-US";
 
-import { registerSW } from "virtual:pwa-register";
+// import { registerSW } from "virtual:pwa-register";
 
-const updateSW = registerSW({
-  onNeedRefresh() {},
-  onOfflineReady() {},
-});
+// const updateSW = registerSW({
+//   onNeedRefresh() {},
+//   onOfflineReady() {},
+// });
 
 Locale.use("en-US", enUS);
 

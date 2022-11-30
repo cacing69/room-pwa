@@ -11,6 +11,15 @@
 import Default from "./layouts/default.layout.vue";
 import { markRaw, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useRegisterSW } from "virtual:pwa-register/vue";
+
+const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
+
+if ("serviceWorker" in navigator) {
+  console.log("serviceWorker");
+  // && !/localhost/.test(window.location)) {
+  useRegisterSW();
+}
 
 const layout = ref();
 const route = useRoute();

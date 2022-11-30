@@ -1,14 +1,17 @@
 
 <template>
     <div id="app-container">
-        <slot/>
+        <div class="layout-content">
+            <slot/>
+        </div>
     </div>
-
-    <van-tabbar class="van-safe-area-bottom" v-model="active">
-        <template v-for="tab in tabMenu">
-            <van-tabbar-item :name="tab?.name" :icon="tab?.icon" @click="navigateTo(tab.name)" style="text-transform: capitalize;">{{tab.name}}</van-tabbar-item>
-        </template>
-    </van-tabbar>
+    <div class="layout-footer">
+        <van-tabbar class="van-safe-area-bottom" v-model="active">
+            <template v-for="tab in tabMenu">
+                <van-tabbar-item :name="tab?.name" :icon="tab?.icon" @click="navigateTo(tab.name)" style="text-transform: capitalize;">{{tab.name}}</van-tabbar-item>
+            </template>
+        </van-tabbar>
+    </div>
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
