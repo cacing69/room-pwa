@@ -49,7 +49,7 @@
     </van-form>
     </van-col>
   </van-row>
-  <van-row>
+  <!-- <van-row>
     <van-col span="24">
       <van-cell-group inset>
   <van-field
@@ -60,7 +60,7 @@
   />
 </van-cell-group>
     </van-col>
-  </van-row>
+  </van-row> -->
 
 </template>
 <script setup lang="ts">
@@ -116,8 +116,8 @@
     ]
   }
   const generatedCaption = computed(() => {
-    const replaceBrand = brand?.value?.replace(" ", "") || 'thrift';
-    const replaceDesign = design?.value?.replace(" ", "");
+    const replaceBrand = brand?.value?.replace(" ", "")?.toLowerCase() || 'thrift';
+    const replaceDesign = design?.value?.replace(" ", "")?.toLowerCase();
 
 
     const getPattern = (pattern as any)[categoryObject?.value?.value]?.map((e: string) => {
@@ -149,7 +149,7 @@ NB : BIASAKAN BACA CAPTION
 - TELITI SEBELUM MEMBELI, TANYAKAN SEDETAIL MUNGKIN
 - ONGKOS KIRIM DI TANGGUNG PEMBELI`;
 
-    return `${header} \n\n ${getPattern || ""}`;
+    return `${header} \n\n${getPattern || ""}`;
   })
 
     const onCopy = () => {
