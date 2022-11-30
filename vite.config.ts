@@ -33,7 +33,7 @@ export default defineConfig({
       manifest: {
         name: "Room PWA",
         short_name: "Room PWA",
-        theme_color: "#FEC22C",
+        theme_color: "#ffffff",
         start_url: "/",
         display: "standalone",
         background_color: "#ffffff",
