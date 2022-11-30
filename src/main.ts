@@ -5,7 +5,7 @@ import app from './app.vue'
 import "./style.css";
 
 // vant components
-import { Button, CellGroup, Col, Field, Form, Picker, Popup, Row, Space } from "vant";
+import { Button, CellGroup, Col, Collapse, CollapseItem,DropdownMenu, DropdownItem, Field, Form, Picker, Popup, Row, Space } from "vant";
 
 import { VueQueryPlugin } from "vue-query";
 import { Locale } from "vant";
@@ -25,7 +25,10 @@ const vApp = createApp(app);
 vApp.use(Button);
 vApp.use(CellGroup);
 vApp.use(Col);
-vApp.use(Col);
+vApp.use(Collapse);
+vApp.use(CollapseItem);
+vApp.use(DropdownItem);
+vApp.use(DropdownMenu);
 vApp.use(Field);
 vApp.use(Form);
 vApp.use(Picker);

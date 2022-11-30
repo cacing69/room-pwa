@@ -10,7 +10,7 @@
     <van-col span="24">
       <van-form @submit="">
       <van-cell-group inset>
-        <van-field
+        <!-- <van-field
           v-model="categoryLabel"
           is-link
           readonly
@@ -25,7 +25,17 @@
             @confirm="onConfirm"
             @cancel="showCategory = false"
           />
-        </van-popup>
+        </van-popup> -->
+        <van-row>
+          <van-col span="12" class="">
+            <van-cell title="Category"/>
+          </van-col>
+          <van-col span="12">
+            <van-dropdown-menu>
+              <van-dropdown-item title="" v-model="categoryLabel" :options="columns" @change="onConfirm"/>
+            </van-dropdown-menu>
+          </van-col>
+        </van-row>
         <van-field
           v-model="brand"
           name="brand"
@@ -51,22 +61,18 @@
   </van-row>
   <van-row>
     <van-col span="24">
-      <van-cell-group inset>
-  <van-field
-    type="textarea"
-    :disabled="true"
-    v-model="generatedCaption"
-    rows="10"
-  />
-</van-cell-group>
+      <van-collapse v-model="active">
+        <van-collapse-item title="Generated caption" name="1">{{generatedCaption}}</van-collapse-item>
+      </van-collapse>
     </van-col>
   </van-row>
 
 </template>
 <script setup lang="ts">
   import { computed, reactive, ref } from 'vue';
+  import { showNotify } from 'vant';
 
-  const columns = [
+const columns = [
     {
       value: 'headgear',
       text: 'Headgear',
@@ -77,9 +83,10 @@
     },
   ];
   const showCategory = ref(false);
+  const active = ref(['1']);
   const brand : any = ref("");
   const design : any = ref("");
-  const categoryLabel : any = ref("");
+  const categoryLabel : any = ref("Select category");
   const categoryObject: any = reactive({});
 
   const pattern = {
@@ -154,11 +161,18 @@ NB : BIASAKAN BACA CAPTION
 
     const onCopy = () => {
       navigator.clipboard.writeText(generatedCaption.value);
+      showNotify({ type: 'success', message: 'Caption copied' });
     }
 
-  const onConfirm = ({selectedOptions} : any) => {
-      categoryLabel.value = selectedOptions[0]?.text;
-      categoryObject.value = selectedOptions[0];
-    showCategory.value = false;
+// const onConfirm = ({ selectedOptions }: any) => {
+const onConfirm = (e :any) => {
+  console.log(e)
+
+  columns.forEach((v, k) => {
+    if(v.value == e) categoryObject.value = v
+  })
+    // categoryLabel.value = selectedOptions[0]?.text;
+    // categoryObject.value = selectedOptions[0];
+    // showCategory.value = false;
   };
 </script>

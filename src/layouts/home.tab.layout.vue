@@ -4,7 +4,7 @@
         <slot/>
     </div>
 
-    <van-tabbar v-model="active">
+    <van-tabbar class="van-safe-area-bottom" v-model="active">
         <template v-for="tab in tabMenu">
             <van-tabbar-item :name="tab?.name" :icon="tab?.icon" @click="navigateTo(tab.name)" style="text-transform: capitalize;">{{tab.name}}</van-tabbar-item>
         </template>
