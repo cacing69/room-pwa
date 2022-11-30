@@ -38,6 +38,7 @@
           name="design"
           label="Design"
           placeholder=""
+
         />
       </van-cell-group>
       <div style="margin: 16px;">
@@ -53,6 +54,7 @@
       <van-cell-group inset>
   <van-field
     type="textarea"
+    :readonly="true"
     v-model="generatedCaption"
     rows="15"
   />
@@ -69,7 +71,8 @@
       value: 'headgear',
       text: 'Headgear',
       meta: {
-        readyHashtag: "thriftcapready",
+        readyHashtag: "#thriftcapready",
+        altTag: "topi",
       }
     },
   ];
@@ -97,17 +100,17 @@
       "trucker#brand#second",
       "trucker#brand#",
       "trucker#design#",
-      "snapbackvintage",
-      "truckersecond",
+      "topi#brand##design#",
+      "#brand##design#second",
+      "#brand##design#",
+      "snapback#brand##design#",
       "truckerbekas",
       "topivintage",
-      "capsvintage",
+      "snapbackvintage",
+      "truckersecond",
       "topisecondbranded",
       "topisecond",
       "topibekas",
-      "5panelbekas",
-      "5panelsecond",
-      "snapbackbekas",
       "snapbacksecond",
       "capsecond",
     ]
@@ -121,13 +124,13 @@
       return `#${e.replace('#brand#', replaceBrand).replace('#design#', replaceDesign || 'thrift')}`;
     }).join(" ");
 
-
+    const altName = `${categoryObject?.value?.meta?.altTag || ''}`.trim().toUpperCase()
 
     const header = `BISMILLAHIRRAHMANIRRAHIM
 CEK READY STOK ${categoryObject?.value?.meta?.readyHashtag || '#roomthrift'}
 
-ITEM : ${brand?.toUppercase || 'TOPI THRIFT'} ${replaceDesign?.toUppercase || ''}
-CATEGORY : ${categoryObject?.value?.Headgear?.toUppercase || '-'}
+ITEM : ${altName} ${brand?.value?.toUpperCase()} ${design?.value?.toUpperCase() || ''}
+CATEGORY : ${categoryObject?.value?.text?.toUpperCase() || '-'}
 SIZE : -
 IDR : ASK
 
