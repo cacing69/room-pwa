@@ -10,7 +10,22 @@ import "vant/es/dialog/style";
 import "vant/es/image-preview/style";
 
 // vant components
-import { Button, CellGroup, Col, Collapse, CollapseItem,DropdownMenu, DropdownItem, Field, Form, Picker, Popup, Row, Space } from "vant";
+import {
+  Button,
+  CellGroup,
+  Col,
+  Collapse,
+  CollapseItem,
+  DropdownMenu,
+  DropdownItem,
+  Field,
+  Form,
+  Picker,
+  Popup,
+  Row,
+  Space,
+  Toast,
+} from "vant";
 
 import { VueQueryPlugin } from "vue-query";
 import { Locale } from "vant";
@@ -40,6 +55,7 @@ vApp.use(Picker);
 vApp.use(Popup);
 vApp.use(Row);
 vApp.use(Space);
+vApp.use(Toast);
 
 vApp.use(router);
 

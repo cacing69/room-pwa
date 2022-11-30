@@ -70,7 +70,8 @@
 </template>
 <script setup lang="ts">
   import { computed, reactive, ref } from 'vue';
-  import { showNotify } from 'vant';
+// import { showNotify } from 'vant';
+  import { showToast } from 'vant';
 
 const columns = [
     {
@@ -82,7 +83,7 @@ const columns = [
       }
     },
   ];
-  const showCategory = ref(false);
+  // const showCategory = ref(false);
   const active = ref(['1']);
   const brand : any = ref("");
   const design : any = ref("");
@@ -161,7 +162,7 @@ NB : BIASAKAN BACA CAPTION
 
     const onCopy = () => {
       navigator.clipboard.writeText(generatedCaption.value);
-      showNotify({ type: 'success', message: 'Caption copied' });
+      showToast('Caption copied');
     }
 
 // const onConfirm = ({ selectedOptions }: any) => {
