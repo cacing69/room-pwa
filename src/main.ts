@@ -3,6 +3,11 @@ import { router } from './router';
 
 import app from './app.vue'
 import "./style.css";
+import "vant/lib/index.css";
+import "vant/es/notify/style";
+import "vant/es/toast/style";
+import "vant/es/dialog/style";
+import "vant/es/image-preview/style";
 
 // vant components
 import { Button, CellGroup, Col, Collapse, CollapseItem,DropdownMenu, DropdownItem, Field, Form, Picker, Popup, Row, Space } from "vant";
