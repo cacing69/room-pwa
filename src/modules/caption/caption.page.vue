@@ -49,18 +49,18 @@
     </van-form>
     </van-col>
   </van-row>
-  <!-- <van-row>
+  <van-row>
     <van-col span="24">
       <van-cell-group inset>
   <van-field
     type="textarea"
-    :readonly="true"
+    :disabled="true"
     v-model="generatedCaption"
-    rows="15"
+    rows="10"
   />
 </van-cell-group>
     </van-col>
-  </van-row> -->
+  </van-row>
 
 </template>
 <script setup lang="ts">
