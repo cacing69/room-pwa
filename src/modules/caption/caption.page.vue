@@ -62,7 +62,7 @@
   <van-row>
     <van-col span="24">
       <van-collapse v-model="active">
-        <van-collapse-item title="Generated caption" name="1"><div v-html="generatedCaption.replace(/\n/g,'<br />')"></div></van-collapse-item>
+        <van-collapse-item title="Generated caption" name="1"><div style="font-size: 85%;" v-html="generatedCaption.replace(/\n/g,'<br />')"></div></van-collapse-item>
       </van-collapse>
     </van-col>
   </van-row>
@@ -70,7 +70,6 @@
 </template>
 <script setup lang="ts">
   import { computed, reactive, ref } from 'vue';
-// import { showNotify } from 'vant';
   import { showToast } from 'vant';
 
 const columns = [
@@ -81,9 +80,17 @@ const columns = [
         readyHashtag: "#thriftcapready",
         altTag: "topi",
       }
+  },
+    {
+      value: 'tshirt',
+      text: 'T-Shirt',
+      meta: {
+        readyHashtag: "#readyroomthrift",
+        altTag: "t-shirt",
+      }
     },
-  ];
-  // const showCategory = ref(false);
+];
+
   const active = ref(['1']);
   const brand : any = ref("");
   const design : any = ref("");
@@ -112,10 +119,10 @@ const columns = [
       "#brand##design#second",
       "#brand##design#",
       "snapback#brand##design#",
-      "truckerbekas",
+      "#brand#",
+      "#design#",
       "topivintage",
       "snapbackvintage",
-      "truckersecond",
       "topisecondbranded",
       "topisecond",
       "topibekas",
@@ -134,8 +141,8 @@ const columns = [
 
     const altName = `${categoryObject?.value?.meta?.altTag || ''}`.trim().toUpperCase()
 
-    const header = `BISMILLAHIRRAHMANIRRAHIM <br>
-CEK READY STOK ${categoryObject?.value?.meta?.readyHashtag || '#roomthrift'} <br>
+    const header = `BISMILLAHIRRAHMANIRRAHIM
+CEK READY STOK ${categoryObject?.value?.meta?.readyHashtag || '#roomthrift'}
 
 ITEM : ${altName} ${brand?.value?.toUpperCase()} ${design?.value?.toUpperCase() || ''}
 CATEGORY : ${categoryObject?.value?.text?.toUpperCase() || '-'}
@@ -157,7 +164,7 @@ NB : BIASAKAN BACA CAPTION
 - TELITI SEBELUM MEMBELI, TANYAKAN SEDETAIL MUNGKIN
 - ONGKOS KIRIM DI TANGGUNG PEMBELI`;
 
-    return `${header} \n\n${getPattern || ""}`;
+    return `${header}\n\n${getPattern || ""}`;
   })
 
     const onCopy = () => {
