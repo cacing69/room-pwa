@@ -1,5 +1,7 @@
 <template>
     <div id="app-container">
-        <slot/>
+        <div class="layout-content">
+            <slot/>
+        </div>
     </div>
 </template>

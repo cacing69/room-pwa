@@ -6,12 +6,32 @@
       <van-cell title="Order" value="100"/>
     </van-cell-group>
     <van-cell-group title="Tools">
-      <van-grid :border="false">
-        <van-grid-item icon="photo-o"  text="Instagram" @click="() => { }"/>
-        <van-grid-item icon="photo-o" text="Column 2" />
-        <van-grid-item icon="photo-o" text="Column 3" />
-        <van-grid-item icon="photo-o" text="Column 4" />
+      <van-grid :border="false" clickable :column-num="2">
+        <van-grid-item to="/en/instagram">
+          <van-row>
+            <font-awesome-icon icon="fa-brands fa-instagram" size="2x"/>
+          </van-row>
+          <van-row style="padding-top: 1vh;">
+            <span style="font-size: 12px;">Instagram</span>
+          </van-row>
+        </van-grid-item>
+        <van-grid-item>
+          <van-row>
+            <font-awesome-icon icon="fa-solid fa-puzzle-piece" size="2x"/>
+          </van-row>
+          <van-row style="padding-top: 1vh;">
+            <span style="font-size: 12px;">Ping</span>
+          </van-row>
+        </van-grid-item>
       </van-grid>
+      <!-- <van-row>
+        <van-col span="6">
+          <van-icon name="chat-o" size="50" @click="()=>{}"/>
+        </van-col>
+        <van-col span="6">span: 6</van-col>
+        <van-col span="6">span: 6</van-col>
+        <van-col span="6">span: 6</van-col>
+      </van-row> -->
     </van-cell-group>
   </van-pull-refresh>
 </template>

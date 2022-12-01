@@ -23,6 +23,7 @@ import {
   Form,
   Grid,
   GridItem,
+  Icon,
   Picker,
   Popup,
   PullRefresh,
@@ -43,6 +44,15 @@ import enUS from "vant/es/locale/lang/en-US";
 //   onOfflineReady() {},
 // });
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faPuzzlePiece } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faInstagram, faPuzzlePiece);
+
+
 Locale.use("en-US", enUS);
 
 const vApp = createApp(app);
@@ -58,6 +68,7 @@ vApp.use(Field);
 vApp.use(Form);
 vApp.use(Grid);
 vApp.use(GridItem);
+vApp.use(Icon);
 vApp.use(Picker);
 vApp.use(Popup);
 vApp.use(PullRefresh);
@@ -70,5 +81,7 @@ vApp.use(router);
 
 vApp.use(VueQueryPlugin);
 vApp.use(vuex);
+
+vApp.component("font-awesome-icon", FontAwesomeIcon);
 
 vApp.mount('#app')
