@@ -1,30 +1,8 @@
 
 <template>
-  <!-- <van-nav-bar
-        title="Home"
-        left-text="Back"
-        left-arrow
-        @click-left="() => {}"
-  /> -->
   <van-row>
     <van-col span="24">
       <van-cell-group inset style="margin-top: 2vh;">
-        <!-- <van-field
-          v-model="categoryLabel"
-          is-link
-          readonly
-          name="category"
-          label="Category"
-          placeholder="Select Category"
-          @click="showCategory = true"
-        />
-        <van-popup v-model:show="showCategory" position="bottom">
-          <van-picker
-            :columns="columns"
-            @confirm="onConfirm"
-            @cancel="showCategory = false"
-          />
-        </van-popup> -->
         <van-row>
           <van-col span="12" class="">
             <van-cell title="Category"/>
@@ -69,89 +47,9 @@
 <script setup lang="ts">
   import { computed, reactive, ref } from 'vue';
   import { showToast } from 'vant';
+  import {columnsReff} from './caption.reff'
 
-  const columns = [
-      {
-        value: 'headgear',
-        text: 'Headgear',
-        meta: {
-          readyHashtag: "#thriftcapready",
-          altTag: "topi",
-          extraCaption: "SIZE : -\n",
-          hashtag: [
-            "topi#brand#",
-            "topi#brand#second",
-            "topi#brand#vintage",
-            "topi#design#",
-            "snapback#design#",
-            "snapback#brand#",
-            "snapback#brand#second",
-            "cap#brand#",
-            "cap#brand#second",
-            "cap#design#",
-            "5panel#brand#",
-            "5panel#brand#second",
-            "trucker#brand#",
-            "trucker#brand#second",
-            "trucker#brand#",
-            "trucker#design#",
-            "topi#brand##design#",
-            "#brand##design#second",
-            "#brand##design#",
-            "snapback#brand##design#",
-            "#brand#",
-            "#design#",
-            "topivintage",
-            "snapbackvintage",
-            "topisecondbranded",
-            "topisecond",
-            "topibekas",
-            "snapbacksecond",
-            "capsecond",
-          ]
-        }
-    },
-      {
-        value: 'tshirt',
-        text: 'T-Shirt',
-        meta: {
-          readyHashtag: "#readyroomthrift",
-          altTag: "kaos",
-          extraCaption: "PANJANG : -\nLEBAR : -\n",
-          hashtag: [
-            "tshirt#brand#",
-            "tshirt#design#",
-            "tshirt#brand##design#",
-            "tee#brand#",
-            "tee#design#",
-            "tee#brand##design#",
-            "kaos#brand#",
-            "kaos#design#",
-            "kaos#brand##design#",
-            "jual#brand#",
-            "jual#design#",
-            "jual#brand##design#",
-            "#brand#second",
-            "#brand#vintage",
-            "thrift#brand#",
-            "thrift#design#",
-            "thrift#brand##design#",
-            "#brand#",
-            "#design#",
-            "#brand##design#",
-            "#brand#original",
-            "jual#brand#second",
-            "jual#brand#original",
-            "vintage#brand#",
-            "#brand#vintage",
-            "secondbrand",
-            "secondbranded",
-            "kaossecond",
-            "kaossecondbranded",
-          ]
-        }
-      },
-  ];
+  const columns = columnsReff;
 
   const active = ref(['1']);
   const brand : any = ref("");
