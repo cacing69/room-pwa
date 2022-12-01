@@ -5,7 +5,7 @@
       <van-cell title="Earnings" value="1.000.000" />
       <van-cell title="Order" value="100"/>
     </van-cell-group>
-    <van-cell-group title="Tools">
+    <van-cell-group inset title="Tools">
       <van-grid :border="false" clickable :column-num="2">
         <van-grid-item to="/en/instagram">
           <van-row>
