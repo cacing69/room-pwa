@@ -52,7 +52,7 @@
         />
       </van-cell-group>
       <div style="margin: 16px;">
-        <van-button round block type="primary" native-type="submit" size="small" @click="onCopy">
+        <van-button round block type="primary" native-type="button" size="small" @click="onCopy">
           Copy
         </van-button>
       </div>
