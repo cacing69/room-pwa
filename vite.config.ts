@@ -29,7 +29,7 @@ export default defineConfig({
     }),
     VitePWA({
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "room.svg"],
-      mode: "development",
+      mode: "production",
       base: "/",
       srcDir: "src",
       filename: "sw.ts",
@@ -53,7 +53,7 @@ export default defineConfig({
       },
       injectRegister: "auto",
       devOptions: {
-        enabled: true,
+        enabled: false,
         type: "module",
         navigateFallback: "index.html",
       },

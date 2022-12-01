@@ -1,14 +1,24 @@
 
 <template>
-  <van-row gutter="10" style="padding:3vw;">
-    <van-col span="24" class="bg-danger">span: 8</van-col>
-  </van-row>
-  <van-row gutter="10" style="padding:3vw;">
-    <van-col span="8" class="bg-primary" >span: 8</van-col>
-    <van-col span="8" class="bg-success" >span: 8</van-col>
-    <van-col span="8" class="bg-primary" >span: 8</van-col>
-  </van-row>
+  <van-pull-refresh v-model="loading" @refresh="onRefresh" style="height: 100vh;padding-top: 2vh;">
+    <van-cell-group inset>
+      <van-cell title="Cell title" value="Content" />
+      <van-cell title="Cell title" value="Content" label="Description" />
+    </van-cell-group>
+  </van-pull-refresh>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue';
+  import { showToast } from 'vant';
 
+  const count = ref(0);
+  const loading = ref(false);
+
+  const onRefresh = () => {
+      setTimeout(() => {
+        showToast('Refresh Success');
+        loading.value = false;
+        count.value++;
+      }, 1000);
+    };
 </script>

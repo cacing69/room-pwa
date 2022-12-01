@@ -22,6 +22,7 @@ import {
   Form,
   Picker,
   Popup,
+  PullRefresh,
   Row,
   Space,
   Toast,
@@ -53,6 +54,7 @@ vApp.use(Field);
 vApp.use(Form);
 vApp.use(Picker);
 vApp.use(Popup);
+vApp.use(PullRefresh);
 vApp.use(Row);
 vApp.use(Space);
 vApp.use(Toast);

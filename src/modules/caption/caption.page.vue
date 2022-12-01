@@ -31,7 +31,7 @@
             <van-cell title="Category"/>
           </van-col>
           <van-col span="12">
-            <van-dropdown-menu>
+            <van-dropdown-menu >
               <van-dropdown-item title="" v-model="categoryLabel" :options="columns" @change="onConfirm"/>
             </van-dropdown-menu>
           </van-col>
@@ -62,7 +62,7 @@
   <van-row>
     <van-col span="24">
       <van-collapse v-model="active">
-        <van-collapse-item title="Generated caption" name="1"><div style="font-size: 85%;" v-html="generatedCaption.replace(/\n/g,'<br />')"></div></van-collapse-item>
+        <van-collapse-item title="Generated caption" name="1"><div style="font-size: 82.5%;" v-html="generatedCaption.replace(/\n/g,'<br />')"></div></van-collapse-item>
       </van-collapse>
     </van-col>
   </van-row>
