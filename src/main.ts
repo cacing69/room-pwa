@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { router } from './router';
 
 import app from './app.vue'
+import vuex from "./stores/vuex";
 import "./style.css";
 import "vant/lib/index.css";
 import "vant/es/notify/style";
@@ -62,5 +63,6 @@ vApp.use(Toast);
 vApp.use(router);
 
 vApp.use(VueQueryPlugin);
+vApp.use(vuex);
 
 vApp.mount('#app')

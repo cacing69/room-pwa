@@ -6,10 +6,10 @@
         left-arrow
         @click-left="() => {}"
   /> -->
-  <van-row style="padding-top: 2vh;">
+  <van-row>
     <van-col span="24">
       <van-form>
-      <van-cell-group inset>
+      <van-cell-group inset title="Create caption">
         <!-- <van-field
           v-model="categoryLabel"
           is-link
@@ -72,24 +72,88 @@
   import { computed, reactive, ref } from 'vue';
   import { showToast } from 'vant';
 
-const columns = [
-    {
-      value: 'headgear',
-      text: 'Headgear',
-      meta: {
-        readyHashtag: "#thriftcapready",
-        altTag: "topi",
-      }
-  },
-    {
-      value: 'tshirt',
-      text: 'T-Shirt',
-      meta: {
-        readyHashtag: "#readyroomthrift",
-        altTag: "t-shirt",
-      }
+  const columns = [
+      {
+        value: 'headgear',
+        text: 'Headgear',
+        meta: {
+          readyHashtag: "#thriftcapready",
+          altTag: "topi",
+          extraCaption: "SIZE : -\n",
+          hashtag: [
+            "topi#brand#",
+            "topi#brand#second",
+            "topi#brand#vintage",
+            "topi#design#",
+            "snapback#design#",
+            "snapback#brand#",
+            "snapback#brand#second",
+            "cap#brand#",
+            "cap#brand#second",
+            "cap#design#",
+            "5panel#brand#",
+            "5panel#brand#second",
+            "trucker#brand#",
+            "trucker#brand#second",
+            "trucker#brand#",
+            "trucker#design#",
+            "topi#brand##design#",
+            "#brand##design#second",
+            "#brand##design#",
+            "snapback#brand##design#",
+            "#brand#",
+            "#design#",
+            "topivintage",
+            "snapbackvintage",
+            "topisecondbranded",
+            "topisecond",
+            "topibekas",
+            "snapbacksecond",
+            "capsecond",
+          ]
+        }
     },
-];
+      {
+        value: 'tshirt',
+        text: 'T-Shirt',
+        meta: {
+          readyHashtag: "#readyroomthrift",
+          altTag: "kaos",
+          extraCaption: "PANJANG : -\nLEBAR : -\n",
+          hashtag: [
+            "tshirt#brand#",
+            "tshirt#design#",
+            "tshirt#brand##design#",
+            "tee#brand#",
+            "tee#design#",
+            "tee#brand##design#",
+            "kaos#brand#",
+            "kaos#design#",
+            "kaos#brand##design#",
+            "jual#brand#",
+            "jual#design#",
+            "jual#brand##design#",
+            "#brand#second",
+            "#brand#vintage",
+            "thrift#brand#",
+            "thrift#design#",
+            "thrift#brand##design#",
+            "#brand#",
+            "#design#",
+            "#brand##design#",
+            "#brand#original",
+            "jual#brand#second",
+            "jual#brand#original",
+            "vintage#brand#",
+            "#brand#vintage",
+            "secondbrand",
+            "secondbranded",
+            "kaossecond",
+            "kaossecondbranded",
+          ]
+        }
+      },
+  ];
 
   const active = ref(['1']);
   const brand : any = ref("");
@@ -97,56 +161,22 @@ const columns = [
   const categoryLabel : any = ref("Select category");
   const categoryObject: any = reactive({});
 
-  const pattern = {
-    headgear: [
-      "topi#brand#",
-      "topi#brand#second",
-      "topi#brand#vintage",
-      "topi#design#",
-      "snapback#design#",
-      "snapback#brand#",
-      "snapback#brand#second",
-      "cap#brand#",
-      "cap#brand#second",
-      "cap#design#",
-      "5panel#brand#",
-      "5panel#brand#second",
-      "trucker#brand#",
-      "trucker#brand#second",
-      "trucker#brand#",
-      "trucker#design#",
-      "topi#brand##design#",
-      "#brand##design#second",
-      "#brand##design#",
-      "snapback#brand##design#",
-      "#brand#",
-      "#design#",
-      "topivintage",
-      "snapbackvintage",
-      "topisecondbranded",
-      "topisecond",
-      "topibekas",
-      "snapbacksecond",
-      "capsecond",
-    ]
-  }
   const generatedCaption = computed(() => {
-    const replaceBrand = brand?.value?.replace(" ", "")?.toLowerCase() || 'thrift';
-    const replaceDesign = design?.value?.replace(" ", "")?.toLowerCase();
+  const replaceBrand = brand?.value?.replace(" ", "")?.toLowerCase() || 'thrift';
+  const replaceDesign = design?.value?.replace(" ", "")?.toLowerCase();
 
+  const getPattern = categoryObject?.value?.meta?.hashtag?.map((e: string) => {
+    return `#${e.replace('#brand#', replaceBrand).replace('#design#', replaceDesign || 'thrift')}`;
+  }).join(" ");
 
-    const getPattern = (pattern as any)[categoryObject?.value?.value]?.map((e: string) => {
-      return `#${e.replace('#brand#', replaceBrand).replace('#design#', replaceDesign || 'thrift')}`;
-    }).join(" ");
+  const altName = `${categoryObject?.value?.meta?.altTag || ''}`.trim().toUpperCase()
 
-    const altName = `${categoryObject?.value?.meta?.altTag || ''}`.trim().toUpperCase()
-
-    const header = `BISMILLAHIRRAHMANIRRAHIM
+  const header = `BISMILLAHIRRAHMANIRRAHIM
 CEK READY STOK ${categoryObject?.value?.meta?.readyHashtag || '#roomthrift'}
 
 ITEM : ${altName} ${brand?.value?.toUpperCase()} ${design?.value?.toUpperCase() || ''}
 CATEGORY : ${categoryObject?.value?.text?.toUpperCase() || '-'}
-SIZE : -
+${categoryObject?.value?.meta?.extraCaption}
 IDR : ASK
 
 DETAIL GESER SAMPAI UJUNG -->
@@ -167,20 +197,16 @@ NB : BIASAKAN BACA CAPTION
     return `${header}\n\n${getPattern || ""}`;
   })
 
-    const onCopy = () => {
-      navigator.clipboard.writeText(generatedCaption.value);
-      showToast('Caption copied');
-    }
+  const onCopy = () => {
+    navigator.clipboard.writeText(generatedCaption.value);
+    showToast('Caption copied');
+  }
 
-// const onConfirm = ({ selectedOptions }: any) => {
-const onConfirm = (e :any) => {
-  console.log(e)
+  const onConfirm = (e :any) => {
+    console.log(e)
 
-  columns.forEach((v, k) => {
-    if(v.value == e) categoryObject.value = v
-  })
-    // categoryLabel.value = selectedOptions[0]?.text;
-    // categoryObject.value = selectedOptions[0];
-    // showCategory.value = false;
+    columns.forEach((v, k) => {
+      if(v.value == e) categoryObject.value = v
+    })
   };
 </script>
