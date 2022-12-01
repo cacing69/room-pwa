@@ -1,7 +1,7 @@
 
 <template>
-  <van-pull-refresh v-model="loading" @refresh="onRefresh" style="height: 100vh;padding-top: 2vh;">
-    <van-cell-group inset>
+  <van-pull-refresh v-model="loading" @refresh="onRefresh" style="height: 100vh;padding-top: 0vh;">
+    <van-cell-group inset title="Group 1">
       <van-cell title="Cell title" value="Content" />
       <van-cell title="Cell title" value="Content" label="Description" />
     </van-cell-group>
