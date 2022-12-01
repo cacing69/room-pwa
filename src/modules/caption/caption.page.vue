@@ -8,7 +8,6 @@
   /> -->
   <van-row>
     <van-col span="24">
-      <van-form>
       <van-cell-group inset style="margin-top: 2vh;">
         <!-- <van-field
           v-model="categoryLabel"
@@ -56,7 +55,6 @@
           Copy
         </van-button>
       </div>
-    </van-form>
     </van-col>
   </van-row>
   <van-row>
