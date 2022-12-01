@@ -9,7 +9,7 @@
   <van-row>
     <van-col span="24">
       <van-form>
-      <van-cell-group inset title="Create caption">
+      <van-cell-group inset style="margin-top: 2vh;">
         <!-- <van-field
           v-model="categoryLabel"
           is-link
@@ -176,7 +176,7 @@ CEK READY STOK ${categoryObject?.value?.meta?.readyHashtag || '#roomthrift'}
 
 ITEM : ${altName} ${brand?.value?.toUpperCase()} ${design?.value?.toUpperCase() || ''}
 CATEGORY : ${categoryObject?.value?.text?.toUpperCase() || '-'}
-${categoryObject?.value?.meta?.extraCaption}
+${categoryObject?.value?.meta?.extraCaption || ""}
 IDR : ASK
 
 DETAIL GESER SAMPAI UJUNG -->
