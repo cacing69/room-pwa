@@ -21,11 +21,14 @@ import {
   DropdownItem,
   Field,
   Form,
+  Grid,
+  GridItem,
   Picker,
   Popup,
   PullRefresh,
   Row,
   Space,
+  Tag,
   Toast,
 } from "vant";
 
@@ -53,11 +56,14 @@ vApp.use(DropdownItem);
 vApp.use(DropdownMenu);
 vApp.use(Field);
 vApp.use(Form);
+vApp.use(Grid);
+vApp.use(GridItem);
 vApp.use(Picker);
 vApp.use(Popup);
 vApp.use(PullRefresh);
 vApp.use(Row);
 vApp.use(Space);
+vApp.use(Tag);
 vApp.use(Toast);
 
 vApp.use(router);
