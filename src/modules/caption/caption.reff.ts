@@ -45,7 +45,7 @@ export const columnsReff = [
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "kaos",
-      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE: -\n",
+      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE : -\n",
       hashtag: [
         "tshirt#brand#",
         "tshirt#design#",
@@ -85,7 +85,7 @@ export const columnsReff = [
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "kemeja",
-      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE: -\n",
+      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE : -\n",
       hashtag: [
         "shirt#brand#",
         "shirt#design#",
@@ -125,7 +125,7 @@ export const columnsReff = [
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "crewneck",
-      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE: -\n",
+      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE : -\n",
       hashtag: [
         "crewneck#brand#",
         "crewneck#design#",
@@ -165,7 +165,7 @@ export const columnsReff = [
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "polo shirt",
-      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE: -\n",
+      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE : -\n",
       hashtag: [
         "polo#brand#",
         "polo#design#",
@@ -205,7 +205,7 @@ export const columnsReff = [
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "Hoodie",
-      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE: -\n",
+      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE : -\n",
       hashtag: [
         "hoodie#brand#",
         "hoodie#design#",
@@ -245,7 +245,7 @@ export const columnsReff = [
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "Tank Top",
-      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE: -\n",
+      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE : -\n",
       hashtag: [
         "tanktop#brand#",
         "tanktop#design#",
@@ -285,7 +285,7 @@ export const columnsReff = [
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "Jersey",
-      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE: -\n",
+      extraCaption: "PANJANG : -\nLEBAR : -\nSIZE : -\n",
       hashtag: [
         "jersey#brand#",
         "jersey#design#",
