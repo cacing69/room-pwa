@@ -8,46 +8,46 @@
   @click-left="onClickLeft"
 />
   <van-row>
-    <van-grid :border="false" clickable :column-num="3">
+    <van-grid :border="true" clickable :column-num="3">
       <van-grid-item @click="contentClicked({})">
         <van-image
-          width="auto"
-          height="auto"
+          width="7.6rem"
+          height="7.6rem"
           src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
         />
       </van-grid-item>
       <van-grid-item @click="contentClicked({})">
         <van-image
-          width="auto"
-          height="auto"
+          width="7.6rem"
+          height="7.6rem"
           src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
         />
       </van-grid-item>
       <van-grid-item @click="contentClicked({})">
         <van-image
-          width="auto"
-          height="auto"
+          width="7.6rem"
+          height="7.6rem"
           src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
         />
       </van-grid-item>
       <van-grid-item @click="contentClicked({})">
         <van-image
-          width="auto"
-          height="auto"
+          width="7.6rem"
+          height="7.6rem"
           src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
         />
       </van-grid-item>
       <van-grid-item @click="contentClicked({})">
         <van-image
-          width="auto"
-          height="auto"
+          width="7.6rem"
+          height="7.6rem"
           src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
         />
       </van-grid-item>
       <van-grid-item @click="contentClicked({})">
         <van-image
-          width="auto"
-          height="auto"
+          width="7.6rem"
+          height="7.6rem"
           src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
         />
       </van-grid-item>
