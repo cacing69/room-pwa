@@ -12,22 +12,51 @@
       <van-grid-item @click="contentClicked({})">
         <van-image
           width="auto"
+          height="auto"
           src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
         />
       </van-grid-item>
       <van-grid-item @click="contentClicked({})">
         <van-image
           width="auto"
+          height="auto"
           src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
         />
       </van-grid-item>
       <van-grid-item @click="contentClicked({})">
         <van-image
           width="auto"
+          height="auto"
+          src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
+        />
+      </van-grid-item>
+      <van-grid-item @click="contentClicked({})">
+        <van-image
+          width="auto"
+          height="auto"
+          src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
+        />
+      </van-grid-item>
+      <van-grid-item @click="contentClicked({})">
+        <van-image
+          width="auto"
+          height="auto"
+          src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
+        />
+      </van-grid-item>
+      <van-grid-item @click="contentClicked({})">
+        <van-image
+          width="auto"
+          height="auto"
           src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/3ec3127e-722d-48ca-8a4d-e5063a675ab6.jpg"
         />
       </van-grid-item>
     </van-grid>
+  </van-row>
+  <van-row style="padding: 2vh;">
+    <!-- <div > -->
+      <van-button plain type="primary" size="small" block>Load more</van-button>
+    <!-- </div> -->
   </van-row>
 </template>
 
