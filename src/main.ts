@@ -24,6 +24,8 @@ import {
   Grid,
   GridItem,
   Icon,
+  Image as VanImage,
+  Lazyload,
   Picker,
   Popup,
   PullRefresh,
@@ -69,6 +71,7 @@ vApp.use(Form);
 vApp.use(Grid);
 vApp.use(GridItem);
 vApp.use(Icon);
+vApp.use(Lazyload);
 vApp.use(Picker);
 vApp.use(Popup);
 vApp.use(PullRefresh);
@@ -76,6 +79,7 @@ vApp.use(Row);
 vApp.use(Space);
 vApp.use(Tag);
 vApp.use(Toast);
+vApp.use(VanImage);
 
 vApp.use(router);
 
