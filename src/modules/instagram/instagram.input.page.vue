@@ -43,21 +43,8 @@
   import { postInstagramUrls } from '../../services/instagram.api';
 
   const onClickLeft = () => history.back();
-  // const urls = ref<string[]>([""]);
-const urls = ref<string[]>([
-  "https://www.instagram.com/p/ClnWuRQvydP/",
-  "https://www.instagram.com/p/ClnW4ZGP2rY/",
-  "https://www.instagram.com/p/ClnXFm9PyPO/",
-  "https://www.instagram.com/p/ClqXCPNPN8U/",
-  "https://www.instagram.com/p/ClqXJPfPyf2/",
-  "https://www.instagram.com/p/ClqXOxSvc6V/",
-  "https://www.instagram.com/p/ClskG_hPVlp/",
-  "https://www.instagram.com/p/ClskPglvDJE/",
-  "https://www.instagram.com/p/CltT4rFvTl0/",
-  "https://www.instagram.com/p/Cl07V83PPYr/",
-  "https://www.instagram.com/p/Cl075ZGvn64/",
-  "https://www.instagram.com/p/Cl08GLbPELs/",
-]);
+  const urls = ref<string[]>([""]);
+
   const urlForwarder = ref("");
 
   const canAddMoreUrl = computed(() => urls.value[urls.value.length - 1] != "")
