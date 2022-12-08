@@ -9,7 +9,7 @@
   </van-sticky>
   <van-cell-group inset title="Url forwarder">
     <van-field
-      v-model="urlScraper"
+      v-model="urlForwarder"
       placeholder="Paste url scraper here"
       label-align="top"
     />
@@ -19,7 +19,7 @@
       v-for="(url, index) in urls"
       v-model="urls[index]"
       :readonly="(index != urls.length - 1)"
-      placeholder="https://www.instagram.com/p/someUniqId/"
+      :placeholder="`https://www.instagram.com/p/uniqId_${index + 1}/`"
       :rules="[{ required: false, message: 'brand is required' }]"
       @click-right-icon="removeUrl(index)"
       right-icon="delete-o"
@@ -43,8 +43,22 @@
   import { postInstagramUrls } from '../../services/instagram.api';
 
   const onClickLeft = () => history.back();
-  const urls = ref<string[]>([""]);
-  const urlScraper = ref("");
+  // const urls = ref<string[]>([""]);
+const urls = ref<string[]>([
+  "https://www.instagram.com/p/ClnWuRQvydP/",
+  "https://www.instagram.com/p/ClnW4ZGP2rY/",
+  "https://www.instagram.com/p/ClnXFm9PyPO/",
+  "https://www.instagram.com/p/ClqXCPNPN8U/",
+  "https://www.instagram.com/p/ClqXJPfPyf2/",
+  "https://www.instagram.com/p/ClqXOxSvc6V/",
+  "https://www.instagram.com/p/ClskG_hPVlp/",
+  "https://www.instagram.com/p/ClskPglvDJE/",
+  "https://www.instagram.com/p/CltT4rFvTl0/",
+  "https://www.instagram.com/p/Cl07V83PPYr/",
+  "https://www.instagram.com/p/Cl075ZGvn64/",
+  "https://www.instagram.com/p/Cl08GLbPELs/",
+]);
+  const urlForwarder = ref("");
 
   const canAddMoreUrl = computed(() => urls.value[urls.value.length - 1] != "")
 
@@ -54,7 +68,6 @@
       closeToast()
     },
     onSuccess: () => {
-      store.set('urlScraper', urlScraper.value)
       showNotify({
         type: 'success',
         message: 'Url scraped'
@@ -91,8 +104,6 @@
       }
     }
 
-    // check if value duplicate;
-
     return urls.value;
   })
 
@@ -100,34 +111,37 @@
 
 const submitUrl = () => {
 
-  if (urlScraper.value?.trim()?.length == 0) {
+  if (urlForwarder.value?.trim()?.length == 0) {
     showNotify({
       type: 'warning',
-      message: 'There are empty url scraper '
+      message: 'There are empty forwarder '
     });
 
     return;
   } else {
-    if (!urlScraper.value?.trim()?.match(/^https:\/\/\.*(.*\.)?ngrok.io/)) {
+    if (!urlForwarder.value?.trim()?.match(/^https:\/\/\.*(.*\.)?ngrok.io/)) {
       showNotify({
         type: 'warning',
-        message: 'There are invalide url scraper forward '
+        message: 'There are invalid forwarder '
       });
       return;
     }
   }
 
-    if (!hasDuplicates) {
+  store.set('urlForwarder', urlForwarder.value);
+
+    if (!hasDuplicates.value) {
       showLoadingToast({
         duration: 0,
         forbidClick: true,
         loadingType: "spinner",
         message: "Loading...",
       });
+
       mutate(
         {
           urls: getCleanUrls.value,
-          urlScraper: urlScraper.value
+          forwarder: urlForwarder.value
       })
     } else {
       showNotify({
@@ -138,6 +152,6 @@ const submitUrl = () => {
   };
 
   onMounted(() => {
-    urlScraper.value = store.get("urlScraper");
+    urlForwarder.value = store.get("urlForwarder");
   })
 </script>

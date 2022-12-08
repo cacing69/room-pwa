@@ -19,10 +19,5 @@ export const getInstagramDetail = async (id: string) => {
 };
 
 export const postInstagramUrls = async (payload: any) => {
-
-  const { data } = await axios.post<GenericResponse>(`${payload.urlScraper}/instagram`, {
-    urls: payload.url,
-  });
-
-  return data;
+  return await axios.post(`${payload.forwarder}instagram`, { urls: payload.urls });
 };
