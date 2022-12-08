@@ -12,6 +12,9 @@ import "vant/es/image-preview/style";
 
 // vant components
 import {
+  ActionBar,
+  ActionBarIcon,
+  ActionBarButton,
   Button,
   CellGroup,
   Col,
@@ -25,12 +28,18 @@ import {
   GridItem,
   Icon,
   Image as VanImage,
+  ImagePreview,
   Lazyload,
   Picker,
   Popup,
   PullRefresh,
   Row,
+  Search,
   Space,
+  Sticky,
+  SubmitBar,
+  Swipe,
+  SwipeItem,
   Tag,
   Toast,
 } from "vant";
@@ -59,6 +68,9 @@ Locale.use("en-US", enUS);
 
 const vApp = createApp(app);
 
+vApp.use(ActionBar);
+vApp.use(ActionBarIcon);
+vApp.use(ActionBarIcon);
 vApp.use(Button);
 vApp.use(CellGroup);
 vApp.use(Col);
@@ -71,12 +83,18 @@ vApp.use(Form);
 vApp.use(Grid);
 vApp.use(GridItem);
 vApp.use(Icon);
+vApp.use(ImagePreview);
 vApp.use(Lazyload);
 vApp.use(Picker);
 vApp.use(Popup);
 vApp.use(PullRefresh);
 vApp.use(Row);
+vApp.use(Search);
 vApp.use(Space);
+vApp.use(Sticky);
+vApp.use(SubmitBar);
+vApp.use(Swipe);
+vApp.use(SwipeItem);
 vApp.use(Tag);
 vApp.use(Toast);
 vApp.use(VanImage);

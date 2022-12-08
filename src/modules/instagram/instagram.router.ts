@@ -17,7 +17,7 @@ export const instagramRouter: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/:locale/instagram/:id/detail",
+    path: "/:locale/instagram/:uuid/detail",
     name: "module:instagram:detail",
     component: () => import("./instagram.detail.page.vue"),
     meta: {

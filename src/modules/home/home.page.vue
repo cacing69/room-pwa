@@ -1,6 +1,6 @@
 
 <template>
-  <van-pull-refresh v-model="loading" @refresh="onRefresh" style="height: 100vh;padding-top: 0vh;">
+  <van-pull-refresh v-model="loading" @refresh="onRefresh" style="height: 100vh;">
     <van-cell-group inset title="This month">
       <van-cell title="Earnings" value="1.000.000" />
       <van-cell title="Order" value="100"/>

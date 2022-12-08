@@ -1,65 +1,50 @@
 <template>
-<van-nav-bar
-  title="Instagram"
-  left-text="Back"
-  right-text="Add"
-  left-arrow
-  @click-right="onClickRight"
-  @click-left="onClickLeft"
-/>
-  <van-row>
-    <van-grid :border="true" clickable :column-num="3">
-      <van-grid-item @click="contentClicked({})">
-        <van-image
-          width="7.6rem"
-          height="7.6rem"
-          lazy-load
-          src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/f8b17b91-6bce-4557-92ef-89f0dca712ae.jpg"
-        />
-      </van-grid-item>
-      <van-grid-item @click="contentClicked({})">
-        <van-image
-          width="7.6rem"
-          height="7.6rem"
-          lazy-load
-          src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/252a87be-8948-44d7-a7fc-4c06214ec48a.jpg"
-        />
-      </van-grid-item>
-      <van-grid-item @click="contentClicked({})">
-        <van-image
-          width="7.6rem"
-          height="7.6rem"
-          lazy-load
-          src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/37beb919-2a14-4b49-8d54-fb60ce681af4.jpg"
-        />
-      </van-grid-item>
-      <van-grid-item @click="contentClicked({})">
-        <van-image
-          width="7.6rem"
-          height="7.6rem"
-          lazy-load
-          src="https://room-bucket.s3.ap-southeast-3.amazonaws.com/749e58bd-292d-4307-b827-1694506d7455.jpg"
-        />
-      </van-grid-item>
-    </van-grid>
-  </van-row>
+  <van-sticky>
+    <van-nav-bar
+      title="Instagram"
+      left-text="Back"
+      left-arrow
+      @click-right="onClickRight"
+      @click-left="onClickLeft"
+    >
+      <template #right>
+        <van-icon name="plus" />
+      </template>
+    </van-nav-bar>
+  </van-sticky>
+  <van-pull-refresh v-model="isFetching" @refresh="onRevalidate()" style="height: 100vh;">
+    <van-row>
+      <van-grid :border="true" clickable :column-num="3">
+        <template v-for="page in data?.pages">
+          <van-grid-item v-for="item in page.data" @click="contentClicked(item.id)">
+            <van-image
+              width="7.6rem"
+              height="7.6rem"
+              lazy-load
+              :src="item.coverUrl"
+            />
+          </van-grid-item>
+        </template>
+      </van-grid>
+    </van-row>
   <van-row style="padding: 2vh;">
-    <!-- <div > -->
-      <van-button plain type="primary" size="small" block @click="onLoadMore()">Load more</van-button>
-    <!-- </div> -->
+  <!-- <div > -->
+    <van-button round plain type="primary" size="small" block @click="fetchNextPage" :disabled="!hasNextPage">Load more</van-button>
+  <!-- </div> -->
   </van-row>
+  </van-pull-refresh>
 </template>
 
 <script setup lang="ts">
   import { useRouter } from "vue-router";
   import { showToast } from 'vant';
+  import { useInfiniteQuery, useQueryClient } from "vue-query";
+  import { getInstagram } from "../../services/instagram.api";
+import { ref } from "vue";
 
   const router = useRouter();
 
   const onClickLeft = () => history.back();
-  const onLoadMore = () => {
-    showToast('Load more');
-  };
 
   const onClickRight = () => {
     router.push({
@@ -69,13 +54,42 @@
       }
     });
   };
-const contentClicked = (e: any) => {
+
+
+  const queryClient = useQueryClient();
+
+  const onRevalidate = () => {
+    queryClient.resetQueries();
+  }
+
+  const contentClicked = (id: any) => {
     router.push({
       name: "module:instagram:detail",
       params : {
         locale: 'en',
-        id: 'uuid'
+        uuid: id
       }
     });
-}
+  }
+
+  const limit = ref(15);
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+    isRefetching,
+    refetch
+  } = useInfiniteQuery({
+    queryKey: ['getInstagram'],
+    queryFn: (pageParam) => getInstagram(pageParam, { limit: limit.value }),
+    getNextPageParam: (lastPage, pages) => lastPage.data.length == limit.value ? lastPage.meta.page + 1 : undefined,
+    refetchOnWindowFocus: false
+  });
+
+  // refetch({ refetchPage: (page, index) => index === 0 })
 </script>
