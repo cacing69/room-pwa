@@ -3,16 +3,9 @@
   <van-row>
     <van-col span="24">
       <van-cell-group inset style="margin-top: 2vh;">
-        <van-row>
-          <van-col span="12" class="">
-            <van-cell title="Category"/>
-          </van-col>
-          <van-col span="12">
-            <van-dropdown-menu >
-              <van-dropdown-item title="" v-model="categoryLabel" :options="columns" @change="onConfirm"/>
-            </van-dropdown-menu>
-          </van-col>
-        </van-row>
+        <van-cell is-link title="Category" @click="showCategory = true" :value="categoryObject?.data?.name || 'None'"/>
+        <van-action-sheet v-model:show="showCategory" :actions="columns" @select="onConfirm" cancel-text="Close"
+  @cancel="onCategoryCancel"/>
         <van-field
           v-model="brand"
           name="brand"
@@ -49,30 +42,34 @@
   import { showToast } from 'vant';
   import {columnsReff} from './caption.reff'
 
-  const columns = columnsReff;
+const columns = columnsReff;
+
+  const showCategory = ref(false);
 
   const active = ref(['1']);
   const brand : any = ref("");
   const design : any = ref("");
   const categoryLabel : any = ref("Select category");
-  const categoryObject: any = reactive({});
+const categoryObject: any = reactive({});
+
+const onCategoryCancel = () => showCategory.value = false;
 
   const generatedCaption = computed(() => {
   const replaceBrand = brand?.value?.replace(" ", "")?.toLowerCase() || 'thrift';
   const replaceDesign = design?.value?.replace(" ", "")?.toLowerCase();
 
-  const getPattern = categoryObject?.value?.meta?.hashtag?.map((e: string) => {
+  const getPattern = categoryObject?.data?.meta?.hashtag?.map((e: string) => {
     return `#${e.replace('#brand#', replaceBrand).replace('#design#', replaceDesign || 'thrift')}`;
   }).join(" ");
 
-  const altName = `${categoryObject?.value?.meta?.altTag || ''}`.trim().toUpperCase()
+  const altName = `${categoryObject?.data?.meta?.altTag || ''}`.trim().toUpperCase()
 
   const header = `BISMILLAHIRRAHMANIRRAHIM
-CEK READY STOK ${categoryObject?.value?.meta?.readyHashtag || '#roomthrift'}
+CEK READY STOK ${categoryObject?.data?.meta?.readyHashtag || '#roomthrift'}
 
 ITEM : ${altName} ${brand?.value?.toUpperCase()} ${design?.value?.toUpperCase() || ''}
-CATEGORY : ${categoryObject?.value?.text?.toUpperCase() || '-'}
-${categoryObject?.value?.meta?.extraCaption || ""}
+CATEGORY : ${categoryObject?.data?.name?.toUpperCase() || '-'}
+${categoryObject?.data?.meta?.extraCaption || ""}
 IDR : ASK
 
 DETAIL GESER SAMPAI UJUNG -->
@@ -99,10 +96,10 @@ NB : BIASAKAN BACA CAPTION
   }
 
   const onConfirm = (e :any) => {
-    console.log(e)
+    showCategory.value = false;
 
     columns.forEach((v, k) => {
-      if(v.value == e) categoryObject.value = v
+      if(v.value == e.value) categoryObject.data = v
     })
   };
 </script>

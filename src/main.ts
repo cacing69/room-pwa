@@ -13,8 +13,9 @@ import "vant/es/image-preview/style";
 // vant components
 import {
   ActionBar,
-  ActionBarIcon,
   ActionBarButton,
+  ActionBarIcon,
+  ActionSheet,
   Button,
   CellGroup,
   Col,
@@ -69,8 +70,9 @@ Locale.use("en-US", enUS);
 const vApp = createApp(app);
 
 vApp.use(ActionBar);
+vApp.use(ActionBarButton);
 vApp.use(ActionBarIcon);
-vApp.use(ActionBarIcon);
+vApp.use(ActionSheet);
 vApp.use(Button);
 vApp.use(CellGroup);
 vApp.use(Col);

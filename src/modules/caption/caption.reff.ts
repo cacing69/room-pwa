@@ -1,7 +1,7 @@
 export const columnsReff = [
   {
     value: "headgear",
-    text: "Headgear",
+    name: "Headgear",
     meta: {
       readyHashtag: "#thriftcapready",
       altTag: "topi",
@@ -41,7 +41,7 @@ export const columnsReff = [
   },
   {
     value: "tshirt",
-    text: "T-Shirt",
+    name: "T-Shirt",
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "kaos",
@@ -81,7 +81,7 @@ export const columnsReff = [
   },
   {
     value: "shirt",
-    text: "Shirt",
+    name: "Shirt",
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "kemeja",
@@ -121,7 +121,7 @@ export const columnsReff = [
   },
   {
     value: "crewneck",
-    text: "Crewneck",
+    name: "Crewneck",
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "crewneck",
@@ -161,7 +161,7 @@ export const columnsReff = [
   },
   {
     value: "polo",
-    text: "Polo",
+    name: "Polo",
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "polo shirt",
@@ -201,7 +201,7 @@ export const columnsReff = [
   },
   {
     value: "hoodie",
-    text: "Hoodie",
+    name: "Hoodie",
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "Hoodie",
@@ -241,7 +241,7 @@ export const columnsReff = [
   },
   {
     value: "tanktop",
-    text: "Tank Top",
+    name: "Tank Top",
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "Tank Top",
@@ -281,7 +281,7 @@ export const columnsReff = [
   },
   {
     value: "jersey",
-    text: "Jersey",
+    name: "Jersey",
     meta: {
       readyHashtag: "#readyroomthrift",
       altTag: "Jersey",

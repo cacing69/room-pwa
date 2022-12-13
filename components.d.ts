@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     VanActionBar: typeof import('vant/es')['ActionBar']
     VanActionBarButton: typeof import('vant/es')['ActionBarButton']
     VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
+    VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanButton: typeof import('vant/es')['Button']
     VanCel: typeof import('vant/es')['Cel']
     VanCell: typeof import('vant/es')['Cell']
