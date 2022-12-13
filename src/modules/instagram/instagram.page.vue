@@ -12,7 +12,7 @@
       </template>
     </van-nav-bar>
   </van-sticky>
-  <van-pull-refresh v-model="isFetching" @refresh="onRevalidate()" style="height: 100vh;">
+  <van-pull-refresh v-model="isFetching" @refresh="onRevalidate()" :style="{height: getHeight}">
     <van-row>
       <van-grid :border="true" clickable :column-num="3">
         <template v-for="page in data?.pages">
@@ -40,7 +40,9 @@
   import { showToast } from 'vant';
   import { useInfiniteQuery, useQueryClient } from "vue-query";
   import { getInstagram } from "../../services/instagram.api";
-import { ref } from "vue";
+  import { computed, ref } from "vue";
+
+  const getHeight = computed(() => data.value?.pages?.length == 1 && data.value?.pages.values.length <= 15 ? '100vh' : 'auto')
 
   const router = useRouter();
 

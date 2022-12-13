@@ -15,10 +15,21 @@
     />
   </van-cell-group>
   <van-cell-group inset title="Scrape content">
+      <van-grid :border="true" clickable :column-num="3">
+    <van-grid-item v-for="top3Item in top3Data">
+      <van-image
+        width="6.97rem"
+        height="6.97rem"
+        lazy-load
+        :src="top3Item.coverUrl"
+      />
+    </van-grid-item>
+  </van-grid>
     <van-field
       v-for="(url, index) in urls"
       v-model="urls[index]"
       :readonly="(index != urls.length - 1)"
+      @keypress.enter="submitUrl"
       :placeholder="`https://www.instagram.com/p/uniqId_${index + 1}/`"
       :rules="[{ required: false, message: 'brand is required' }]"
       @click-right-icon="removeUrl(index)"
@@ -28,10 +39,6 @@
   <van-row style="padding: 2vh;">
     <van-button round :disabled="!canAddMoreUrl" plain type="primary" size="small" block @click="addUrl()">Add more url</van-button>
   </van-row>
-  <van-action-bar>
-    <van-action-bar-icon icon="add-o" text="Add url" @click="" />
-    <van-action-bar-button :loading="isLoading" :disabled="isLoading" type="primary" text="Scrape" @click="submitUrl()" />
-  </van-action-bar>
   <van-submit-bar :loading="isLoading" :disabled="isLoading" button-type="primary" button-text="Scrape" @submit="submitUrl()" />
 </template>
 
@@ -39,13 +46,14 @@
   import { closeToast, showLoadingToast, showNotify, showToast } from 'vant';
   import { computed, onMounted, ref } from 'vue';
   import store from "store2";
-  import { useMutation } from 'vue-query';
-  import { postInstagramUrls } from '../../services/instagram.api';
+  import { useMutation, useQuery, useQueryClient } from 'vue-query';
+  import { getInstagram, postInstagramUrls } from '../../services/instagram.api';
 
   const onClickLeft = () => history.back();
   const urls = ref<string[]>([""]);
 
   const urlForwarder = ref("");
+    const queryClient = useQueryClient();
 
   const canAddMoreUrl = computed(() => urls.value[urls.value.length - 1] != "")
 
@@ -55,6 +63,10 @@
       closeToast()
     },
     onSuccess: () => {
+      setInterval(() => {
+        queryClient.invalidateQueries({ queryKey: ['getTop3Instagram'] });
+      }, 1000);
+
       showNotify({
         type: 'success',
         message: 'Url scraped'
@@ -85,18 +97,27 @@
   }
 
   const getCleanUrls = computed(() => {
-    if (urls.value.length > 1) {
-      if (urls.value[urls.value.length - 1] == "") {
-        return urls.value.splice(urls.value.length - 1, 1);
+    if (urls.value.length >= 1) {
+      if (!urls.value[urls.value.length - 1].match(/^https?:\/\/.*/)) {
+        if (urls.value.length != 1) {
+          return urls.value.splice(urls.value.length - 1, 1);
+        }
       }
     }
 
     return urls.value;
   })
 
-  const hasDuplicates = computed(() => urls.value.length !== new Set(urls.value).size);
+const hasDuplicates = computed(() => urls.value.length !== new Set(urls.value).size);
 
-const submitUrl = () => {
+const { data: top3Data } = useQuery({
+    queryKey: ['getTop3Instagram'],
+    queryFn: () => getInstagram({pageParam:1}, {limit: 3}),
+    select: (data) => data?.data,
+    refetchOnWindowFocus: false
+  });
+
+  const submitUrl = () => {
 
   if (urlForwarder.value?.trim()?.length == 0) {
     showNotify({
@@ -106,7 +127,7 @@ const submitUrl = () => {
 
     return;
   } else {
-    if (!urlForwarder.value?.trim()?.match(/^https:\/\/\.*(.*\.)?ngrok.io/)) {
+    if (!urlForwarder.value?.trim()?.match(/^https?:\/\/(localhost:\d{4}|.*\.ngrok\.io)/)) {
       showNotify({
         type: 'warning',
         message: 'There are invalid forwarder '
@@ -117,7 +138,19 @@ const submitUrl = () => {
 
   store.set('urlForwarder', urlForwarder.value);
 
-    if (!hasDuplicates.value) {
+  if (urls.value.length == 1) {
+    if (!urls.value[0].match(/^https:\/\/.*/)) {
+      showNotify({
+        type: 'warning',
+        message: 'There are empty urls '
+      });
+
+      return;
+    }
+  }
+
+  if (!hasDuplicates.value) {
+
       showLoadingToast({
         duration: 0,
         forbidClick: true,
