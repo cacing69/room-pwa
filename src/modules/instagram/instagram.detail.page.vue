@@ -8,7 +8,7 @@
     />
   </van-sticky>
   <div style="padding: 1vh;">
-    <van-swipe lazy-render style="height: 40vh;" :loop="false">
+    <van-swipe lazy-render style="height: auto;" :loop="false">
       <van-swipe-item v-for="(media, index) in data?.medias" :key="media" >
         <van-image lazy-load :src="media.url" width="100%" height="100%" style="object-fit: cover;" @click="onPreviewImage(index)"/>
       </van-swipe-item>

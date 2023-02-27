@@ -4,8 +4,7 @@
     <van-col span="24">
       <van-cell-group inset style="margin-top: 2vh;">
         <van-cell is-link title="Category" @click="showCategory = true" :value="categoryObject?.data?.name || 'None'"/>
-        <van-action-sheet v-model:show="showCategory" :actions="columns" @select="onConfirm" cancel-text="Close"
-  @cancel="onCategoryCancel"/>
+        <van-action-sheet v-model:show="showCategory" :actions="columns" @select="onConfirm" cancel-text="Close" @cancel="onCategoryCancel"/>
         <van-field
           v-model="brand"
           name="brand"
@@ -78,7 +77,7 @@ ROOM THRIFT
 LOKASI : Jl. Adisucipto KM 15.3, Desa Limbung, Dusun Limbung Jaya, Gg. Seruat Sambas No. 06
 
 JIKA BERMINAT HUBUNGI
-WA : +62 895-2933-8675
+WA : +62 896-7216-5341
 INSYAALLAH AMANAH
 
 NB : BIASAKAN BACA CAPTION

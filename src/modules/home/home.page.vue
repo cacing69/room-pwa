@@ -15,12 +15,12 @@
             <span style="font-size: 12px;">Instagram</span>
           </van-row>
         </van-grid-item>
-        <van-grid-item>
+        <van-grid-item to="/en/excel-engine">
           <van-row>
-            <font-awesome-icon icon="fa-solid fa-puzzle-piece" size="2x"/>
+            <font-awesome-icon icon="fa-solid fa-file-excel" size="2x"/>
           </van-row>
           <van-row style="padding-top: 1vh;">
-            <span style="font-size: 12px;">Ping</span>
+            <span style="font-size: 12px;">Excel Engine</span>
           </van-row>
         </van-grid-item>
       </van-grid>
