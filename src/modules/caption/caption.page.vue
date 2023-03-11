@@ -77,7 +77,7 @@ ROOM THRIFT
 LOKASI : Jl. Adisucipto KM 15.3, Desa Limbung, Dusun Limbung Jaya, Gg. Seruat Sambas No. 06
 
 JIKA BERMINAT HUBUNGI
-WA : +62 896-7216-5341
+WA : -
 INSYAALLAH AMANAH
 
 NB : BIASAKAN BACA CAPTION
