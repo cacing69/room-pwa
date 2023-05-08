@@ -3,7 +3,7 @@ export const columnsReff = [
     value: "headgear",
     name: "Headgear",
     meta: {
-      readyHashtag: "#thriftcapready",
+      readyHashtag: "#thriftcaplistos",
       altTag: "topi",
       extraCaption: "SIZE : -\n",
       hashtag: [
@@ -32,10 +32,10 @@ export const columnsReff = [
         "topivintage",
         "snapbackvintage",
         "topisecondbranded",
-        "topisecond",
+        "gorrasoriginales",
         "topibekas",
         "snapbacksecond",
-        "capsecond",
+        "tiendadegorras_#uuid#",
       ],
     },
   },

@@ -40,6 +40,7 @@
   import { computed, reactive, ref } from 'vue';
   import { showToast } from 'vant';
   import {columnsReff} from './caption.reff'
+ import Hashids from 'hashids'
 
 const columns = columnsReff;
 
@@ -55,26 +56,28 @@ const onCategoryCancel = () => showCategory.value = false;
 
   const generatedCaption = computed(() => {
   const replaceBrand = brand?.value?.replace(" ", "")?.toLowerCase() || 'thrift';
-  const replaceDesign = design?.value?.replace(" ", "")?.toLowerCase();
+    const replaceDesign = design?.value?.replace(" ", "")?.toLowerCase();
+    const timestamp = new Date().getTime();
+    const hashids = new Hashids()
+    const replaceUuid = hashids.encode(timestamp);
 
   const getPattern = categoryObject?.data?.meta?.hashtag?.map((e: string) => {
-    return `#${e.replace('#brand#', replaceBrand).replace('#design#', replaceDesign || 'thrift')}`;
+    return `#${e.replace('#brand#', replaceBrand).replace('#design#', replaceDesign || 'thrift').replace('#uuid#', `${replaceUuid}` || 'thrift')}`;
   }).join(" ");
 
   const altName = `${categoryObject?.data?.meta?.altTag || ''}`.trim().toUpperCase()
 
   const header = `BISMILLAHIRRAHMANIRRAHIM
-CEK READY STOK ${categoryObject?.data?.meta?.readyHashtag || '#roomthrift'}
+CHECK READY STOK ${categoryObject?.data?.meta?.readyHashtag || '#roomthrift'}
 
 ITEM : ${altName} ${brand?.value?.toUpperCase()} ${design?.value?.toUpperCase() || ''}
 CATEGORY : ${categoryObject?.data?.name?.toUpperCase() || '-'}
 ${categoryObject?.data?.meta?.extraCaption || ""}
-IDR : ASK
+PRICE : ASK
 
 DETAIL GESER SAMPAI UJUNG -->
 
-ROOM THRIFT
-LOKASI : Jl. Adisucipto KM 15.3, Desa Limbung, Dusun Limbung Jaya, Gg. Seruat Sambas No. 06
+LOKASI : KUBU RAYA
 
 JIKA BERMINAT HUBUNGI VIA DM
 INSYAALLAH AMANAH
