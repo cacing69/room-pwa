@@ -40,7 +40,7 @@
       <tr>
         <td style="padding: 3.5px; font-size: 12px">Pengirim :</td>
         <td rowspan="4" class="table-border">
-          <img width="100" src="assets/wesale.png" alt="" />
+          <img width="100" :src="'/various/wesale.png'" alt="" />
         </td>
       </tr>
       <tr>
@@ -99,7 +99,7 @@
           TOPI
         </td>
         <td class="table-border">
-          <img width="100" src="assets/qr.png" alt="" />
+          <img width="100" :src="'/various/qr.png'" alt="" />
         </td>
       </tr>
       <tr>
