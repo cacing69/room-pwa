@@ -1,7 +1,7 @@
-import { createApp } from 'vue'
-import { router } from './router';
+import { createApp } from "vue";
+import { router } from "./router";
 
-import app from './app.vue'
+import app from "./app.vue";
 import vuex from "./stores/vuex";
 import "./style.css";
 import "vant/lib/index.css";
@@ -45,7 +45,7 @@ import {
   Toast,
 } from "vant";
 
-import { VueQueryPlugin } from "vue-query";
+import { VueQueryPlugin } from "@tanstack/vue-query";
 import { Locale } from "vant";
 import enUS from "vant/es/locale/lang/en-US";
 
@@ -60,10 +60,13 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
-import { faFileExcel, faPuzzlePiece } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFileExcel,
+  faPrint,
+  faPuzzlePiece,
+} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faInstagram, faPuzzlePiece, faFileExcel);
-
+library.add(faInstagram, faPuzzlePiece, faFileExcel, faPrint);
 
 Locale.use("en-US", enUS);
 
@@ -108,4 +111,4 @@ vApp.use(vuex);
 
 vApp.component("font-awesome-icon", FontAwesomeIcon);
 
-vApp.mount('#app')
+vApp.mount("#app");
