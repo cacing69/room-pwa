@@ -14,12 +14,30 @@
           v-model="name"
           name="name"
           label="Name"
-          :rules="[{ required: false, message: 'name is required' }]"
+          right-icon="records-o"
+          @click-right-icon="onNamePaste"
         />
-        <van-field v-model="phone" name="phone" label="Phone" />
+        <van-field
+          v-model="phone"
+          name="phone"
+          label="Phone"
+          right-icon="records-o"
+          @click-right-icon="onPhonePaste"
+        />
+        <van-field v-model="item" name="item" label="Item" />
       </van-cell-group>
       <van-cell-group inset title="Address">
-        <van-field v-model="address" type="textarea" rows="3" autosize />
+        <van-field
+          v-model="address"
+          type="textarea"
+          rows="3"
+          autosize
+          right-icon="records-o"
+          @click-right-icon="onAddressPaste"
+        />
+        <van-cell title="Paper size">
+          <van-tag round type="primary">78x100</van-tag>
+        </van-cell>
       </van-cell-group>
       <div style="margin: 16px">
         <van-button
@@ -36,18 +54,26 @@
     </van-col>
   </van-row>
   <div id="print-area" style="padding: 5px">
-    <table class="table-border">
+    <table
+      class="table-border"
+      style="
+        width: 100%;
+        word-wrap: break-word;
+        table-layout: fixed;
+        white-space: pre-line;
+      "
+    >
       <tr>
         <td style="padding: 3.5px; font-size: 12px">Pengirim :</td>
-        <td rowspan="4" class="table-border">
+        <td rowspan="4" class="table-border" width="100">
           <img width="100" :src="'/various/wesale.png'" alt="" />
         </td>
       </tr>
       <tr>
-        <td style="padding: 3.5px"><b>WeSale</b></td>
+        <td style="padding: 3.5px"><b>WESALE</b></td>
       </tr>
       <tr>
-        <td style="padding: 3.5px"><b>+62 896-7216-5341</b></td>
+        <td style="padding: 3.5px"><b>+62 895-3217-62074</b></td>
       </tr>
       <tr>
         <td style="padding: 3.5px; font-size: 14px">
@@ -58,26 +84,25 @@
       <tr style="border-top: 1px solid black; border-collapse: collapse">
         <td colspan="2" style="padding: 3.5px; font-size: 12px">penerima :</td>
       </tr>
-      <tr>
+      <tr v-if="name.trim()">
         <td
           colspan="2"
           style="padding: 3.5px; font-size: 20px; font-weight: bold"
         >
-          Nama Penerima
+          {{ name.trim() || "-" }}
         </td>
       </tr>
-      <tr>
+      <tr v-if="name.trim()">
         <td
           colspan="2"
           style="padding: 3.5px; font-size: 20px; font-weight: bold"
         >
-          089678787878
+          {{ phone.trim() || "-" }}
         </td>
       </tr>
       <tr>
         <td colspan="2" style="padding: 3.5px; font-size: 18px">
-          Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai
-          Raya, Kab. Kubu Raya Regency, Kalimantan Barat
+          {{ address.trim() || "-" }}
         </td>
       </tr>
       <tr
@@ -96,10 +121,10 @@
             text-align: center;
           "
         >
-          TOPI
+          {{ item.toUpperCase() || "PAKAIAN" }}
         </td>
         <td class="table-border">
-          <img width="100" :src="'/various/qr.png'" alt="" />
+          <img style="width: 100%" :src="'/various/qr-wesale.png'" alt="" />
         </td>
       </tr>
       <tr>
@@ -113,7 +138,7 @@
             font-style: italic;
           "
         >
-          scan qrcode untuk melihat item yang masih tersedia
+          scan qrcode untuk melihat item lainnya
         </td>
       </tr>
     </table>
@@ -127,11 +152,18 @@ import printJS from "print-js";
 import { computed, reactive, ref } from "vue";
 const name: any = ref("");
 const phone: any = ref("");
+const item: any = ref("");
 const address: any = ref("");
 const onClickLeft = () => history.back();
 
 const header = {
   roomthrift: {
+    logo: "logo/roomthrift.jpg",
+    phone: "+62 896-7216-5341",
+    address:
+      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya Regency, Kalimantan Barat",
+  },
+  thriftcap: {
     logo: "logo/roomthrift.jpg",
     phone: "+62 896-7216-5341",
     address:
@@ -143,6 +175,18 @@ const header = {
     address:
       "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya Regency, Kalimantan Barat",
   },
+};
+
+const onNamePaste = () => {
+  navigator.clipboard.readText().then((cliptext) => (name.value = cliptext));
+};
+
+const onPhonePaste = () => {
+  navigator.clipboard.readText().then((cliptext) => (phone.value = cliptext));
+};
+
+const onAddressPaste = () => {
+  navigator.clipboard.readText().then((cliptext) => (address.value = cliptext));
 };
 
 const onPrint = () => {
