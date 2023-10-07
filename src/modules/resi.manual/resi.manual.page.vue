@@ -28,9 +28,9 @@
           type="primary"
           native-type="button"
           size="small"
-          @click="onGenerate"
+          @click="onPrint"
         >
-          Generate
+          Print
         </van-button>
       </div>
     </van-col>
@@ -117,8 +117,9 @@
         </td>
       </tr>
     </table>
-    <div id="canvas-area" style="display: none"></div>
+    <!-- <div id="canvas-area" style="display: block"></div> -->
   </div>
+  <div id="printable-area"></div>
 </template>
 <script setup lang="ts">
 import html2canvas from "html2canvas";
@@ -144,21 +145,41 @@ const header = {
   },
 };
 
-const onGenerate = () => {
+const onPrint = () => {
+  // show first html original
+  (document as any).getElementById("print-area").style.display = "block";
+
+  (document as any)?.getElementById("canvas-area")?.remove();
   html2canvas((document as any).querySelector("#print-area")).then(
     (canvas: any) => {
-      const canvasArea = (document as any).getElementById("canvas-area");
+      var myCreatedElement = document.createElement("div");
+      var myContainer = document.getElementById("printable-area");
 
-      while (canvasArea.firstChild) {
-        canvasArea.firstChild.remove();
+      //setAttribute() is used to create attributes or change it:
+      myCreatedElement.setAttribute("id", "canvas-area");
+
+      //here you add the element you created using appendChild()
+      (myContainer as any).appendChild(myCreatedElement);
+
+      const canvasArea = (document as any)?.getElementById("canvas-area");
+
+      let child = canvasArea.lastElementChild;
+      while (child) {
+        canvasArea.removeChild(child);
+        child = canvasArea.lastElementChild;
       }
+
+      // before append, hide original
+      (document as any).getElementById("print-area").style.display = "none";
+
       canvasArea.appendChild(canvas);
 
       printJS({
-        printable: "print-area",
+        printable: "canvas-area",
         type: "html",
         targetStyles: ["*"],
-        style: "#canvas-area { visibility: visible; }",
+        // style:
+        // "#canvas-area, #canvas-area > table { visibility: visible !important; }",
       });
     }
   );
