@@ -26,6 +26,11 @@
         />
         <van-field v-model="item" name="item" label="Item" />
       </van-cell-group>
+      <van-tabs type="card" style="padding-top: 1.5vh">
+        <van-tab title="@room.thrift" />
+        <van-tab title="@thriftcap" />
+        <van-tab title="@wesalee_" />
+      </van-tabs>
       <van-cell-group inset title="Address">
         <van-field
           v-model="address"
@@ -64,8 +69,14 @@
       "
     >
       <tr>
-        <td style="padding: 3.5px; font-size: 12px">Pengirim :</td>
-        <td rowspan="4" class="table-border" width="100">
+        <td style="padding: 3.5px; font-size: 12px; font-style: italic">
+          Pengirim :
+        </td>
+        <td
+          rowspan="4"
+          style="border-left: 1px solid black; border-collapse: collapse"
+          width="100"
+        >
           <img width="100" :src="'/various/wesale.png'" alt="" />
         </td>
       </tr>
@@ -81,8 +92,14 @@
           Raya, Kab. Kubu Raya Regency, Kalimantan Barat
         </td>
       </tr>
-      <tr style="border-top: 1px solid black; border-collapse: collapse">
-        <td colspan="2" style="padding: 3.5px; font-size: 12px">penerima :</td>
+      <tr
+        style="
+          border-top: 1px solid black;
+          border-collapse: collapse;
+          font-style: italic;
+        "
+      >
+        <td colspan="2" style="padding: 3.5px; font-size: 12px">Penerima :</td>
       </tr>
       <tr v-if="name.trim()">
         <td
@@ -123,7 +140,10 @@
         >
           {{ item.toUpperCase() || "PAKAIAN" }}
         </td>
-        <td class="table-border">
+        <td
+          class=""
+          style="border-left: 1px solid black; border-collapse: collapse"
+        >
           <img style="width: 100%" :src="'/various/qr-wesale.png'" alt="" />
         </td>
       </tr>
@@ -134,11 +154,10 @@
             text-align: center;
             font-size: 12px;
             padding: 3px;
-            color: gray;
             font-style: italic;
           "
         >
-          scan qrcode untuk melihat item lainnya
+          scan qrcode untuk melihat item lainnya (ig : @wesalee_)
         </td>
       </tr>
     </table>
@@ -149,7 +168,9 @@
 <script setup lang="ts">
 import html2canvas from "html2canvas";
 import printJS from "print-js";
+import { closeToast, showLoadingToast } from "vant";
 import { computed, reactive, ref } from "vue";
+const selected: any = ref("");
 const name: any = ref("");
 const phone: any = ref("");
 const item: any = ref("");
@@ -191,6 +212,12 @@ const onAddressPaste = () => {
 
 const onPrint = () => {
   // show first html original
+  showLoadingToast({
+    duration: 0,
+    forbidClick: true,
+    loadingType: "spinner",
+    message: "Print...",
+  });
   (document as any).getElementById("print-area").style.display = "block";
 
   (document as any)?.getElementById("canvas-area")?.remove();
@@ -222,9 +249,8 @@ const onPrint = () => {
         printable: "canvas-area",
         type: "html",
         targetStyles: ["*"],
-        // style:
-        // "#canvas-area, #canvas-area > table { visibility: visible !important; }",
       });
+      closeToast();
     }
   );
 };

@@ -4,7 +4,6 @@ import { modulesRouter } from "./modules/modules.router";
 import { showLoadingToast, closeToast } from "vant";
 import vuex from "./stores/vuex";
 
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -44,19 +43,19 @@ export const router = createRouter({
 });
 
 const routeGuard = async (to: any, from: any, next: any) => {
- const loadedRoutes = vuex.getters["GET_LOADED_ROUTES"];
+  const loadedRoutes = vuex.getters["GET_LOADED_ROUTES"];
 
- if (!loadedRoutes.includes(to.fullPath)) {
-   const toast = showLoadingToast({
-     duration: 0,
-     forbidClick: true,
-     loadingType: "spinner",
-     message: "Loading...",
-   });
- }
+  if (!loadedRoutes.includes(to.fullPath)) {
+    showLoadingToast({
+      duration: 0,
+      forbidClick: true,
+      loadingType: "spinner",
+      message: "Loading...",
+    });
+  }
 
   next();
-}
+};
 
 router.beforeEach(routeGuard);
 
