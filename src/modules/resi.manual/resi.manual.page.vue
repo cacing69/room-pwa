@@ -42,4 +42,6 @@ const name: any = ref("");
 const phone: any = ref("");
 const address: any = ref("");
 const onClickLeft = () => history.back();
+
+const onPrint = () => {};
 </script>
