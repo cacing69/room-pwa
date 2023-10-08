@@ -132,7 +132,7 @@
           font-style: italic;
         "
       >
-        <td colspan="2" style="padding: 3.5px; font-size: 12px">Penerima :</td>
+        <td colspan="3" style="padding: 3.5px; font-size: 12px">Penerima :</td>
       </tr>
       <tr v-if="name.trim()">
         <td
