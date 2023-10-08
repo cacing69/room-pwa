@@ -289,8 +289,8 @@ const item: any = ref("pakaian");
 const address: any = ref("");
 const showProvider: any = ref(false);
 const showSeller: any = ref(false);
-const provider = ref({});
-const seller = ref({});
+const provider = ref({} as any);
+const seller = ref({} as any);
 
 const providers = [
   {
