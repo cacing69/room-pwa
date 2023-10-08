@@ -166,6 +166,7 @@
           style="
             text-align: center;
             border-right: 1px solid black;
+            border-bottom: 1px solid black;
             border-collapse: collapse;
             margin: 0px;
             padding: 1px;
