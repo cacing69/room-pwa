@@ -49,7 +49,7 @@
           @click="showProvider = true"
           :value="provider?.name || 'None'"
         />
-        <van-field name="radio" label="Service">
+        <van-field name="radio" label="Payment">
           <template #input>
             <van-radio-group v-model="service" direction="horizontal">
               <van-radio name="cash">CASH</van-radio>
@@ -59,15 +59,12 @@
           </template>
         </van-field>
         <van-field
-          v-if="service == 'cod'"
+          v-if="service === 'cod'"
           v-model="price"
           name="price"
           type="number"
           label="Price (IDR)"
         />
-        <van-cell title="Paper size">
-          <van-tag plain type="primary">78x100</van-tag>
-        </van-cell>
       </van-cell-group>
 
       <div style="margin: 16px">
@@ -216,7 +213,7 @@
           </span>
         </td>
       </tr>
-      <template v-if="service == 'cod'">
+      <template v-if="service === 'cod'">
         <tr
           style="
             padding: 3.5px;
