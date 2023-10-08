@@ -156,13 +156,7 @@
           {{ address.trim() || "-" }}
         </td>
       </tr>
-      <tr
-        style="
-          border-top: 1px solid black;
-          border-bottom: 1px solid black;
-          border-collapse: collapse;
-        "
-      >
+      <tr style="border-top: 1px solid black; border-collapse: collapse">
         <td
           style="
             text-align: center;
@@ -173,21 +167,18 @@
             padding: 1px;
           "
         >
-          <img
-            style="width: 100%"
-            :src="provider?.logo || '/etc/ph-width.png'"
-            alt=""
-          />
+          <template v-if="provider?.logo">
+            <img style="width: 100%" :src="provider?.logo" alt="" />
+          </template>
+          <template v-else> NO IMAGE </template>
         </td>
         <td
           rowspan="3"
           style="
-            padding: 3.5px;
+            padding-top: 3.5px;
             font-size: 18px;
             font-weight: bold;
             text-align: center;
-            border-left: 1px solid black;
-            border-collapse: collapse;
           "
         >
           {{ item.toUpperCase() || "-" }}
@@ -208,31 +199,37 @@
         <tr
           style="
             padding: 3.5px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             text-align: center;
-            border-bottom: 1px solid black;
-            border-collapse: collapse;
           "
         >
-          <td>{{ service.toUpperCase() }}</td>
+          <td
+            style="
+              border-bottom: 1px solid black;
+              border-right: 1px solid black;
+            "
+          >
+            {{ service.toUpperCase() }}
+          </td>
         </tr>
         <tr
           style="
             padding: 3.5px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             text-align: center;
             border-bottom: 1px solid black;
-            border-collapse: collapse;
           "
         >
-          <td>Rp{{ numberFormat(price) }}</td>
+          <td style="border-right: 1px solid black">
+            Rp{{ numberFormat(price) }}
+          </td>
         </tr>
       </template>
       <template v-else>
         <tr>
-          <td></td>
+          <td style="border-right: 1px solid black"></td>
         </tr>
         <tr
           style="
@@ -240,11 +237,12 @@
             font-size: 20px;
             font-weight: bold;
             text-align: center;
-            border-bottom: 1px solid black;
             border-collapse: collapse;
           "
         >
-          <td>{{ service.toUpperCase() }}</td>
+          <td style="border-right: 1px solid black">
+            {{ service.toUpperCase() }}
+          </td>
         </tr>
       </template>
       <tr>
@@ -255,6 +253,7 @@
             font-size: 12px;
             padding: 3px;
             font-style: italic;
+            border-top: 1px solid black;
           "
         >
           scan qrcode untuk melihat item lainnya (ig : @{{
