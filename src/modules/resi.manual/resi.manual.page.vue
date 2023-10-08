@@ -69,6 +69,7 @@
           <van-tag plain type="primary">78x100</van-tag>
         </van-cell>
       </van-cell-group>
+
       <div style="margin: 16px">
         <van-button
           round
@@ -83,6 +84,9 @@
       </div>
     </van-col>
   </van-row>
+  <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o">
+    Set paper size as width x height = 78x100
+  </van-notice-bar>
   <div id="print-area" style="padding: 5px">
     <table
       class="table-border"
@@ -168,7 +172,15 @@
           "
         >
           <template v-if="provider?.logo">
-            <img style="width: 100%" :src="provider?.logo" alt="" />
+            <img
+              style="
+                width: 100%;
+                filter: grayscale(100%);
+                -webkit-filter: grayscale(100%);
+              "
+              :src="provider?.logo"
+              alt=""
+            />
           </template>
           <template v-else>
             <span style="font-weight: bold">NO IMAGE</span>
