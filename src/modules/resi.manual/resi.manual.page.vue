@@ -169,15 +169,7 @@
           "
         >
           <template v-if="provider?.logo">
-            <img
-              style="
-                width: 100%;
-                filter: grayscale(100%);
-                -webkit-filter: grayscale(100%);
-              "
-              :src="provider?.logo"
-              alt=""
-            />
+            <img style="width: 100%" :src="provider?.logo" alt="" />
           </template>
           <template v-else>
             <span style="font-weight: bold">NO IMAGE</span>
@@ -208,9 +200,6 @@
             :src="seller?.qr || '/etc/ph-qr-dummy.png'"
             alt=""
           />
-          <span style="font-size: 12px; font-weight: bold">
-            {{ clickedAt || "dd-mm-yyyy hh:ii" }}
-          </span>
         </td>
       </tr>
       <template v-if="service === 'cod'">
@@ -468,8 +457,6 @@ const onPrint = () => {
     message: "Print...",
   });
   // show first html original
-
-  clickedAt.value = getDatePrintClicked();
 
   (document as any).getElementById("print-area").style.display = "block";
 
