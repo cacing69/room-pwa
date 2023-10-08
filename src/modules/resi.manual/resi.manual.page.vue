@@ -170,7 +170,9 @@
           <template v-if="provider?.logo">
             <img style="width: 100%" :src="provider?.logo" alt="" />
           </template>
-          <template v-else> NO IMAGE </template>
+          <template v-else>
+            <span style="font-weight: bold">NO IMAGE</span>
+          </template>
         </td>
         <td
           rowspan="3"
