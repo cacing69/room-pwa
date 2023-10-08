@@ -188,13 +188,20 @@
         <td
           rowspan="3"
           class=""
-          style="border-left: 1px solid black; border-collapse: collapse"
+          style="
+            border-left: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+          "
         >
           <img
             style="width: 100%"
             :src="seller?.qr || '/etc/ph-qr-dummy.png'"
             alt=""
           />
+          <span style="font-size: 12px; font-weight: bold">
+            {{ clickedAt || "dd-mm-yyyy hh:ii" }}
+          </span>
         </td>
       </tr>
       <template v-if="service == 'cod'">
@@ -288,6 +295,7 @@ import { computed, reactive, ref } from "vue";
 const selected: any = ref("");
 const name: any = ref("");
 const phone: any = ref("");
+const clickedAt: any = ref("");
 const price: any = ref("");
 const service: any = ref("cash");
 const item: any = ref("pakaian");
@@ -381,6 +389,23 @@ const numberFormat = (value: any) => {
 
 const onClickLeft = () => history.back();
 
+const getDatePrintClicked = () => {
+  let date = new Date();
+
+  let dateStr =
+    ("00" + (date.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("00" + date.getDate()).slice(-2) +
+    "-" +
+    date.getFullYear() +
+    " " +
+    ("00" + date.getHours()).slice(-2) +
+    ":" +
+    ("00" + date.getMinutes()).slice(-2);
+
+  return dateStr;
+};
+
 const sellers = [
   {
     name: "ROOM THRIFT",
@@ -434,6 +459,8 @@ const onPrint = () => {
     message: "Print...",
   });
   // show first html original
+
+  clickedAt.value = getDatePrintClicked();
 
   (document as any).getElementById("print-area").style.display = "block";
 
