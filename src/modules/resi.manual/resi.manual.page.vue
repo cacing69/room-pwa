@@ -411,14 +411,17 @@ const sellers = [
 ];
 
 const onNamePaste = () => {
+  name.value = "";
   navigator.clipboard.readText().then((cliptext) => (name.value = cliptext));
 };
 
 const onPhonePaste = () => {
+  phone.value = "";
   navigator.clipboard.readText().then((cliptext) => (phone.value = cliptext));
 };
 
 const onAddressPaste = () => {
+  address.value = "";
   navigator.clipboard.readText().then((cliptext) => (address.value = cliptext));
 };
 
@@ -464,6 +467,9 @@ const onPrint = () => {
         targetStyles: ["*"],
       });
       closeToast();
+
+      (document as any).getElementById("print-area").style.display = "block";
+      (document as any).getElementById("canvas-area").style.display = "none";
     }
   );
 };
