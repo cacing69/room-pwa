@@ -5,7 +5,11 @@
     </div>
   </div>
   <div class="layout-footer">
-    <van-tabbar class="van-safe-area-bottom" v-model="active">
+    <van-tabbar
+      class="van-safe-area-bottom"
+      v-model="active"
+      style="padding-bottom: 2vh"
+    >
       <template v-for="tab in tabMenu" v-bind:key="tab">
         <van-tabbar-item
           :name="tab?.name"
