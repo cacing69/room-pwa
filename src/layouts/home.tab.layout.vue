@@ -4,24 +4,22 @@
       <slot />
     </div>
   </div>
-  <div class="van-safe-area-bottom">
-    <div class="layout-footer">
-      <van-tabbar
-        class="van-safe-area-bottom"
-        v-model="active"
-        style="padding-bottom: 1vh"
-      >
-        <template v-for="tab in tabMenu" v-bind:key="tab">
-          <van-tabbar-item
-            :name="tab?.name"
-            :icon="tab?.icon"
-            @click="navigateTo(tab.name)"
-            style="text-transform: capitalize"
-            >{{ tab.name }}</van-tabbar-item
-          >
-        </template>
-      </van-tabbar>
-    </div>
+  <div class="layout-footer">
+    <van-tabbar
+      class="van-safe-area-bottom"
+      v-model="active"
+      style="padding-bottom: 1.5vh"
+    >
+      <template v-for="tab in tabMenu" v-bind:key="tab">
+        <van-tabbar-item
+          :name="tab?.name"
+          :icon="tab?.icon"
+          @click="navigateTo(tab.name)"
+          style="text-transform: capitalize"
+          >{{ tab.name }}</van-tabbar-item
+        >
+      </template>
+    </van-tabbar>
   </div>
 </template>
 <script setup lang="ts">
