@@ -144,7 +144,7 @@
           {{ name.trim() || "-" }}
         </td>
       </tr>
-      <tr v-if="name.trim()">
+      <tr v-if="phone.trim()">
         <td
           colspan="3"
           style="padding: 3.5px; font-size: 20px; font-weight: bold"
@@ -289,11 +289,9 @@
 import html2canvas from "html2canvas";
 import printJS from "print-js";
 import { closeToast, showLoadingToast } from "vant";
-import { computed, reactive, ref } from "vue";
-const selected: any = ref("");
+import { ref } from "vue";
 const name: any = ref("");
 const phone: any = ref("");
-const clickedAt: any = ref("");
 const price: any = ref("");
 const service: any = ref("cash");
 const item: any = ref("pakaian");
@@ -386,23 +384,6 @@ const numberFormat = (value: any) => {
 };
 
 const onClickLeft = () => history.back();
-
-const getDatePrintClicked = () => {
-  let date = new Date();
-
-  let dateStr =
-    ("00" + (date.getMonth() + 1)).slice(-2) +
-    "-" +
-    ("00" + date.getDate()).slice(-2) +
-    "-" +
-    date.getFullYear() +
-    " " +
-    ("00" + date.getHours()).slice(-2) +
-    ":" +
-    ("00" + date.getMinutes()).slice(-2);
-
-  return dateStr;
-};
 
 const sellers = [
   {

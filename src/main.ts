@@ -61,12 +61,21 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import {
+  faCalculator,
   faFileExcel,
+  faPercent,
   faPrint,
   faPuzzlePiece,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faInstagram, faPuzzlePiece, faFileExcel, faPrint);
+library.add(
+  faInstagram,
+  faPuzzlePiece,
+  faFileExcel,
+  faPrint,
+  faCalculator,
+  faPercent
+);
 
 Locale.use("en-US", enUS);
 
