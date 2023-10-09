@@ -1,7 +1,7 @@
 <template>
   <van-sticky>
     <van-nav-bar
-      title="Check percentages"
+      title="Check price"
       left-text="Back"
       left-arrow
       @click-left="onClickLeft"
