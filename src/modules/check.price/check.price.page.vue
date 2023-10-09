@@ -47,7 +47,7 @@
               style="
                 text-align: center;
                 font-weight: bold;
-                font-size: 40px;
+                font-size: 30px;
                 margin: 20px;
               "
               class="custom-title"
