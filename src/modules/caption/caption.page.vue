@@ -106,6 +106,7 @@ const generatedCaption = computed(() => {
   CATEGORY : ${categoryObject?.data?.name?.toUpperCase() || "-"}
   ${categoryObject?.data?.meta?.extraCaption || ""}
   PRICE : ASK
+  SKU : ${replaceUuid}
 
   DETAIL GESER SAMPAI UJUNG -->
 
