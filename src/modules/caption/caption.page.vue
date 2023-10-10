@@ -14,6 +14,7 @@
           @select="onConfirm"
           cancel-text="Close"
           @cancel="onCategoryCancel"
+          style="padding-bottom: 1.75vh"
         />
         <van-field
           v-model="brand"
@@ -69,7 +70,6 @@ const showCategory = ref(false);
 const active = ref(["1"]);
 const brand: any = ref("");
 const design: any = ref("");
-const categoryLabel: any = ref("Select category");
 const categoryObject: any = reactive({});
 
 const onCategoryCancel = () => (showCategory.value = false);
@@ -85,9 +85,9 @@ const generatedCaption = computed(() => {
   const getPattern = categoryObject?.data?.meta?.hashtag
     ?.map((e: string) => {
       return `#${e
-        .replace("#brand#", replaceBrand)
-        .replace("#design#", replaceDesign || "thrift")
-        .replace("#uuid#", `${replaceUuid}` || "thrift")}`;
+        .replace("#brand#", replaceBrand.replace(" ", ""))
+        .replace("#design#", replaceDesign.replace(" ", "") || "thrift")
+        .replace("#uuid#", `${replaceUuid}`)}`;
     })
     .join(" ");
 

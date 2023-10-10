@@ -8,7 +8,7 @@
     <van-tabbar
       class="van-safe-area-bottom"
       v-model="active"
-      style="padding-bottom: 1.5vh"
+      style="padding-bottom: 1.75vh"
     >
       <template v-for="tab in tabMenu" v-bind:key="tab">
         <van-tabbar-item

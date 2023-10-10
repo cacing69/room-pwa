@@ -271,18 +271,18 @@
     </table>
     <!-- <div id="canvas-area" style="display: block"></div> -->
   </div>
-  <div id="printable-area" style="padding-bottom: 2vh"></div>
+  <div id="printable-area" style="padding-bottom: 1.75vh"></div>
   <van-action-sheet
     v-model:show="showProvider"
     :actions="providers"
     @select="onProviderSelect"
-    style="padding-bottom: 2vh"
+    style="padding-bottom: 1.75vh"
   />
   <van-action-sheet
     v-model:show="showSeller"
     :actions="sellers"
     @select="onSellerSelect"
-    style="padding-bottom: 2vh"
+    style="padding-bottom: 1.75vh"
   />
 </template>
 <script setup lang="ts">
