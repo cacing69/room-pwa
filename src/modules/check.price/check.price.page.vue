@@ -1,11 +1,6 @@
 <template>
   <van-sticky>
-    <van-nav-bar
-      title="Check price"
-      left-text="Back"
-      left-arrow
-      @click-left="onClickLeft"
-    />
+    <van-nav-bar title="Check price" left-arrow @click-left="onClickLeft" />
   </van-sticky>
   <van-row>
     <van-col span="24">

@@ -1,11 +1,30 @@
 <template>
   <van-sticky>
-    <van-nav-bar
-      title="Resi Manual"
-      left-text="Back"
-      left-arrow
-      @click-left="onClickLeft"
-    />
+    <van-nav-bar title="Resi Manual" left-arrow @click-left="onClickLeft">
+      <template #right>
+        <van-icon name="replay" @click="onRightClick" />
+      </template>
+    </van-nav-bar>
+    <van-popup
+      v-model:show="showRight"
+      position="right"
+      :style="{ width: '90%', height: '100%' }"
+    >
+      <van-search
+        show-action
+        input-align="left"
+        placeholder="Search"
+        @cancel="onCancelClicked"
+      />
+      <van-list>
+        <van-cell
+          title="title"
+          value="value"
+          label="Lorem ipsum dolor sit amet"
+          @click="onItemRightClicked({})"
+        />
+      </van-list>
+    </van-popup>
   </van-sticky>
   <van-row>
     <van-col span="24">
@@ -329,6 +348,7 @@ const showSeller: any = ref(false);
 const showItem: any = ref(false);
 const provider = ref({} as any);
 const seller = ref({} as any);
+const showRight = ref(false);
 
 const items = [{ name: "Pakaian" }, { name: "Topi" }, { name: "Lainnya" }];
 
@@ -410,9 +430,22 @@ const onItemSelect = (_item: any) => {
   showItem.value = false;
 };
 
+const onRightClick = () => {
+  showRight.value = true;
+};
+
 const numberFormat = (value: any) => {
   let nf = new Intl.NumberFormat("id-ID");
   return nf.format(value);
+};
+
+const onItemRightClicked = (value: any) => {
+  console.log(1);
+  showRight.value = false;
+};
+
+const onCancelClicked = () => {
+  showRight.value = false;
 };
 
 const onClickLeft = () => history.back();
