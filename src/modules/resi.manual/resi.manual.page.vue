@@ -9,13 +9,15 @@
   </van-sticky>
   <van-row>
     <van-col span="24">
-      <van-cell-group inset title="General Info">
+      <van-cell-group inset title="Seller">
         <van-cell
           is-link
-          title="Seller"
+          title="Account"
           @click="showSeller = true"
           :value="seller?.name || 'None'"
         />
+      </van-cell-group>
+      <van-cell-group inset title="Customer">
         <van-field
           v-model="name"
           name="name"
@@ -42,7 +44,17 @@
           placeholder="Address"
           @click-right-icon="onAddressPaste"
         />
-        <van-field v-model="item" name="item" label="Item" />
+        <van-cell
+          is-link
+          title="Item"
+          @click="showItem = true"
+          :value="item?.name || 'None'"
+        />
+        <van-field
+          v-if="item?.name?.toLowerCase() === 'lainnya'"
+          placeholder="type item name"
+          v-model="itemName"
+        />
         <van-cell
           is-link
           title="Express delivery"
@@ -184,7 +196,16 @@
             text-align: center;
           "
         >
-          {{ item.toUpperCase() || "-" }}
+          <template v-if="item?.name?.toLowerCase() !== 'lainnya'">
+            <span>
+              {{ item?.name?.toUpperCase() }}
+            </span>
+          </template>
+          <template v-else>
+            <span>
+              {{ itemName?.toUpperCase() || "-" }}
+            </span>
+          </template>
         </td>
         <td
           rowspan="3"
@@ -284,6 +305,12 @@
     @select="onSellerSelect"
     style="padding-bottom: 1.75vh"
   />
+  <van-action-sheet
+    v-model:show="showItem"
+    :actions="items"
+    @select="onItemSelect"
+    style="padding-bottom: 1.75vh"
+  />
 </template>
 <script setup lang="ts">
 import html2canvas from "html2canvas";
@@ -294,12 +321,16 @@ const name: any = ref("");
 const phone: any = ref("");
 const price: any = ref("");
 const service: any = ref("cash");
-const item: any = ref("pakaian");
+const item: any = ref({ name: "Pakaian" });
+const itemName: any = ref("");
 const address: any = ref("");
 const showProvider: any = ref(false);
 const showSeller: any = ref(false);
+const showItem: any = ref(false);
 const provider = ref({} as any);
 const seller = ref({} as any);
+
+const items = [{ name: "Pakaian" }, { name: "Topi" }, { name: "Lainnya" }];
 
 const providers = [
   {
@@ -362,10 +393,6 @@ const providers = [
     name: "SAPX",
     logo: "/various/provider-sapx.png",
   },
-  {
-    name: "Other",
-    logo: "/various/provider-other.png",
-  },
 ];
 
 const onProviderSelect = (item: any) => {
@@ -376,6 +403,11 @@ const onProviderSelect = (item: any) => {
 const onSellerSelect = (item: any) => {
   seller.value = item;
   showSeller.value = false;
+};
+
+const onItemSelect = (_item: any) => {
+  item.value = _item;
+  showItem.value = false;
 };
 
 const numberFormat = (value: any) => {
@@ -406,6 +438,15 @@ const sellers = [
   },
   {
     name: "WESALE",
+    logo: "/various/wesale.png",
+    phone: "+62 895-3217-62074",
+    address:
+      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya, Kalimantan Barat, Indonesia",
+    instagram: "wesalee_",
+    qr: "/various/qr-wesale.png",
+  },
+  {
+    name: "OTHERS",
     logo: "/various/wesale.png",
     phone: "+62 895-3217-62074",
     address:
