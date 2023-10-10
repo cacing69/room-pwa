@@ -76,8 +76,10 @@ const onCategoryCancel = () => (showCategory.value = false);
 
 const generatedCaption = computed(() => {
   const replaceBrand =
-    brand?.value?.replace(" ", "")?.toLowerCase() || "thrift";
-  const replaceDesign = design?.value?.replace(" ", "")?.toLowerCase();
+    brand.value?.toLowerCase()?.replaceAll(" ", "") || "thrift";
+  const replaceDesign =
+    design.value?.toLowerCase()?.replaceAll(" ", "") || "thrift";
+
   const timestamp = new Date().getTime();
   const hashids = new Hashids();
   const replaceUuid = hashids.encode(timestamp);
@@ -85,9 +87,9 @@ const generatedCaption = computed(() => {
   const getPattern = categoryObject?.data?.meta?.hashtag
     ?.map((e: string) => {
       return `#${e
-        .replace("#brand#", replaceBrand.replace(" ", ""))
-        .replace("#design#", replaceDesign.replace(" ", "") || "thrift")
-        .replace("#uuid#", `${replaceUuid}`)}`;
+        .replaceAll("#brand#", replaceBrand)
+        .replaceAll("#design#", replaceDesign)
+        .replaceAll("#uuid#", `${replaceUuid}`)}`;
     })
     .join(" ");
 
