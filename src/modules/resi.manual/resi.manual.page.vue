@@ -15,14 +15,35 @@
         input-align="left"
         placeholder="Search"
         @cancel="onCancelClicked"
+        v-model="search"
+        @input="onInputSearch($event)"
       />
       <van-list>
-        <van-cell
-          title="title"
-          value="value"
-          label="Lorem ipsum dolor sit amet"
-          @click="onItemRightClicked({})"
-        />
+        <!-- <van-cell
+          v-for="hist in history.value"
+          :key="hist"
+          :title="hist.name"
+          :value="hist.phone"
+          :label="hist.address"
+          @click="onItemRightClicked(hist)"
+        /> -->
+        <van-swipe-cell v-for="hist in history.value" :key="hist.uuid">
+          <van-cell
+            :key="hist"
+            :title="hist.name"
+            :value="hist.phone"
+            :label="hist.address"
+            @click="onItemRightClicked(hist)"
+          />
+          <template #right>
+            <van-button
+              square
+              type="danger"
+              text="Delete"
+              @click="onDeleteHistoryClicked(hist)"
+            />
+          </template>
+        </van-swipe-cell>
       </van-list>
     </van-popup>
   </van-sticky>
@@ -334,9 +355,15 @@
 <script setup lang="ts">
 import html2canvas from "html2canvas";
 import printJS from "print-js";
-import { closeToast, showLoadingToast } from "vant";
+import { closeToast, showLoadingToast, showNotify } from "vant";
 import { ref } from "vue";
+import { v4 as uuidv4 } from "uuid";
+import Dexie, { liveQuery } from "dexie";
+import { onMounted } from "vue";
+import { useObservable } from "@vueuse/rxjs";
+
 const name: any = ref("");
+const history: any = ref([]);
 const phone: any = ref("");
 const price: any = ref("");
 const service: any = ref("cash");
@@ -349,6 +376,18 @@ const showItem: any = ref(false);
 const provider = ref({} as any);
 const seller = ref({} as any);
 const showRight = ref(false);
+const search: any = ref("");
+
+const db = new Dexie("resiDb");
+
+onMounted(() => {
+  db.version(1).stores({
+    history: "uuid, name, phone, address", // Primary key and indexed props
+  });
+  // const modal = new Modal(theModal.value!, {});
+
+  // modal.show();
+});
 
 const items = [{ name: "Pakaian" }, { name: "Topi" }, { name: "Lainnya" }];
 
@@ -432,6 +471,10 @@ const onItemSelect = (_item: any) => {
 
 const onRightClick = () => {
   showRight.value = true;
+
+  history.value = useObservable(
+    liveQuery(() => (db as any).history.toArray()) as any
+  );
 };
 
 const numberFormat = (value: any) => {
@@ -439,16 +482,53 @@ const numberFormat = (value: any) => {
   return nf.format(value);
 };
 
-const onItemRightClicked = (value: any) => {
-  console.log(1);
+const onInputSearch = (event: any) => {
+  if (event.target.value.trim()) {
+    let regex = new RegExp(event.target.value.trim(), "i");
+
+    history.value = useObservable(
+      liveQuery(() =>
+        (db as any).history
+          // .where("name")
+          .filter((history: any) => regex.test(history.name))
+          .toArray()
+      ) as any
+    );
+  } else {
+    history.value = useObservable(
+      liveQuery(() => (db as any).history.toArray()) as any
+    );
+  }
+};
+
+const onItemRightClicked = (history: any) => {
+  name.value = history.name;
+  phone.value = history.phone;
+  address.value = history.address;
+
   showRight.value = false;
+  history.value = [];
+};
+
+const onDeleteHistoryClicked = (history: any) => {
+  (db as any).history
+    .where("uuid")
+    .equalsIgnoreCase(history.uuid)
+    .delete()
+    .then(function (deleted: any) {
+      showNotify({
+        type: "success",
+        message: `${history.name} deleted`,
+        duration: 1000,
+      });
+    });
 };
 
 const onCancelClicked = () => {
   showRight.value = false;
 };
 
-const onClickLeft = () => history.back();
+const onClickLeft = () => (window as any).history.back();
 
 const sellers = [
   {
@@ -504,7 +584,19 @@ const onAddressPaste = () => {
   navigator.clipboard.readText().then((cliptext) => (address.value = cliptext));
 };
 
-const onPrint = () => {
+const onPrint = async () => {
+  // store to local db
+  if (name.value && phone.value && address.value) {
+    let saveToDb = {
+      uuid: uuidv4(),
+      name: name.value,
+      phone: phone.value,
+      address: address.value,
+    };
+
+    const saveHistory = await (db as any).history.add(saveToDb);
+  }
+
   showLoadingToast({
     duration: 0,
     forbidClick: true,

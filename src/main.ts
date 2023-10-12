@@ -40,6 +40,7 @@ import {
   Sticky,
   SubmitBar,
   Swipe,
+  SwipeCell,
   SwipeItem,
   Tag,
   Toast,
@@ -108,6 +109,7 @@ vApp.use(Space);
 vApp.use(Sticky);
 vApp.use(SubmitBar);
 vApp.use(Swipe);
+vApp.use(SwipeCell);
 vApp.use(SwipeItem);
 vApp.use(Tag);
 vApp.use(Toast);

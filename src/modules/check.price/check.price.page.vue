@@ -5,24 +5,12 @@
   <van-row>
     <van-col span="24">
       <van-cell-group inset title="Check price">
-        <van-field
-          v-model="fee"
-          name="fee"
-          label="Fee"
-          input-align="right"
-          type="number"
-        >
+        <van-field v-model="fee" name="fee" label="Fee" type="number">
           <template #right-icon>
             <font-awesome-icon icon="fa-solid fa-percent" />
           </template>
         </van-field>
-        <van-field
-          v-model="price"
-          name="price"
-          label="Price"
-          type="number"
-          input-align="right"
-        />
+        <van-field v-model="price" name="price" label="Price" type="number" />
       </van-cell-group>
 
       <van-notice-bar
