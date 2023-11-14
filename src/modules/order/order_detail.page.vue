@@ -11,7 +11,7 @@
   </span>
   <span v-else-if="isError">Error: {{ error?.message }}</span>
   <span v-else-if="data" style="padding-bottom: 1.75vh">
-    <span>{{ data.title }}</span>
+    <span>{{ data?.title }}</span>
   </span>
   <!-- We can assume by this point that `isSuccess === true` -->
 </template>
