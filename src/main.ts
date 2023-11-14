@@ -44,6 +44,11 @@ import {
   SwipeItem,
   Tag,
   Toast,
+  Skeleton,
+  SkeletonTitle,
+  SkeletonImage,
+  SkeletonAvatar,
+  SkeletonParagraph,
 } from "vant";
 
 import { VueQueryPlugin } from "@tanstack/vue-query";
@@ -105,6 +110,12 @@ vApp.use(Popup);
 vApp.use(PullRefresh);
 vApp.use(Row);
 vApp.use(Search);
+vApp.use(Skeleton);
+vApp.use(Skeleton);
+vApp.use(SkeletonTitle);
+vApp.use(SkeletonImage);
+vApp.use(SkeletonAvatar);
+vApp.use(SkeletonParagraph);
 vApp.use(Space);
 vApp.use(Sticky);
 vApp.use(SubmitBar);

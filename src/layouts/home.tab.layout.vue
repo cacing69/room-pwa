@@ -1,6 +1,6 @@
 <template>
   <div id="app-container">
-    <div class="layout-content">
+    <div class="layout-content" style="max-height: 93vh; overflow: scroll">
       <slot />
     </div>
   </div>
