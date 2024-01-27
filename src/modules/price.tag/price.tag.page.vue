@@ -42,16 +42,16 @@
           v-for="e in [...Array(row).keys()]"
         >
           <tr>
-            <td style="padding:5px;text-align: center; border-right:  1px solid black;border-left:  1px solid black;border-top:  1px solid black;border-bottom:  1px solid black;">
-              <span style="font-weight: bold; font-size: 18px; margin: 10px;">Rp {{ price }}</span>
+            <td style="border-radius: 10px;padding:5px;text-align: center; border-right:  1px solid black;border-left:  1px solid black;border-top:  1px solid black;border-bottom:  1px solid black;">
+              <span style="font-weight: bold; font-size: 16px; margin: 10px;"><span style="font-size: 12px;font-style: italic;">Rp</span>{{ numberWithCommas(price) }}</span>
             </td>
             <td style="width: 0.5px; "></td>
-            <td style="padding:5px;text-align: center; border-right:  1px solid black;border-left:  1px solid black;border-top:  1px solid black;border-bottom:  1px solid black;">
-              <span style="font-weight: bold; font-size: 18px; margin: 10px;">Rp {{ price }}</span>
+            <td style="border-radius: 10px;padding:5px;text-align: center; border-right:  1px solid black;border-left:  1px solid black;border-top:  1px solid black;border-bottom:  1px solid black;">
+              <span style="font-weight: bold; font-size: 16px; margin: 10px;"><span style="font-size: 12px;font-style: italic;">Rp</span>{{ numberWithCommas(price) }}</span>
             </td>
             <td style="width: 0.5px; "></td>
-            <td style="padding:5px;text-align: center; border-right:  1px solid black;border-left:  1px solid black;border-top:  1px solid black;border-bottom:  1px solid black;">
-              <span style="font-weight: bold; font-size: 18px; margin: 10px;">Rp {{ price }}</span>
+            <td style="border-radius: 10px;padding:5px;text-align: center; border-right:  1px solid black;border-left:  1px solid black;border-top:  1px solid black;border-bottom:  1px solid black;">
+              <span style="font-weight: bold; font-size: 16px; margin: 10px;"><span style="font-size: 12px;font-style: italic;">Rp</span>{{ numberWithCommas(price) }}</span>
             </td>
             <td style="width: 0.5px; "></td>
           </tr>
@@ -71,7 +71,10 @@ import {  ref } from "vue";
 import { onNavLeftClick } from "../../utils/compose.util";
 
 const price: any = ref();
-const row: number = 10;
+const row: number = 12;
+const  numberWithCommas = (x: number) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 const onPrint = async () => {
   // store to local db
 
