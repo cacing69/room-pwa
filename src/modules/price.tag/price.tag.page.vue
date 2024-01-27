@@ -73,7 +73,7 @@ import { onNavLeftClick } from "../../utils/compose.util";
 const price: any = ref();
 const row: number = 12;
 const  numberWithCommas = (x: number) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ".") ||  0
 }
 const onPrint = async () => {
   // store to local db
