@@ -45,18 +45,15 @@
             <td style="border-radius: 7.5px;padding:5px;text-align: center; border-right:  1px solid black;border-left:  1px solid black;border-top:  1px solid black;border-bottom:  1px solid black;">
               <span style="font-weight: bold; font-size: 16px;"><span style="font-size: 12px;font-style: italic;">Rp </span>{{ numberWithCommas(price) }}</span>
             </td>
-            <td style="width: 0.5px; "></td>
+            <!-- <td style="width: 0.25px; "></td> -->
             <td style="border-radius: 7.5px;padding:5px;text-align: center; border-right:  1px solid black;border-left:  1px solid black;border-top:  1px solid black;border-bottom:  1px solid black;">
               <span style="font-weight: bold; font-size: 16px;"><span style="font-size: 12px;font-style: italic;">Rp </span>{{ numberWithCommas(price) }}</span>
             </td>
-            <td style="width: 0.5px; "></td>
+            <!-- <td style="width: 0.25px; "></td> -->
             <td style="border-radius: 7.5px;padding:5px;text-align: center; border-right:  1px solid black;border-left:  1px solid black;border-top:  1px solid black;border-bottom:  1px solid black;">
               <span style="font-weight: bold; font-size: 16px;"><span style="font-size: 12px;font-style: italic;">Rp </span>{{ numberWithCommas(price) }}</span>
             </td>
-            <td style="width: 0.5px; "></td>
-          </tr>
-          <tr>
-            <td colspan="3" style="height: 0.5px;"></td>
+            <!-- <td style="width: 0.25px; "></td> -->
           </tr>
         </table>
       </div>
