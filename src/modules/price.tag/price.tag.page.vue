@@ -7,16 +7,10 @@
       <van-cell-group inset title="Check price">
         <van-field v-model="price" name="price" label="Price" type="number" />
       </van-cell-group>
-
-      <van-notice-bar
-        wrapable
-        color="#1989fa"
-        background="#ecf9ff"
-        left-icon="info-o"
-        style="margin-top: 1vh"
-      >
-        Price after marketplace fee has been applied
-      </van-notice-bar>
+      <span style="padding: 10px;"></span>
+    <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o">
+      Set paper size as width x height = 78x100
+    </van-notice-bar>
 
       <div style="margin: 16px">
         <van-button
@@ -68,7 +62,7 @@ import {  ref } from "vue";
 import { onNavLeftClick } from "../../utils/compose.util";
 
 const price: any = ref();
-const row: number = 12;
+const row: number = 13;
 const  numberWithCommas = (x: number) => {
     return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ".") ||  0
 }
