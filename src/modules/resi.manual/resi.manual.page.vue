@@ -1,6 +1,6 @@
 <template>
   <van-sticky>
-    <van-nav-bar title="Resi Manual" left-arrow @click-left="onClickLeft">
+    <van-nav-bar title="Resi Manual" left-arrow @click-left="onNavLeftClick">
       <template #right>
         <van-icon name="replay" @click="onRightClick" />
       </template>
@@ -361,6 +361,7 @@ import { v4 as uuidv4 } from "uuid";
 import Dexie, { liveQuery } from "dexie";
 import { onMounted } from "vue";
 import { useObservable } from "@vueuse/rxjs";
+import { onNavLeftClick } from "../../utils/compose.util";
 
 const name: any = ref("");
 const history: any = ref([]);
@@ -527,8 +528,6 @@ const onDeleteHistoryClicked = (history: any) => {
 const onCancelClicked = () => {
   showRight.value = false;
 };
-
-const onClickLeft = () => (window as any).history.back();
 
 const sellers = [
   {

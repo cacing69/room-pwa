@@ -5,6 +5,7 @@ import { orderRouter } from "./order/order.router";
 import { instagramRouter } from "./instagram/instagram.router";
 import { excelEngineRouter } from "./excel.engine/excel.engine.router";
 import { checkPriceRouter } from "./check.price/check.price.router";
+import { priceTagRouter } from "./price.tag/price.tag.router";
 
 export const modulesRouter = [
   ...captionRouter,
@@ -14,4 +15,5 @@ export const modulesRouter = [
   ...excelEngineRouter,
   ...resiManualRouter,
   ...checkPriceRouter,
+  ...priceTagRouter,
 ];

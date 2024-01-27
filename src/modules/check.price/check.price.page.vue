@@ -1,15 +1,10 @@
 <template>
   <van-sticky>
-    <van-nav-bar title="Check price" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="Check price" left-arrow @click-left="onNavLeftClick" />
   </van-sticky>
   <van-row>
     <van-col span="24">
       <van-cell-group inset title="Check price">
-        <van-field v-model="fee" name="fee" label="Fee" type="number">
-          <template #right-icon>
-            <font-awesome-icon icon="fa-solid fa-percent" />
-          </template>
-        </van-field>
         <van-field v-model="price" name="price" label="Price" type="number" />
       </van-cell-group>
 
@@ -45,10 +40,10 @@
 </template>
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { onNavLeftClick } from "../../utils/compose.util";
+
 const fee: any = ref(8);
 const price: any = ref();
-
-const onClickLeft = () => history.back();
 
 const calculatedPrice = computed(() => {
   let _fee = (fee.value / 100) * price.value;

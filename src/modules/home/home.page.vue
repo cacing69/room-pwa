@@ -5,7 +5,7 @@
     style="height: 100vh"
   >
     <van-cell-group inset style="margin: 1.5vh">
-      <van-grid :border="false" clickable :column-num="2">
+      <van-grid :border="false" clickable :column-num="3">
         <!-- <van-grid-item to="/en/instagram">
           <van-row>
             <font-awesome-icon icon="fa-brands fa-instagram" size="2x" />
@@ -36,6 +36,14 @@
           </van-row>
           <van-row style="padding-top: 1vh">
             <span style="font-size: 12px">Check price</span>
+          </van-row>
+        </van-grid-item>
+        <van-grid-item to="/en/price-tag">
+          <van-row>
+            <font-awesome-icon icon="fa-solid fa-tag" size="2x" />
+          </van-row>
+          <van-row style="padding-top: 1vh">
+            <span style="font-size: 12px">Price Tag</span>
           </van-row>
         </van-grid-item>
       </van-grid>

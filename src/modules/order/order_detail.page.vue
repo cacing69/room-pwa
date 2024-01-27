@@ -1,6 +1,6 @@
 <template>
   <van-sticky>
-    <van-nav-bar title="Order Detail" left-arrow @click-left="onClickLeft">
+    <van-nav-bar title="Order Detail" left-arrow @click-left="onNavLeftClick">
     </van-nav-bar>
   </van-sticky>
   <van-row gutter="10" style="padding: 3vw">
@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import { useQuery } from "@tanstack/vue-query";
 import { getPost } from "../../services/json_placeholder.api";
+import { onNavLeftClick } from "../../utils/compose.util";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -28,6 +29,4 @@ const { isLoading, isError, data, error } = useQuery({
   queryKey: ["post", postId],
   queryFn: ({ queryKey }) => getPost(queryKey[1]),
 });
-
-const onClickLeft = () => (window as any).history.back();
 </script>

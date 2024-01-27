@@ -4,7 +4,7 @@
       title="Content detail"
       left-text="Back"
       left-arrow
-      @click-left="onClickLeft"
+      @click-left="onNavLeftClick"
     />
   </van-sticky>
   <div style="padding: 1vh">
@@ -28,6 +28,7 @@ import { showImagePreview } from "vant";
 import { useRoute } from "vue-router";
 import { getInstagramDetail } from "../../services/instagram.api";
 import { useQuery } from "@tanstack/vue-query";
+import { onNavLeftClick } from "../../utils/compose.util";
 
 const onClickLeft = () => history.back();
 

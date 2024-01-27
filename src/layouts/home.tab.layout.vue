@@ -18,7 +18,7 @@
           style="text-transform: capitalize"
           >{{ tab.name }}</van-tabbar-item
         >
-      </template>
+    </template>
     </van-tabbar>
   </div>
 </template>
