@@ -17,7 +17,7 @@
           native-type="button"
           size="small"
         >
-          Print
+          Simpan
         </van-button>
       </div>
 
@@ -35,7 +35,7 @@
         >
           <tr>
             <th style="border: 1px solid black; width:30px; text-align: center">+</th>
-            <th style="border: 1px solid black" @click="showPicker = true">
+            <th style="border: 1px solid black; text-align:left" @click="showPicker = true">
               {{ fieldValue.text }}
             </th>
             <th style="border: 1px solid black; width:45px; text-align: center;">
