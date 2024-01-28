@@ -30,12 +30,20 @@
             <span style="font-size: 12px">Resi Manual</span>
           </van-row>
         </van-grid-item>
+        <van-grid-item to="/en/sales-record">
+          <van-row>
+            <font-awesome-icon icon="fa-solid fa-cash-register" size="2x" />
+          </van-row>
+          <van-row style="padding-top: 1vh">
+            <span style="font-size: 12px">Sales Record</span>
+          </van-row>
+        </van-grid-item>
         <van-grid-item to="/en/check-price">
           <van-row>
             <font-awesome-icon icon="fa-solid fa-calculator" size="2x" />
           </van-row>
           <van-row style="padding-top: 1vh">
-            <span style="font-size: 12px">Check price</span>
+            <span style="font-size: 12px">Check Price</span>
           </van-row>
         </van-grid-item>
         <van-grid-item to="/en/price-tag">

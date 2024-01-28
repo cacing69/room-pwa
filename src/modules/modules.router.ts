@@ -6,6 +6,7 @@ import { instagramRouter } from "./instagram/instagram.router";
 import { excelEngineRouter } from "./excel.engine/excel.engine.router";
 import { checkPriceRouter } from "./check.price/check.price.router";
 import { priceTagRouter } from "./price.tag/price.tag.router";
+import { salesRecordRouter } from "./sales.record/sales.record.router";
 
 export const modulesRouter = [
   ...captionRouter,
@@ -16,4 +17,5 @@ export const modulesRouter = [
   ...resiManualRouter,
   ...checkPriceRouter,
   ...priceTagRouter,
+  ...salesRecordRouter,
 ];

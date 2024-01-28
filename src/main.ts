@@ -31,6 +31,7 @@ import {
   Image as VanImage,
   ImagePreview,
   Lazyload,
+  NumberKeyboard,
   Picker,
   Popup,
   PullRefresh,
@@ -72,7 +73,8 @@ import {
   faPercent,
   faPrint,
   faPuzzlePiece,
-  faTag
+  faTag,
+  faCashRegister
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -82,7 +84,8 @@ library.add(
   faPrint,
   faCalculator,
   faPercent,
-  faTag
+  faTag,
+  faCashRegister,
 );
 
 Locale.use("en-US", enUS);
@@ -107,6 +110,7 @@ vApp.use(GridItem);
 vApp.use(Icon);
 vApp.use(ImagePreview);
 vApp.use(Lazyload);
+vApp.use(NumberKeyboard);
 vApp.use(Picker);
 vApp.use(Popup);
 vApp.use(PullRefresh);
