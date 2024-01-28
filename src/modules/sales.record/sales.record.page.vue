@@ -76,7 +76,7 @@
   </van-popup>
   <van-number-keyboard
     :show="showKeyboard"
-    @blur="show = false"
+    @blur="() => {showKeyboard = false}"
     @input="onInput"
     @delete="onDelete"
   />
@@ -84,7 +84,7 @@
 <script setup lang="ts">
 
 const showKeyboard = ref(false);
-const onInput = (value) => showToast(value);
+const onInput = (value: any) => showToast(value);
 const onDelete = () => showToast('delete');
 // ---------
 const showPicker = ref(false);
@@ -94,12 +94,12 @@ import {  ref } from "vue";
 import { onNavLeftClick } from "../../utils/compose.util";
 import { showToast } from "vant";
 
-const onConfirm = ({ selectedOptions }) => {
+const onConfirm = ({ selectedOptions }: {selectedOptions: any}) => {
   showPicker.value = false;
   fieldValue.value = selectedOptions[0]
 };
 
-const fieldValue = ref({});
+const fieldValue = ref({text: ""});
 
 const columns = [
       { text: 'Delaware', value: 'Delaware' },
@@ -115,7 +115,7 @@ const  numberWithCommas = (x: number) => {
     return x?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ".") ||  0
 }
 
-const onChange = ({ selectedValues, selectedOptions }) => {
+const onChange = ({ selectedValues, selectedOptions }: any) => {
   showPicker.value = false;
   console.log(selectedValues)
   fieldValue.value = selectedOptions[0]
@@ -125,8 +125,4 @@ const onChange = ({ selectedValues, selectedOptions }) => {
 </script>
 
 <style scoped>
-.table-border {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
 </style>
