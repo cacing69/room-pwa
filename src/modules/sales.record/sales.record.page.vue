@@ -30,7 +30,7 @@
             white-space: pre-line;
             border-collapse: collapse;
             border: 1px solid black;
-            font-size: 12px;
+            font-size: 14px;
           "
         >
           <tr>
@@ -38,13 +38,13 @@
             <th style="border: 1px solid black" @click="showPicker = true">
               {{ fieldValue.text }}
             </th>
-            <th style="border: 1px solid black; width:10%; text-align: center;">
-              <input type="number" name="" id="" style="width:30px">
+            <th style="border: 1px solid black; width:40px; text-align: center;">
+              <input type="number" name="" id="" style="width:70%">
             </th>
-            <th style="border: 1px solid black; text-align: center">
-              <input type="number" name="" id="" style="width:95px">
+            <th style="border: 1px solid black; width:100px; text-align: center">
+              <input type="number" name="" id="" style="width:90%">
             </th>
-            <th style="border: 1px solid black; text-align: center; width:40px">CASH</th>
+            <th style="border: 1px solid black; text-align: center; width:45px">CASH</th>
           </tr>
           <tr>
             <td colspan="5" style="height:1px;"></td>
