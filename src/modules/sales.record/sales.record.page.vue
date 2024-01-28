@@ -29,37 +29,38 @@
             table-layout: fixed;
             white-space: pre-line;
             border-collapse: collapse;
-            border: 1px solid black
+            border: 1px solid black;
+            font-size: 12px;
           "
         >
           <tr>
-            <td style="border: 1px solid black; width:7.5%; text-align: center">+</td>
-            <td style="border: 1px solid black" @click="showPicker = true">
+            <th style="border: 1px solid black; width:7.5%; text-align: center">+</th>
+            <th style="border: 1px solid black" @click="showPicker = true">
               {{ fieldValue.text }}
-            </td>
-            <td style="border: 1px solid black; width:10%; text-align: center;">
+            </th>
+            <th style="border: 1px solid black; width:10%; text-align: center;">
               <input type="number" name="" id="" style="width:30px">
-            </td>
-            <td style="border: 1px solid black; text-align: center">
+            </th>
+            <th style="border: 1px solid black; text-align: center">
               <input type="number" name="" id="" style="width:95px">
-            </td>
-            <td style="border: 1px solid black; text-align: center">CASH</td>
+            </th>
+            <th style="border: 1px solid black; text-align: center; width:40px">CASH</th>
           </tr>
           <tr>
             <td colspan="5" style="height:1px;"></td>
           </tr>
           <tr>
-            <td style="border: 1px solid black; width:10px; text-align: center">1</td>
+            <td style="border: 1px solid black;  text-align: center">1</td>
             <td style="border: 1px solid black" >
               Item selected
             </td>
-            <td style="border: 1px solid black; width:10px; text-align: center;">
+            <td style="border: 1px solid black;  text-align: center;">
               3
             </td>
             <td style="border: 1px solid black; text-align: right">
               100.000
             </td>
-            <td style="border: 1px solid black; width:15px; text-align: center">QR</td>
+            <td style="border: 1px solid black; text-align: center">QR</td>
           </tr>
         </table>
       </div>
