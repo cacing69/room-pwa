@@ -34,15 +34,15 @@
           "
         >
           <tr>
-            <th style="border: 1px solid black; width:7.5%; text-align: center">+</th>
+            <th style="border: 1px solid black; width:30px; text-align: center">+</th>
             <th style="border: 1px solid black" @click="showPicker = true">
               {{ fieldValue.text }}
             </th>
-            <th style="border: 1px solid black; width:40px; text-align: center;">
-              <input type="number" name="" id="" style="width:70%; margin-left:2px;margin-right:2px;">
+            <th style="border: 1px solid black; width:45px; text-align: center;">
+              <input type="number" name="" id="" style="width:70%; padding-left:2px;padding-right:2px;">
             </th>
-            <th style="border: 1px solid black; width:100px; text-align: center">
-              <input type="number" name="" id="" style="width:90%; margin-left:2px;margin-right:2px;">
+            <th style="border: 1px solid black; width:105px; text-align: center">
+              <input type="number" name="" id="" style="width:90%; padding-left:2px;padding-right:2px;">
             </th>
             <th style="border: 1px solid black; text-align: center; width:45px">CASH</th>
           </tr>
