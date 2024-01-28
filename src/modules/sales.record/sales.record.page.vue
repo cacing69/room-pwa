@@ -39,10 +39,10 @@
               {{ fieldValue.text }}
             </th>
             <th style="border: 1px solid black; width:40px; text-align: center;">
-              <input type="number" name="" id="" style="width:70%">
+              <input type="number" name="" id="" style="width:70%; margin-left:2px;margin-right:2px;">
             </th>
             <th style="border: 1px solid black; width:100px; text-align: center">
-              <input type="number" name="" id="" style="width:90%">
+              <input type="number" name="" id="" style="width:90%; margin-left:2px;margin-right:2px;">
             </th>
             <th style="border: 1px solid black; text-align: center; width:45px">CASH</th>
           </tr>
