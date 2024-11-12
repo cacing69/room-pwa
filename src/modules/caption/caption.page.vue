@@ -97,29 +97,8 @@ const generatedCaption = computed(() => {
     .trim()
     .toUpperCase();
 
-  const header = `BISMILLAHIRRAHMANIRRAHIM
-  CHECK READY STOK ${categoryObject?.data?.meta?.readyHashtag || "#roomthrift"}
-
-  ITEM : ${altName} ${brand?.value?.toUpperCase()} ${
-    design?.value?.toUpperCase() || ""
-  }
-  CATEGORY : ${categoryObject?.data?.name?.toUpperCase() || "-"}
-  ${categoryObject?.data?.meta?.extraCaption || ""}
-  PRICE : ASK
-  SKU : ${replaceUuid}
-
-  DETAIL GESER SAMPAI UJUNG -->
-
-  LOKASI : KUBU RAYA
-
-  JIKA BERMINAT HUBUNGI VIA DM
-  INSYAALLAH AMANAH
-
-  NB : BIASAKAN BACA CAPTION
-  - TANYAKAN STOK TERLEBIH DAHULU
-  - BARANG YANG SUDAH DIBELI TIDAK DAPAT DIKEMBALIKAN
-  - TELITI SEBELUM MEMBELI, TANYAKAN SEDETAIL MUNGKIN
-  - ONGKOS KIRIM DI TANGGUNG PEMBELI`;
+  const header = `BISMILLAHIRRAHMANIRRAHIM\nCHECK READY STOK ${categoryObject?.data?.meta?.readyHashtag || "#roomthrift"}\n\nITEM : ${altName} ${brand?.value?.toUpperCase()} ${design?.value?.toUpperCase() || ""}\n
+  CATEGORY : ${categoryObject?.data?.name?.toUpperCase() || "-"}\n${categoryObject?.data?.meta?.extraCaption || ""}\nPRICE : ASK\nSKU : ${replaceUuid}\n\nDETAIL GESER SAMPAI UJUNG -->\n\nLOKASI : KUBU RAYA\n\nJIKA BERMINAT HUBUNGI VIA DM\nINSYAALLAH AMANAH\n\nNB : BIASAKAN BACA CAPTION\n- TANYAKAN STOK TERLEBIH DAHULU\n- BARANG YANG SUDAH DIBELI TIDAK DAPAT DIKEMBALIKAN\n- TELITI SEBELUM MEMBELI, TANYAKAN SEDETAIL MUNGKIN\n- ONGKOS KIRIM DI TANGGUNG PEMBELI`;
 
   return `${header}\n\n${getPattern || ""}`;
 });
