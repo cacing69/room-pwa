@@ -44,9 +44,9 @@
       :style="{ width: '90%', height: '100%' }"
     >
       <van-list style="padding-top: 40px;">
-        <van-swipe-cell v-for="(resi, index) in resi">
+        <van-swipe-cell v-for="(r, index) in resi">
           <van-cell
-            :title="resi?.address"
+            :title="r?.address"
             :value="(index + 1)"
           />
           <template #right>
