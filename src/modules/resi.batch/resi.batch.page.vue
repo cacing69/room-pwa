@@ -2,7 +2,8 @@
 <van-sticky>
     <van-nav-bar title="Resi Massal" left-arrow @click-left="onNavLeftClick">
       <template #right>
-        <van-icon name="orders-o" @click="onRightClick" />
+        <van-icon name="orders-o" @click="onResiActiveClick" style="padding-right: 20px;" size="20"/>
+        <van-icon name="replay" @click="onRightClick" size="20"/>
       </template>
     </van-nav-bar>
     <van-popup
@@ -18,24 +19,42 @@
         v-model="search"
       />
       <van-list>
-        <!-- <van-cell
-          v-for="hist in history.value"
-          :key="hist"
-          :title="hist.name"
-          :value="hist.phone"
-          :label="hist.address"
-          @click="onItemRightClicked(hist)"
-        /> -->
-        <van-swipe-cell v-for="(r, index) in resi">
+        <van-swipe-cell v-for="(history, index) in historyMassal">
           <van-cell
-          :title="r.address"
+            @click="onItemRightClicked(history)"
+            :title="history?.address"
             :value="(index + 1)"
           />
           <template #right>
             <van-button
               square
+              style=" height: 100%;"
               type="danger"
               text="Delete"
+              @click="onDeleteHistoryMassalClicked(history?.id)"
+            />
+          </template>
+        </van-swipe-cell>
+      </van-list>
+    </van-popup>
+    <van-popup
+      v-model:show="showResiActive"
+      position="right"
+      closeable
+      :style="{ width: '90%', height: '100%' }"
+    >
+      <van-list style="padding-top: 40px;">
+        <van-swipe-cell v-for="(resi, index) in resi">
+          <van-cell
+            :title="resi?.address"
+            :value="(index + 1)"
+          />
+          <template #right>
+            <van-button
+              square
+              style=" height: 100%;"
+              type="danger"
+              text="Remove"
               @click="onDeleteResiClicked(index)"
             />
           </template>
@@ -43,18 +62,8 @@
       </van-list>
     </van-popup>
   </van-sticky>
-<!-- <van-nav-bar title="Resi Batch" left-arrow @click-left="onNavLeftClick">
-</van-nav-bar> -->
   <van-row>
     <van-col span="24">
-      <!-- <van-cell-group inset title="Seller">
-        <van-cell
-          is-link
-          title="Account"
-          @click="showSeller = true"
-          :value="seller?.name || 'None'"
-        />
-      </van-cell-group> -->
       <van-cell-group inset title="Rincian Pengiriman">
         <van-field
           v-model="address"
@@ -334,35 +343,22 @@
     @select="onProviderSelect"
     style="padding-bottom: 1.75vh"
   />
-  <!-- <van-action-sheet
-    v-model:show="showSeller"
-    :actions="sellers"
-    @select="onSellerSelect"
-    style="padding-bottom: 1.75vh"
-  /> -->
-  <!-- <van-action-sheet
-    v-model:show="showItem"
-    :actions="items"
-    @select="onItemSelect"
-    style="padding-bottom: 1.75vh"
-  /> -->
 </template>
 <script setup lang="ts">
 import html2canvas from "html2canvas";
-import printJS from "print-js";
 import { closeToast, showLoadingToast, showNotify } from "vant";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { v4 as uuidv4 } from "uuid";
-import Dexie, { liveQuery } from "dexie";
+import { liveQuery } from "dexie";
 import { onMounted } from "vue";
-                  import { useObservable } from "@vueuse/rxjs";
-                  import { jsPDF } from "jspdf";
+import { jsPDF } from "jspdf";
 import { onNavLeftClick } from "../../utils/compose.util";
 import { providers } from '../../services/data/providers.data';
 import { sellers } from '../../services/data/sellers.data';
+import localDb from '../../services/local.db';
 
 const name: any = ref("");
-const history: any = ref([]);
+const historyMassal: any = ref([]);
 const resi: any = ref([]);
 const phone: any = ref("");
 const price: any = ref("");
@@ -376,20 +372,38 @@ const showItem: any = ref(false);
 const provider = ref({} as any);
 const seller = ref({} as any);
 const showRight = ref(false);
+const showResiActive = ref(false);
 const search: any = ref("");
 
-// const db = new Dexie("resiDb");
+const getRegex = (query: any) => new RegExp(query, 'i');
+
+// const db = new Dexie("resiMassalDb");
+
+const loadHistoryMassal = async () => {
+  historyMassal.value = await (localDb as any).historyMassal.toArray();
+};
+
+// Menggunakan watchEffect untuk meng-update data ketika input berubah
+    watchEffect(() => {
+      const regex = getRegex(search.value);
+
+      // Menggunakan liveQuery untuk memfilter data secara dinamis
+      const filteredData = liveQuery(() =>
+        (localDb as any).historyMassal
+          .filter((historyMassal: any) => regex.test(historyMassal.address)) // Filter berdasarkan regex
+          .toArray()
+      );
+
+      // Subscribe ke filteredData untuk mendapatkan hasilnya
+      filteredData.subscribe((data) => {
+        historyMassal.value = data;  // Memperbarui data hasil filter
+      });
+    });
 
 onMounted(() => {
-  // db.version(1).stores({
-  //   history: "uuid, name, phone, address", // Primary key and indexed props
-  // });
-  // const modal = new Modal(theModal.value!, {});
-
-  // modal.show();
-
   seller.value = sellers[2];
   provider.value = providers[0];
+  loadHistoryMassal();
 });
 
 
@@ -398,22 +412,13 @@ const onProviderSelect = (item: any) => {
   showProvider.value = false;
 };
 
-const onSellerSelect = (item: any) => {
-  seller.value = item;
-  showSeller.value = false;
-};
-
-const onItemSelect = (_item: any) => {
-  item.value = _item;
-  showItem.value = false;
-};
-
 const onRightClick = () => {
+  search.value = "";
   showRight.value = true;
+};
 
-  // history.value = useObservable(
-    // liveQuery(() => (db as any).history.toArray()) as any
-  // );
+const onResiActiveClick = () => {
+  showResiActive.value = true;
 };
 
 const numberFormat = (value: any) => {
@@ -421,60 +426,20 @@ const numberFormat = (value: any) => {
   return nf.format(value);
 };
 
-const onInputSearch = (event: any) => {
-  // if (event.target.value.trim()) {
-  //   let regex = new RegExp(event.target.value.trim(), "i");
-
-  //   history.value = useObservable(
-  //     liveQuery(() =>
-  //       (db as any).history
-  //         // .where("name")
-  //         .filter((history: any) => regex.test(history.name))
-  //         .toArray()
-  //     ) as any
-  //   );
-  // } else {
-  //   history.value = useObservable(
-  //     liveQuery(() => (db as any).history.toArray()) as any
-  //   );
-  // }
-};
-
-const onItemRightClicked = (history: any) => {
-  name.value = history.name;
-  phone.value = history.phone;
-  address.value = history.address;
+const onItemRightClicked = (historyMassal: any) => {
+  console.log(historyMassal)
+  resi.value.push({
+    address: historyMassal.address,
+    service: JSON.parse(historyMassal.service),
+    price: historyMassal.price,
+    provider: JSON.parse(historyMassal.provider),
+  });
 
   showRight.value = false;
-  history.value = [];
-};
-
-const onDeleteHistoryClicked = (history: any) => {
-  // (db as any).history
-  //   .where("uuid")
-  //   .equalsIgnoreCase(history.uuid)
-  //   .delete()
-  //   .then(function (deleted: any) {
-  //     showNotify({
-  //       type: "success",
-  //       message: `${history.name} deleted`,
-  //       duration: 1000,
-  //     });
-  //   });
 };
 
 const onCancelClicked = () => {
   showRight.value = false;
-};
-
-const onNamePaste = () => {
-  name.value = "";
-  navigator.clipboard.readText().then((cliptext) => (name.value = cliptext));
-};
-
-const onPhonePaste = () => {
-  phone.value = "";
-  navigator.clipboard.readText().then((cliptext) => (phone.value = cliptext));
 };
 
 const onAddressPaste = () => {
@@ -484,26 +449,50 @@ const onAddressPaste = () => {
 
 const onDeleteResiClicked = (index: any) => {
   resi.value.splice(index, 1);
-  // address.value = "";
-  // navigator.clipboard.readText().then((cliptext) => (address.value = cliptext));
 };
 
-const onClearResi = async () => {
-  resi.value = [];
-}
+const onDeleteHistoryMassalClicked = (id: any) => {
+  (localDb as any).historyMassal
+    .delete(id);
+
+    loadHistoryMassal();
+};
 
 const onAddResi = async () => {
   resi.value.push({
-    address: address.value,
+    address: address.value.trim(),
     service: service.value,
-    price: price.value,
+    price: price.value.trim(),
     provider: provider.value,
   });
+
+  // check dulu, jika tidak ada save
+  const checkLocalDb = await (localDb as any).historyMassal
+    .where('address')
+    .equals(address.value.trim())  // Memeriksa apakah ada data dengan alamat yang sama
+    .toArray();
+
+  console.log(checkLocalDb.length);
+
+  if (checkLocalDb.length == 0) {
+    // save to indexDB
+    let saveToDb = {
+      uuid: uuidv4(),
+      address: address.value.trim(),
+      service: JSON.stringify(service.value),
+      price: price.value.trim(),
+      provider: JSON.stringify(provider.value),
+    };
+
+    const saveHistoryMassal = await (localDb as any).historyMassal.add(saveToDb);
+  }
 
   address.value = "";
   service.value = "cash";
   price.value = "";
   provider.value = providers[0];
+
+  loadHistoryMassal();
 }
 
 const onPrint = async () => {

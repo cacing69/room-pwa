@@ -2,7 +2,7 @@
   <van-sticky>
     <van-nav-bar title="Resi Manual" left-arrow @click-left="onNavLeftClick">
       <template #right>
-        <van-icon name="replay" @click="onRightClick" />
+        <van-icon name="replay" @click="onRightClick" size="20" />
       </template>
     </van-nav-bar>
     <van-popup
@@ -362,6 +362,8 @@ import Dexie, { liveQuery } from "dexie";
 import { onMounted } from "vue";
 import { useObservable } from "@vueuse/rxjs";
 import { onNavLeftClick } from "../../utils/compose.util";
+import { sellers } from '../../services/data/sellers.data';
+import { providers } from '../../services/data/providers.data';
 
 const name: any = ref("");
 const history: any = ref([]);
@@ -382,8 +384,9 @@ const search: any = ref("");
 const db = new Dexie("resiDb");
 
 onMounted(() => {
-  db.version(1).stores({
+  db.version(2).stores({
     history: "uuid, name, phone, address", // Primary key and indexed props
+    historyMassal: "uuid, address, provider, payment", // Primary key and indexed props
   });
   // const modal = new Modal(theModal.value!, {});
 
@@ -391,69 +394,6 @@ onMounted(() => {
 });
 
 const items = [{ name: "Pakaian" }, { name: "Topi" }, { name: "Lainnya" }];
-
-const providers = [
-  {
-    name: "J&T",
-    logo: "/various/provider-jnt.png",
-  },
-  {
-    name: "JNE",
-    logo: "/various/provider-jne.png",
-  },
-  {
-    name: "ID Express",
-    logo: "/various/provider-id-express.png",
-  },
-  {
-    name: "Lion Parcel",
-    logo: "/various/provider-lion-parcel.png",
-  },
-  {
-    name: "Sicepat",
-    logo: "/various/provider-sicepat.png",
-  },
-  {
-    name: "Anteraja",
-    logo: "/various/provider-anteraja.png",
-  },
-  {
-    name: "Kirim Aja",
-    logo: "/various/provider-kirim-aja.png",
-  },
-  {
-    name: "POS Indonesia",
-    logo: "/various/provider-pos-indonesia.png",
-  },
-  {
-    name: "Ninja Express",
-    logo: "/various/provider-ninja-express.png",
-  },
-  {
-    name: "TIKI",
-    logo: "/various/provider-tiki.png",
-  },
-  {
-    name: "J&T Cargo",
-    logo: "/various/provider-jnt-cargo.png",
-  },
-  {
-    name: "Indah Cargo",
-    logo: "/various/provider-indah-cargo.png",
-  },
-  {
-    name: "DHL",
-    logo: "/various/provider-dhl.png",
-  },
-  {
-    name: "FedEx",
-    logo: "/various/provider-fedex.png",
-  },
-  {
-    name: "SAPX",
-    logo: "/various/provider-sapx.png",
-  },
-];
 
 const onProviderSelect = (item: any) => {
   provider.value = item;
@@ -528,45 +468,6 @@ const onDeleteHistoryClicked = (history: any) => {
 const onCancelClicked = () => {
   showRight.value = false;
 };
-
-const sellers = [
-  {
-    name: "ROOM THRIFT",
-    logo: "/various/roomthrift.jpg",
-    phone: "+62 896-7216-5341",
-    address:
-      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya, Kalimantan Barat, Indonesia",
-    instagram: "room.thrift",
-    qr: "/various/qr-roomthrift.png",
-  },
-  {
-    name: "THRIFTCAP",
-    logo: "/various/thriftcap.jpg",
-    phone: "+62 896-7216-5341",
-    address:
-      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya, Kalimantan Barat, Indonesia",
-    instagram: "thriftcap",
-    qr: "/various/qr-thriftcap.png",
-  },
-  {
-    name: "WESALE",
-    logo: "/various/wesale.png",
-    phone: "+62 895-3217-62074",
-    address:
-      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya, Kalimantan Barat, Indonesia",
-    instagram: "wesalee_",
-    qr: "/various/qr-wesale.png",
-  },
-  {
-    name: "OTHERS",
-    logo: "/various/wesale.png",
-    phone: "+62 895-3217-62074",
-    address:
-      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya, Kalimantan Barat, Indonesia",
-    instagram: "wesalee_",
-    qr: "/various/qr-wesale.png",
-  },
-];
 
 const onNamePaste = () => {
   name.value = "";

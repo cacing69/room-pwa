@@ -18,7 +18,7 @@
     "@types/html2canvas": "^1.0.0",
     "@vueuse/rxjs": "^10.5.0",
     "axios": "^1.5.1",
-    "dexie": "^3.2.4",
+    "dexie": "^4.0.11",
     "hashids": "^2.3.0",
     "html2canvas": "^1.4.1",
     "install": "^0.13.0",

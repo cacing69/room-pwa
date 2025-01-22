@@ -1425,10 +1425,15 @@
     "@vue/compiler-ssr" "3.3.4"
     "@vue/shared" "3.3.4"
 
-"@vue/shared@3.3.4", "@vue/shared@^3.0.0", "@vue/shared@^3.3.0":
+"@vue/shared@3.3.4", "@vue/shared@^3.3.0":
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.3.4.tgz#06e83c5027f464eef861c329be81454bc8b70780"
   integrity sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==
+
+"@vue/shared@^3.5.13":
+  version "3.5.13"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.5.13.tgz#87b309a6379c22b926e696893237826f64339b6f"
+  integrity sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==
 
 "@vue/typescript@1.8.16":
   version "1.8.16"
@@ -1779,10 +1784,10 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
 
-dexie@^3.2.4:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/dexie/-/dexie-3.2.4.tgz#b22a9729be1102acb2eee16102ea6e2bc76454cf"
-  integrity sha512-VKoTQRSv7+RnffpOJ3Dh6ozknBqzWw/F3iqMdsZg958R0AS8AnY9x9d1lbwENr0gzeGJHXKcGhAMRaqys6SxqA==
+dexie@^4.0.11:
+  version "4.0.11"
+  resolved "https://registry.yarnpkg.com/dexie/-/dexie-4.0.11.tgz#010a2c82dd35d40aa9a81c8d21951bfeb487b7d6"
+  integrity sha512-SOKO002EqlvBYYKQSew3iymBoN2EQ4BDw/3yprjh7kAfFzjBYkaMNa/pZvcA7HSWlcKSQb9XhPe3wKyQ0x4A8A==
 
 dompurify@^2.5.4:
   version "2.5.8"
@@ -3130,14 +3135,14 @@ uuid@^9.0.1:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
   integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
-vant@^4.7.1:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/vant/-/vant-4.7.1.tgz#8888901ba57202f419ce5a27e78b9ea8ed3b66dd"
-  integrity sha512-LIzAvTdUVVjBB6NwWpUhClUfUkJvAsc681roEumSZ62ptwwrroCy4HxvSsyf0aSemPqNbPcx0uN+wzENC81eEA==
+vant@^4.9.9:
+  version "4.9.16"
+  resolved "https://registry.yarnpkg.com/vant/-/vant-4.9.16.tgz#93959ab48258dac6b316cc7320739538131b2654"
+  integrity sha512-QkcxoV7MOiV+fakCPF8z/czarW42BeR0k79U9KNuM2xZs8q3YhhPxBDdrcoQ64OWIkdf5alEYeDWCuDYfiyR3g==
   dependencies:
     "@vant/popperjs" "^1.3.0"
     "@vant/use" "^1.6.0"
-    "@vue/shared" "^3.0.0"
+    "@vue/shared" "^3.5.13"
 
 vite-plugin-pwa@^0.16.5:
   version "0.16.5"
