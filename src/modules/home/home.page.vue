@@ -56,10 +56,10 @@
         </van-grid-item>
         <van-grid-item to="/en/resi-batch">
           <van-row>
-            <font-awesome-icon icon="fa-solid fa-print" size="2x" />
+            <font-awesome-icon icon="fa-solid fa-truck" size="2x" />
           </van-row>
           <van-row style="padding-top: 1vh">
-            <span style="font-size: 12px">Resi Batch</span>
+            <span style="font-size: 12px">Resi Massal</span>
           </van-row>
         </van-grid-item>
       </van-grid>

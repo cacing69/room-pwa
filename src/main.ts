@@ -74,7 +74,8 @@ import {
   faPrint,
   faPuzzlePiece,
   faTag,
-  faCashRegister
+  faCashRegister,
+  faTruck
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -86,6 +87,7 @@ library.add(
   faPercent,
   faTag,
   faCashRegister,
+  faTruck,
 );
 
 Locale.use("en-US", enUS);
