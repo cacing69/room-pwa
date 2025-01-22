@@ -1,0 +1,664 @@
+<template>
+
+<van-nav-bar title="Resi Batch" left-arrow @click-left="onNavLeftClick">
+</van-nav-bar>
+  <van-row>
+    <van-col span="24">
+      <van-cell-group inset title="Seller">
+        <van-cell
+          is-link
+          title="Account"
+          @click="showSeller = true"
+          :value="seller?.name || 'None'"
+        />
+      </van-cell-group>
+      <van-cell-group inset title="Shipping detail">
+        <van-field
+          v-model="address"
+          type="textarea"
+          rows="3"
+          autosize
+          right-icon="records-o"
+          placeholder="Address"
+          @click-right-icon="onAddressPaste"
+        />
+      </van-cell-group>
+       <div style="margin: 16px">
+        <van-button
+          round
+          block
+          type="primary"
+          native-type="button"
+          size="small"
+          @click="onAddResi"
+        >
+          + Tambah ({{ resi.length }})
+        </van-button>
+      </div>
+
+      <div style="margin: 16px">
+        <van-button
+          round
+          block
+          type="primary"
+          native-type="button"
+          size="small"
+          @click="onPrint"
+        >
+          Print
+        </van-button>
+      </div>
+    </van-col>
+  </van-row>
+  <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o">
+    Set paper size as width x height = 78x100
+  </van-notice-bar>
+  <div id="print-area"></div>
+  <template v-for="(r, index) in resi">
+      <div :id="'print-area-' + (index + 1)" style="padding: 5px">
+        <table
+          class="table-border"
+          style="
+            width: 100%;
+            word-wrap: break-word;
+            table-layout: fixed;
+            white-space: pre-line;
+          "
+        >
+          <tr>
+            <td
+              colspan="2"
+              style="padding: 3.5px; font-size: 12px; font-style: italic"
+            >
+              Pengirim :
+            </td>
+            <td
+              rowspan="4"
+              style="border-left: 1px solid black; border-collapse: collapse"
+              width="100"
+            >
+              <img width="100" :src="seller?.logo || '/etc/ph-square.jpg'" alt="" />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding: 3.5px">
+              <b>{{ seller?.name || "LOREM IPSUM" }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding: 3.5px">
+              <b>{{ seller?.phone || "+62 800-0000-0000" }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding: 3.5px; font-size: 14px">
+              {{
+                seller?.address ||
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus ipsum leo, a auctor odio tempus eu."
+              }}
+            </td>
+          </tr>
+          <tr
+            style="
+              border-top: 1px solid black;
+              border-collapse: collapse;
+              font-style: italic;
+            "
+          >
+            <td colspan="3" style="padding: 3.5px; font-size: 12px">Penerima :</td>
+          </tr>
+          <tr v-if="name.trim()">
+            <td
+              colspan="3"
+              style="padding: 3.5px; font-size: 20px; font-weight: bold"
+            >
+              {{ name.trim() || "-" }}
+            </td>
+          </tr>
+          <tr v-if="phone.trim()">
+            <td
+              colspan="3"
+              style="padding: 3.5px; font-size: 20px; font-weight: bold"
+            >
+              {{ phone.trim() || "-" }}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" style="padding: 3.5px; font-size: 18px">
+              {{ r.address.trim() || "-" }}
+            </td>
+          </tr>
+          <tr style="border-top: 1px solid black; border-collapse: collapse">
+            <td
+              style="
+                text-align: center;
+                border-right: 1px solid black;
+                border-bottom: 1px solid black;
+                border-collapse: collapse;
+                margin: 0px;
+                padding: 1px;
+              "
+            >
+              <template v-if="provider?.logo">
+                <img style="width: 100%" :src="provider?.logo" alt="" />
+              </template>
+              <template v-else>
+                <span style="font-weight: bold">NO IMAGE</span>
+              </template>
+            </td>
+            <td
+              rowspan="3"
+              style="
+                padding-top: 3.5px;
+                font-size: 18px;
+                font-weight: bold;
+                text-align: center;
+              "
+            >
+              <template v-if="item?.name?.toLowerCase() !== 'lainnya'">
+                <span>
+                  {{ item?.name?.toUpperCase() }}
+                </span>
+              </template>
+              <template v-else>
+                <span>
+                  {{ itemName?.toUpperCase() || "-" }}
+                </span>
+              </template>
+            </td>
+            <td
+              rowspan="3"
+              class=""
+              style="
+                border-left: 1px solid black;
+                border-collapse: collapse;
+                text-align: center;
+              "
+            >
+              <img
+                style="width: 100%"
+                :src="seller?.qr || '/etc/ph-qr-dummy.png'"
+                alt=""
+              />
+            </td>
+          </tr>
+          <template v-if="service === 'cod'">
+            <tr
+              style="
+                padding: 3.5px;
+                font-size: 18px;
+                font-weight: bold;
+                text-align: center;
+              "
+            >
+              <td
+                style="
+                  border-bottom: 1px solid black;
+                  border-right: 1px solid black;
+                "
+              >
+                {{ service.toUpperCase() }}
+              </td>
+            </tr>
+            <tr
+              style="
+                padding: 3.5px;
+                font-size: 18px;
+                font-weight: bold;
+                text-align: center;
+                border-bottom: 1px solid black;
+              "
+            >
+              <td style="border-right: 1px solid black">
+                Rp{{ numberFormat(price) }}
+              </td>
+            </tr>
+          </template>
+          <template v-else>
+            <tr>
+              <td style="border-right: 1px solid black"></td>
+            </tr>
+            <tr
+              style="
+                padding-top: 3.5px;
+                font-size: 20px;
+                font-weight: bold;
+                text-align: center;
+                border-collapse: collapse;
+              "
+            >
+              <td style="border-right: 1px solid black">
+                {{ service.toUpperCase() }}
+              </td>
+            </tr>
+          </template>
+          <tr>
+            <td
+              colspan="3"
+              style="
+                text-align: center;
+                font-size: 12px;
+                padding: 3px;
+                font-style: italic;
+                border-top: 1px solid black;
+              "
+            >
+              scan qrcode untuk melihat item lainnya (ig : @{{
+                seller?.instagram || "instagram"
+              }})
+            </td>
+          </tr>
+        </table>
+        <!-- <div id="canvas-area" style="display: block"></div> -->
+      </div>
+  </template>
+  <template v-for="(r, index) in resi">
+    <div :id="'printable-area-' + (index + 1)" style="padding-bottom: 1.75vh"></div>
+  </template>
+  <van-action-sheet
+    v-model:show="showProvider"
+    :actions="providers"
+    @select="onProviderSelect"
+    style="padding-bottom: 1.75vh"
+  />
+  <van-action-sheet
+    v-model:show="showSeller"
+    :actions="sellers"
+    @select="onSellerSelect"
+    style="padding-bottom: 1.75vh"
+  />
+  <van-action-sheet
+    v-model:show="showItem"
+    :actions="items"
+    @select="onItemSelect"
+    style="padding-bottom: 1.75vh"
+  />
+</template>
+<script setup lang="ts">
+import html2canvas from "html2canvas";
+import printJS from "print-js";
+import { closeToast, showLoadingToast, showNotify } from "vant";
+import { ref } from "vue";
+import { v4 as uuidv4 } from "uuid";
+import Dexie, { liveQuery } from "dexie";
+import { onMounted } from "vue";
+                  import { useObservable } from "@vueuse/rxjs";
+                  import { jsPDF } from "jspdf";
+import { onNavLeftClick } from "../../utils/compose.util";
+
+const name: any = ref("");
+const history: any = ref([]);
+const resi: any = ref([]);
+const phone: any = ref("");
+const price: any = ref("");
+const service: any = ref("cash");
+const item: any = ref({ name: "Pakaian" });
+const itemName: any = ref("");
+const address: any = ref("");
+const showProvider: any = ref(false);
+const showSeller: any = ref(false);
+const showItem: any = ref(false);
+const provider = ref({} as any);
+const seller = ref({} as any);
+const showRight = ref(false);
+const search: any = ref("");
+
+// const db = new Dexie("resiDb");
+
+onMounted(() => {
+  // db.version(1).stores({
+  //   history: "uuid, name, phone, address", // Primary key and indexed props
+  // });
+  // const modal = new Modal(theModal.value!, {});
+
+  // modal.show();
+
+  seller.value = sellers[2];
+});
+
+const items = [{ name: "Pakaian" }, { name: "Topi" }, { name: "Lainnya" }];
+
+const providers = [
+  {
+    name: "J&T",
+    logo: "/various/provider-jnt.png",
+  },
+  {
+    name: "JNE",
+    logo: "/various/provider-jne.png",
+  },
+  {
+    name: "ID Express",
+    logo: "/various/provider-id-express.png",
+  },
+  {
+    name: "Lion Parcel",
+    logo: "/various/provider-lion-parcel.png",
+  },
+  {
+    name: "Sicepat",
+    logo: "/various/provider-sicepat.png",
+  },
+  {
+    name: "Anteraja",
+    logo: "/various/provider-anteraja.png",
+  },
+  {
+    name: "Kirim Aja",
+    logo: "/various/provider-kirim-aja.png",
+  },
+  {
+    name: "POS Indonesia",
+    logo: "/various/provider-pos-indonesia.png",
+  },
+  {
+    name: "Ninja Express",
+    logo: "/various/provider-ninja-express.png",
+  },
+  {
+    name: "TIKI",
+    logo: "/various/provider-tiki.png",
+  },
+  {
+    name: "J&T Cargo",
+    logo: "/various/provider-jnt-cargo.png",
+  },
+  {
+    name: "Indah Cargo",
+    logo: "/various/provider-indah-cargo.png",
+  },
+  {
+    name: "DHL",
+    logo: "/various/provider-dhl.png",
+  },
+  {
+    name: "FedEx",
+    logo: "/various/provider-fedex.png",
+  },
+  {
+    name: "SAPX",
+    logo: "/various/provider-sapx.png",
+  },
+];
+
+const onProviderSelect = (item: any) => {
+  provider.value = item;
+  showProvider.value = false;
+};
+
+const onSellerSelect = (item: any) => {
+  seller.value = item;
+  showSeller.value = false;
+};
+
+const onItemSelect = (_item: any) => {
+  item.value = _item;
+  showItem.value = false;
+};
+
+const onRightClick = () => {
+  showRight.value = true;
+
+  // history.value = useObservable(
+    // liveQuery(() => (db as any).history.toArray()) as any
+  // );
+};
+
+const numberFormat = (value: any) => {
+  let nf = new Intl.NumberFormat("id-ID");
+  return nf.format(value);
+};
+
+const onInputSearch = (event: any) => {
+  // if (event.target.value.trim()) {
+  //   let regex = new RegExp(event.target.value.trim(), "i");
+
+  //   history.value = useObservable(
+  //     liveQuery(() =>
+  //       (db as any).history
+  //         // .where("name")
+  //         .filter((history: any) => regex.test(history.name))
+  //         .toArray()
+  //     ) as any
+  //   );
+  // } else {
+  //   history.value = useObservable(
+  //     liveQuery(() => (db as any).history.toArray()) as any
+  //   );
+  // }
+};
+
+const onItemRightClicked = (history: any) => {
+  name.value = history.name;
+  phone.value = history.phone;
+  address.value = history.address;
+
+  showRight.value = false;
+  history.value = [];
+};
+
+const onDeleteHistoryClicked = (history: any) => {
+  // (db as any).history
+  //   .where("uuid")
+  //   .equalsIgnoreCase(history.uuid)
+  //   .delete()
+  //   .then(function (deleted: any) {
+  //     showNotify({
+  //       type: "success",
+  //       message: `${history.name} deleted`,
+  //       duration: 1000,
+  //     });
+  //   });
+};
+
+const onCancelClicked = () => {
+  showRight.value = false;
+};
+
+const sellers = [
+  {
+    name: "ROOM THRIFT",
+    logo: "/various/roomthrift.jpg",
+    phone: "+62 896-7216-5341",
+    address:
+      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya, Kalimantan Barat, Indonesia",
+    instagram: "room.thrift",
+    qr: "/various/qr-roomthrift.png",
+  },
+  {
+    name: "THRIFTCAP",
+    logo: "/various/thriftcap.jpg",
+    phone: "+62 896-7216-5341",
+    address:
+      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya, Kalimantan Barat, Indonesia",
+    instagram: "thriftcap",
+    qr: "/various/qr-thriftcap.png",
+  },
+  {
+    name: "WESALE",
+    logo: "/various/wesale.png",
+    phone: "+62 895-3217-62074",
+    address:
+      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya, Kalimantan Barat, Indonesia",
+    instagram: "wesalee_",
+    qr: "/various/qr-wesale.png",
+  },
+  {
+    name: "OTHERS",
+    logo: "/various/wesale.png",
+    phone: "+62 895-3217-62074",
+    address:
+      "Jl. Adisucipto Km 15.3, Gg. Seruat Sambas No.06, Arang Limbung, Sungai Raya, Kab. Kubu Raya, Kalimantan Barat, Indonesia",
+    instagram: "wesalee_",
+    qr: "/various/qr-wesale.png",
+  },
+];
+
+const onNamePaste = () => {
+  name.value = "";
+  navigator.clipboard.readText().then((cliptext) => (name.value = cliptext));
+};
+
+const onPhonePaste = () => {
+  phone.value = "";
+  navigator.clipboard.readText().then((cliptext) => (phone.value = cliptext));
+};
+
+const onAddressPaste = () => {
+  address.value = "";
+  navigator.clipboard.readText().then((cliptext) => (address.value = cliptext));
+};
+
+const onClearResi = async () => {
+  resi.value = [];
+}
+
+const onAddResi = async () => {
+  resi.value.push({
+    address: address.value,
+  });
+
+  address.value = "";
+
+  console.log(resi.value);
+}
+
+const onPrint = async () => {
+  const pdf = new jsPDF();
+  // showLoadingToast({
+  //   duration: 0,
+  //   forbidClick: true,
+  //   loadingType: "spinner",
+  //   message: "Print...",
+  // });
+  // // show first html original
+
+  // (document as any).getElementById("print-area").style.display = "block";
+
+  // (document as any)?.getElementById("canvas-area")?.remove();
+  // html2canvas((document as any).querySelector("#print-area")).then(
+  //   (canvas: any) => {
+  //     var myCreatedElement = document.createElement("div");
+  //     var myContainer = document.getElementById("printable-area");
+
+  //     //setAttribute() is used to create attributes or change it:
+  //     myCreatedElement.setAttribute("id", "canvas-area");
+
+  //     //here you add the element you created using appendChild()
+  //     (myContainer as any).appendChild(myCreatedElement);
+
+  //     const canvasArea = (document as any)?.getElementById("canvas-area");
+
+  //     let child = canvasArea.lastElementChild;
+  //     while (child) {
+  //       canvasArea.removeChild(child);
+  //       child = canvasArea.lastElementChild;
+  //     }
+
+  //     // before append, hide original
+  //     (document as any).getElementById("print-area").style.display = "none";
+
+  //     canvasArea.appendChild(canvas);
+
+  //     printJS({
+  //       printable: "canvas-area",
+  //       type: "html",
+  //       targetStyles: ["*"],
+  //     });
+
+  //     closeToast();
+
+  //     (document as any).getElementById("print-area").style.display = "block";
+  //     (document as any).getElementById("canvas-area").style.display = "none";
+  //   }
+  // );
+   // Iterate over each item in the dataArray
+  for (const [index, item] of resi.value.entries()) {
+    // Populate the `print-area` with data from the current item
+    const printDiv = (document as any).getElementById(`print-area-${(index + 1)}`)
+    printDiv.style.pageBreakAfter = "always";
+
+    console.log(printDiv);
+
+    (document as any).getElementById(`print-area-${(index + 1)}`).style.display = "block";
+    (document as any).getElementById("canvas-area")?.remove();
+
+    await html2canvas((document as any).querySelector(`#print-area-${(index + 1)}`)).then(
+      (canvas) => {
+        const myCreatedElement = (document as any).createElement("div");
+        const myContainer = (document as any).getElementById(`printable-area-${(index + 1)}`);
+
+        myCreatedElement.setAttribute("id", `canvas-area-${(index + 1)}`);
+        myContainer.appendChild(myCreatedElement);
+
+        const canvasArea = (document as any).getElementById(`canvas-area-${(index + 1)}`);
+
+        // Clear previous content
+        let child = canvasArea.lastElementChild;
+
+        while (child) {
+          canvasArea.removeChild(child);
+          child = canvasArea.lastElementChild;
+        }
+
+        // Hide the original content before appending the canvas
+        (document as any).getElementById(`print-area-${(index + 1)}`).style.display = "none";
+        canvasArea.appendChild(canvas);
+
+        const imgData = canvas.toDataURL('image/png'); // Ubah canvas ke data URL
+
+        // Tambahkan canvas ke PDF
+        const imgWidth = 210; // Lebar dalam mm (A4)
+        const imgHeight = (canvas.height * imgWidth) / canvas.width; // Proporsi tinggi
+
+        if (index > 0) {
+          pdf.addPage(); // Tambahkan halaman baru jika bukan halaman pertama
+        }
+        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight,  undefined, 'FAST');
+
+        // Print the current canvas
+        // printJS({
+        //   printable: "canvas-area",
+        //   type: "html",
+        //   targetStyles: ["*"],
+        // });
+
+        // Reset for the next iteration
+        (document as any).getElementById(`print-area-${(index + 1)}`).style.display = "block";
+        (document as any).getElementById(`canvas-area-${(index + 1)}`).style.display = "none";
+      }
+    );
+
+  }
+
+  pdf.save('multi-page.pdf');
+
+  //  // Mengaktifkan print mode
+  // pdf.autoPrint();
+
+  // const iframe = document.createElement('iframe');
+  // iframe.style.position = 'absolute';
+  // iframe.style.width = '0px';
+  // iframe.style.height = '0px';
+  // iframe.style.border = 'none';
+  // document.body.appendChild(iframe);
+
+  // // Menyisipkan PDF ke dalam iframe
+  // iframe.src = pdf.output('datauristring');
+
+  // // Panggil window.print() untuk mencetak
+  // (iframe as any).contentWindow.print();
+
+  // // Setelah pencetakan, menghapus iframe
+  // iframe.remove();
+
+  closeToast();
+};
+</script>
+
+<style scoped>
+.table-border {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>

@@ -7,6 +7,7 @@ import { excelEngineRouter } from "./excel.engine/excel.engine.router";
 import { checkPriceRouter } from "./check.price/check.price.router";
 import { priceTagRouter } from "./price.tag/price.tag.router";
 import { salesRecordRouter } from "./sales.record/sales.record.router";
+import { resiBatchRouter } from './resi.batch/resi.batch.router';
 
 export const modulesRouter = [
   ...captionRouter,
@@ -18,4 +19,5 @@ export const modulesRouter = [
   ...checkPriceRouter,
   ...priceTagRouter,
   ...salesRecordRouter,
+  ...resiBatchRouter
 ];

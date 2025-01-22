@@ -54,6 +54,14 @@
             <span style="font-size: 12px">Price Tag</span>
           </van-row>
         </van-grid-item>
+        <van-grid-item to="/en/resi-batch">
+          <van-row>
+            <font-awesome-icon icon="fa-solid fa-print" size="2x" />
+          </van-row>
+          <van-row style="padding-top: 1vh">
+            <span style="font-size: 12px">Resi Batch</span>
+          </van-row>
+        </van-grid-item>
       </van-grid>
       <!-- <van-row>
         <van-col span="6">
