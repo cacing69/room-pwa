@@ -132,9 +132,16 @@
       </van-cell-group>
     </van-col>
   </van-row>
-  <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o">
-    Set paper size as width x height = 78x100
-  </van-notice-bar>
+  <van-row>
+    <van-col span="24">
+      <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o">
+        Atur ukuran saat print : lebar x tinggi = 78x100
+      </van-notice-bar>
+      <van-notice-bar wrapable  :scrollable="false" left-icon="comment-o">
+        Edit data dengan cara mengklik item pada tiap resi
+      </van-notice-bar>
+    </van-col>
+  </van-row>
   <div id="print-area"></div>
   <template v-for="(r, index) in resi">
       <div :id="'print-area-' + (index + 1)" style="padding: 5px">
@@ -222,10 +229,10 @@
               "
             >
               <template v-if="r.provider?.logo">
-                <img style="width: 100%" :src="r.provider?.logo" alt="" />
+                <img @click="onChangeProviderForRow(index)" style="width: 100%" :src="r.provider?.logo" alt="" />
               </template>
               <template v-else>
-                <span style="font-weight: bold">NO IMAGE</span>
+                <span style="font-weight: bold" @click="onChangeProviderForRow(index)">NO IMAGE</span>
               </template>
             </td>
             <td
@@ -266,6 +273,7 @@
           </tr>
           <template v-if="r.service === 'cod'">
             <tr
+              @click="onChangeServiceForRow(index)"
               style="
                 padding: 3.5px;
                 font-size: 18px;
@@ -301,6 +309,7 @@
               <td style="border-right: 1px solid black"></td>
             </tr>
             <tr
+              @click="onChangeServiceForRow(index)"
               style="
                 padding-top: 3.5px;
                 font-size: 20px;
@@ -343,6 +352,18 @@
     @select="onProviderSelect"
     style="padding-bottom: 1.75vh"
   />
+  <van-action-sheet
+    v-model:show="showProviderRow"
+    :actions="providers"
+    @select="onProviderSelectForRow"
+    style="padding-bottom: 1.75vh"
+  />
+  <van-action-sheet
+    v-model:show="showServices"
+    :actions="services"
+    @select="onServiceSelectForRow"
+    style="padding-bottom: 1.75vh"
+  />
 </template>
 <script setup lang="ts">
 import html2canvas from "html2canvas";
@@ -358,6 +379,7 @@ import { sellers } from '../../services/data/sellers.data';
 import localDb from '../../services/local.db';
 
 const name: any = ref("");
+const selectedIndex: any = ref(null);
 const historyMassal: any = ref([]);
 const resi: any = ref([]);
 const phone: any = ref("");
@@ -367,13 +389,15 @@ const item: any = ref({ name: "Pakaian" });
 const itemName: any = ref("");
 const address: any = ref("");
 const showProvider: any = ref(false);
-const showSeller: any = ref(false);
-const showItem: any = ref(false);
+const showProviderRow: any = ref(false);
+const showServices: any = ref(false);
 const provider = ref({} as any);
 const seller = ref({} as any);
 const showRight = ref(false);
 const showResiActive = ref(false);
 const search: any = ref("");
+
+const services = [{ name: "CASH" }, { name: "DFOD" }, { name: "COD" }];
 
 const getRegex = (query: any) => new RegExp(query, 'i');
 
@@ -430,7 +454,7 @@ const onItemRightClicked = (historyMassal: any) => {
   console.log(historyMassal)
   resi.value.push({
     address: historyMassal.address,
-    service: JSON.parse(historyMassal.service),
+    service: historyMassal.service,
     price: historyMassal.price,
     provider: JSON.parse(historyMassal.provider),
   });
@@ -450,6 +474,36 @@ const onAddressPaste = () => {
 const onDeleteResiClicked = (index: any) => {
   resi.value.splice(index, 1);
 };
+
+
+const onChangeProviderForRow = (index: any) => {
+  showProviderRow.value = true;
+  selectedIndex.value = index;
+};
+
+const onProviderSelectForRow = (provider: any) => {
+  showProviderRow.value = false;
+  const index = selectedIndex.value;
+
+  const tmpSelectedResi = resi.value[index];
+
+  resi.value[index].provider = provider;
+}
+
+const onChangeServiceForRow = (index: any) => {
+  showServices.value = true;
+  selectedIndex.value = index;
+};
+
+const onServiceSelectForRow = (item: any) => {
+  showServices.value = false;
+  const index = selectedIndex.value;
+
+  const tmpSelectedResi = resi.value[index];
+
+  console.log(tmpSelectedResi)
+  resi.value[index].service = item.name;
+}
 
 const onDeleteHistoryMassalClicked = (id: any) => {
   (localDb as any).historyMassal
@@ -479,7 +533,7 @@ const onAddResi = async () => {
     let saveToDb = {
       uuid: uuidv4(),
       address: address.value.trim(),
-      service: JSON.stringify(service.value),
+      service: service.value.trim(),
       price: price.value.trim(),
       provider: JSON.stringify(provider.value),
     };
@@ -496,67 +550,72 @@ const onAddResi = async () => {
 }
 
 const onPrint = async () => {
-  const pdf = new jsPDF();
-  showLoadingToast({
-    duration: 0,
-    forbidClick: true,
-    loadingType: "spinner",
-    message: "Print...",
-  });
 
-   // Iterate over each item in the dataArray
-  for (const [index, item] of resi.value.entries()) {
-    // Populate the `print-area` with data from the current item
-    const printDiv = (document as any).getElementById(`print-area-${(index + 1)}`)
-    printDiv.style.pageBreakAfter = "always";
+  if (resi.value.length > 0) {
+    const pdf = new jsPDF();
+    showLoadingToast({
+      duration: 0,
+      forbidClick: true,
+      loadingType: "spinner",
+      message: "Print...",
+    });
 
-    (document as any).getElementById(`print-area-${(index + 1)}`).style.display = "block";
-    (document as any).getElementById("canvas-area")?.remove();
+    // Iterate over each item in the dataArray
+    for (const [index, item] of resi.value.entries()) {
+      // Populate the `print-area` with data from the current item
+      const printDiv = (document as any).getElementById(`print-area-${(index + 1)}`)
+      printDiv.style.pageBreakAfter = "always";
 
-    await html2canvas((document as any).querySelector(`#print-area-${(index + 1)}`)).then(
-      (canvas) => {
-        const myCreatedElement = (document as any).createElement("div");
-        const myContainer = (document as any).getElementById(`printable-area-${(index + 1)}`);
+      (document as any).getElementById(`print-area-${(index + 1)}`).style.display = "block";
+      (document as any).getElementById("canvas-area")?.remove();
 
-        myCreatedElement.setAttribute("id", `canvas-area-${(index + 1)}`);
-        myContainer.appendChild(myCreatedElement);
+      await html2canvas((document as any).querySelector(`#print-area-${(index + 1)}`)).then(
+        (canvas) => {
+          const myCreatedElement = (document as any).createElement("div");
+          const myContainer = (document as any).getElementById(`printable-area-${(index + 1)}`);
 
-        const canvasArea = (document as any).getElementById(`canvas-area-${(index + 1)}`);
+          myCreatedElement.setAttribute("id", `canvas-area-${(index + 1)}`);
+          myContainer.appendChild(myCreatedElement);
 
-        // Clear previous content
-        let child = canvasArea.lastElementChild;
+          const canvasArea = (document as any).getElementById(`canvas-area-${(index + 1)}`);
 
-        while (child) {
-          canvasArea.removeChild(child);
-          child = canvasArea.lastElementChild;
+          // Clear previous content
+          let child = canvasArea.lastElementChild;
+
+          while (child) {
+            canvasArea.removeChild(child);
+            child = canvasArea.lastElementChild;
+          }
+
+          // Hide the original content before appending the canvas
+          (document as any).getElementById(`print-area-${(index + 1)}`).style.display = "none";
+          canvasArea.appendChild(canvas);
+
+          const imgData = canvas.toDataURL('image/png'); // Ubah canvas ke data URL
+
+          // Tambahkan canvas ke PDF
+          const imgWidth = 210; // Lebar dalam mm (A4)
+          const imgHeight = (canvas.height * imgWidth) / canvas.width; // Proporsi tinggi
+
+          if (index > 0) {
+            pdf.addPage(); // Tambahkan halaman baru jika bukan halaman pertama
+          }
+          pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight,  undefined, 'FAST');
+
+          // Reset for the next iteration
+          (document as any).getElementById(`print-area-${(index + 1)}`).style.display = "block";
+          (document as any).getElementById(`canvas-area-${(index + 1)}`).style.display = "none";
         }
+      );
 
-        // Hide the original content before appending the canvas
-        (document as any).getElementById(`print-area-${(index + 1)}`).style.display = "none";
-        canvasArea.appendChild(canvas);
+    }
+    const timestamp = new Date().getTime();
+    pdf.save(`resi-wesale-${timestamp}.pdf`);
 
-        const imgData = canvas.toDataURL('image/png'); // Ubah canvas ke data URL
-
-        // Tambahkan canvas ke PDF
-        const imgWidth = 210; // Lebar dalam mm (A4)
-        const imgHeight = (canvas.height * imgWidth) / canvas.width; // Proporsi tinggi
-
-        if (index > 0) {
-          pdf.addPage(); // Tambahkan halaman baru jika bukan halaman pertama
-        }
-        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight,  undefined, 'FAST');
-
-        // Reset for the next iteration
-        (document as any).getElementById(`print-area-${(index + 1)}`).style.display = "block";
-        (document as any).getElementById(`canvas-area-${(index + 1)}`).style.display = "none";
-      }
-    );
-
+    closeToast();
+  } else {
+    showNotify('Resi kosong, tidak ada yang bisa dicetak');
   }
-  const timestamp = new Date().getTime();
-  pdf.save(`resi-wesale-${timestamp}.pdf`);
-
-  closeToast();
 };
 </script>
 

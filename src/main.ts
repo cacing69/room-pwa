@@ -32,6 +32,7 @@ import {
   ImagePreview,
   Lazyload,
   NumberKeyboard,
+  Notify,
   Picker,
   Popup,
   PullRefresh,
@@ -113,6 +114,7 @@ vApp.use(Icon);
 vApp.use(ImagePreview);
 vApp.use(Lazyload);
 vApp.use(NumberKeyboard);
+vApp.use(Notify);
 vApp.use(Picker);
 vApp.use(Popup);
 vApp.use(PullRefresh);
