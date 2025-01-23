@@ -391,6 +391,9 @@ onMounted(() => {
   // const modal = new Modal(theModal.value!, {});
 
   // modal.show();
+
+  seller.value = sellers[2];
+  provider.value = providers[0];
 });
 
 const items = [{ name: "Pakaian" }, { name: "Topi" }, { name: "Lainnya" }];
