@@ -65,10 +65,14 @@
       v-model:show="showResiActive"
       round
       position="bottom"
-      closeable
        :style="{ width: '100%', height: '80%' }"
     >
       <template v-if="resi.length > 0">
+        <div style=" padding: 10px; background: #fff; ">
+          <div style="padding-top: 5px;padding-bottom: 5px;">
+            <van-button block round size="small" type="success" @click="onResetResi">Reset</van-button>
+          </div>
+        </div>
         <van-list style="padding-top: 40px;">
           <van-swipe-cell v-for="(r, index) in resi">
             <van-cell
@@ -95,7 +99,6 @@
       @click-overlay="onOverlayClicked"
       v-model:show="showQueue"
       position="left"
-      closeable
       :style="{ width: '90%', height: '100%' }"
     >
       <van-list >
@@ -571,6 +574,10 @@ const loadHistoryMassal = async () => {
   historyMassal.value = await (localDb as any).historyMassal.toArray();
 };
 
+const onResetResi = async () => {
+  resi.value = [];
+};
+
 const loadQueue = async () => {
   queue.value = await (localDb as any).queue.toArray();
 };
@@ -825,7 +832,15 @@ const onAddQueueResi = async () => {
 
 
 const onPrintQueue = async () => {
-  resi.value = queue.value;
+  resi.value = [];
+
+  await queue.value.forEach((q: any) => {
+
+    q.provider = JSON.parse(q.provider);
+
+    resi.value.push(q);
+  });
+
   showQueue.value = false;
 }
 const onPrint = async () => {
