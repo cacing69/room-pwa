@@ -91,14 +91,13 @@
         <van-divider dashed>Resi kosong</van-divider>
       </template>
     </van-popup>
-        <van-popup
-        @click-overlay="onOverlayClicked"
+    <van-popup
+      @click-overlay="onOverlayClicked"
       v-model:show="showQueue"
       position="left"
       closeable
       :style="{ width: '90%', height: '100%' }"
     >
-    <div style="flex: 1; overflow-y: auto; padding-top: 40px;">
       <van-list >
         <van-swipe-cell v-for="(q, index) in queue">
           <template #left>
@@ -126,12 +125,11 @@
           </template>
         </van-swipe-cell>
       </van-list>
-      </div>
       <!-- Button Bawah -->
       <template v-if="queue.length > 0">
         <div style=" padding: 10px; background: #fff; ">
 
-        <div style="padding-bottom: 5px;">
+        <div style="padding-top: 5px;padding-bottom: 5px;">
           <van-button block round size="small" type="danger" @click="onDeleteAllQueue">Hapus Semua</van-button>
         </div>
         <div style="padding-bottom: 5px;">
