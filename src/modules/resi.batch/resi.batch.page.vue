@@ -307,7 +307,7 @@
           </tr>
           <tr>
             <td colspan="3" style="padding: 3.5px; font-size: 18px">
-              {{ r.address.trim() || "-" }}
+              {{ r.address || "-" }}
             </td>
           </tr>
           <tr style="border-top: 1px solid black; border-collapse: collapse">
@@ -460,7 +460,7 @@
 </template>
 <script setup lang="ts">
 import html2canvas from "html2canvas";
-import { closeToast, showConfirmDialog, showLoadingToast, showNotify } from "vant";
+import { closeToast, showConfirmDialog, showLoadingToast, showNotify, showToast } from "vant";
 import { ref, watchEffect } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { liveQuery } from "dexie";
@@ -662,8 +662,13 @@ const addHistoryToQueue = async (history: any) => {
 }
 
 const onAddResi = async () => {
+  if (address.value.trim().length <= 0) {
+    showToast('Alamat masih kosong');
+    return
+  }
+
   resi.value.push({
-    historyMassaladdress: address.value.trim(),
+    address: address.value.trim(),
     service: service.value,
     price: price.value.trim(),
     provider: provider.value,
@@ -699,6 +704,11 @@ const onAddResi = async () => {
 }
 
 const onAddQueueResi = async () => {
+  if (address.value.trim().length <= 0) {
+    showToast('Alamat masih kosong');
+    return
+  }
+
   // check dulu, jika tidak ada save
   const checkQueueDb = await (localDb as any).queue
     .where('address')
