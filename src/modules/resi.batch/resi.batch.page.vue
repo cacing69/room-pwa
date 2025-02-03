@@ -3,12 +3,13 @@
     <van-nav-bar title="Resi Massal" left-arrow @click-left="onNavLeftClick">
       <template #right>
         <van-icon name="orders-o" @click="onResiActiveClick" style="padding-right: 20px;" size="20"/>
-        <van-icon name="replay" @click="onRightClick" size="20"/>
+        <van-icon name="clock-o" @click="onRightClick" size="20"/>
       </template>
     </van-nav-bar>
     <van-popup
       v-model:show="showHistory"
       position="right"
+      @click-overlay="onOverlayClicked"
       :style="{ width: '90%', height: '100%' }"
     >
       <van-search
@@ -18,59 +19,80 @@
         @cancel="onCancelClicked"
         v-model="search"
       />
-      <van-list>
-        <van-swipe-cell v-for="(history, index) in historyMassal">
-          <van-cell
-            @click="onItemRightClicked(history)"
-            :title="history?.address"
-            :value="(index + 1)"
-          />
-          <template #left>
-            <van-button
-              square
-              style=" height: 100%;"
-              type="success"
-              text="Tambah antrian"
-              @click="addHistoryToQueue(history)"
+      <template v-if="historyMassal.length > 0">
+        <van-list>
+          <van-swipe-cell v-for="(history, index) in historyMassal">
+            <van-cell
+              @click="onItemRightClicked(history)"
+              :title="history?.address"
+              :value="(index + 1)"
             />
-          </template>
-          <template #right>
-            <van-button
-              square
-              style=" height: 100%;"
-              type="danger"
-              text="Delete"
-              @click="onDeleteHistoryMassalClicked(history?.id)"
-            />
-          </template>
-        </van-swipe-cell>
-      </van-list>
+            <template #left>
+              <van-button
+                square
+                style=" height: 100%;"
+                type="success"
+                text="Tambah antrian"
+                @click="addHistoryToQueue(history)"
+              />
+            </template>
+            <template #right>
+              <van-button
+                square
+                style=" height: 100%;"
+                type="danger"
+                text="Delete"
+                @click="onDeleteHistoryMassalClicked(history?.id)"
+              />
+            </template>
+          </van-swipe-cell>
+        </van-list>
+      </template>
+      <template v-else>
+        <van-divider dashed>Riwayat kosong</van-divider>
+      </template>
+      <template v-if="historyMassal.length > 0">
+        <div style=" padding: 10px; background: #fff; ">
+
+        <div style="padding-bottom: 5px;">
+          <van-button block round size="small" type="danger" @click="onDeleteAllHistory">Hapus Semua</van-button>
+        </div>
+      </div>
+      </template>
     </van-popup>
     <van-popup
+      @click-overlay="onOverlayClicked"
       v-model:show="showResiActive"
+      round
       position="bottom"
       closeable
-       :style="{ width: '90%', height: '100%', display: 'flex', flexDirection: 'column' }"
+       :style="{ width: '100%', height: '80%' }"
     >
-      <van-list style="padding-top: 40px;">
-        <van-swipe-cell v-for="(r, index) in resi">
-          <van-cell
-            :title="r?.address"
-            :value="(index + 1)"
-          />
-          <template #right>
-            <van-button
-              square
-              style=" height: 100%;"
-              type="danger"
-              text="Hapus"
-              @click="onDeleteResiClicked(index)"
+      <template v-if="resi.length > 0">
+        <van-list style="padding-top: 40px;">
+          <van-swipe-cell v-for="(r, index) in resi">
+            <van-cell
+              :title="r?.address"
+              :value="(index + 1)"
             />
-          </template>
-        </van-swipe-cell>
-      </van-list>
+            <template #right>
+              <van-button
+                square
+                style=" height: 100%;"
+                type="danger"
+                text="Hapus"
+                @click="onDeleteResiClicked(index)"
+              />
+            </template>
+          </van-swipe-cell>
+        </van-list>
+      </template>
+      <template  v-else>
+        <van-divider dashed>Resi kosong</van-divider>
+      </template>
     </van-popup>
         <van-popup
+        @click-overlay="onOverlayClicked"
       v-model:show="showQueue"
       position="left"
       closeable
@@ -118,7 +140,7 @@
       </div>
       </template>
       <template  v-else>
-        <van-divider dashed>Antrian kosong</van-divider>
+        <van-divider dashed>Resi kosong</van-divider>
       </template>
     </van-popup>
   </van-sticky>
@@ -171,8 +193,9 @@
             native-type="button"
             size="small"
             @click="onAddQueueResi"
+            icon="label-o"
           >
-            + Simpan Resi
+            Simpan Resi
           </van-button>
         </van-grid-item>
 
@@ -182,6 +205,7 @@
           block
           type="danger"
           native-type="button"
+          icon="list-switch"
           size="small"
           @click="onShowQueueClick"
         >
@@ -204,8 +228,9 @@
             native-type="button"
             size="small"
             @click="onAddResi"
+            icon="plus"
           >
-            + Tambah ({{ resi.length }})
+            Tambah ({{ resi.length }})
           </van-button>
         </van-grid-item>
 
@@ -217,6 +242,7 @@
           native-type="button"
           size="small"
           @click="onPrint"
+          icon="logistics"
         >
           Print
         </van-button>
@@ -502,6 +528,26 @@ const onQueueAddToResiClicked = async (q: any) => {
   resi.value.push(q);
 }
 
+const onDeleteAllHistory = async () => {
+  showConfirmDialog({
+    title: 'Hapus riwayat',
+    cancelButtonText: "Batal",
+    confirmButtonText: "Ya",
+    message:
+      'Semua data riwayat akan di hapus',
+  })
+  .then(async () => {
+    // on confirm
+    queue.value = [];
+    await (localDb as any).historyMassal.clear();
+  })
+  .catch(() => {
+    // on cancel
+  });
+
+  // delete from indexDB
+}
+
 const onDeleteAllQueue = async () => {
   showConfirmDialog({
     title: 'Hapus antrian',
@@ -564,14 +610,28 @@ const onProviderSelect = (item: any) => {
 const onRightClick = () => {
   search.value = "";
   showHistory.value = true;
+  showQueue.value = false;
+  showResiActive.value = false;
+};
+
+const onRightClosed = () => {
+  search.value = "";
+  showHistory.value = false;
+  showQueue.value = false;
+  showResiActive.value = false;
 };
 
 const onShowQueueClick = () => {
   showQueue.value = true;
+  showHistory.value = false;
+  showResiActive.value = false;
+
 };
 
 const onResiActiveClick = () => {
   showResiActive.value = true;
+    showQueue.value = false;
+  showHistory.value = false;
 };
 
 const numberFormat = (value: any) => {
@@ -593,6 +653,14 @@ const onItemRightClicked = (historyMassal: any) => {
 
 const onCancelClicked = () => {
   showHistory.value = false;
+  showQueue.value = false;
+  showResiActive.value = false;
+};
+
+const onOverlayClicked = () => {
+  showHistory.value = false;
+  showQueue.value = false;
+  showResiActive.value = false;
 };
 
 const onAddressPaste = () => {
