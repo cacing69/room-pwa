@@ -6,6 +6,7 @@ const localDb = new Dexie("roomPwaDb");
 localDb.version(2).stores({
   history: "++id, name, phone, address", // Primary key and indexed props
   historyMassal: "++id, address, provider, payment", // Primary key and indexed props
+  queue: "++id, address, provider, payment, is_done", // Primary key and indexed props
 });
 
 export default localDb;

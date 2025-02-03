@@ -21,6 +21,8 @@ import {
   Col,
   Collapse,
   CollapseItem,
+  Dialog,
+  Divider,
   DropdownMenu,
   DropdownItem,
   Field,
@@ -104,6 +106,8 @@ vApp.use(CellGroup);
 vApp.use(Col);
 vApp.use(Collapse);
 vApp.use(CollapseItem);
+vApp.use(Dialog);
+vApp.use(Divider);
 vApp.use(DropdownItem);
 vApp.use(DropdownMenu);
 vApp.use(Field);

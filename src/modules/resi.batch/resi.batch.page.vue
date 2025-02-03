@@ -7,7 +7,7 @@
       </template>
     </van-nav-bar>
     <van-popup
-      v-model:show="showRight"
+      v-model:show="showHistory"
       position="right"
       :style="{ width: '90%', height: '100%' }"
     >
@@ -25,6 +25,15 @@
             :title="history?.address"
             :value="(index + 1)"
           />
+          <template #left>
+            <van-button
+              square
+              style=" height: 100%;"
+              type="success"
+              text="Tambah antrian"
+              @click="addHistoryToQueue(history)"
+            />
+          </template>
           <template #right>
             <van-button
               square
@@ -39,9 +48,9 @@
     </van-popup>
     <van-popup
       v-model:show="showResiActive"
-      position="right"
+      position="bottom"
       closeable
-      :style="{ width: '90%', height: '100%' }"
+       :style="{ width: '90%', height: '100%', display: 'flex', flexDirection: 'column' }"
     >
       <van-list style="padding-top: 40px;">
         <van-swipe-cell v-for="(r, index) in resi">
@@ -54,12 +63,63 @@
               square
               style=" height: 100%;"
               type="danger"
-              text="Remove"
+              text="Hapus"
               @click="onDeleteResiClicked(index)"
             />
           </template>
         </van-swipe-cell>
       </van-list>
+    </van-popup>
+        <van-popup
+      v-model:show="showQueue"
+      position="left"
+      closeable
+      :style="{ width: '90%', height: '100%' }"
+    >
+    <div style="flex: 1; overflow-y: auto; padding-top: 40px;">
+      <van-list >
+        <van-swipe-cell v-for="(q, index) in queue">
+          <template #left>
+            <van-button
+              square
+              style=" height: 100%;"
+              type="success"
+              text="Cetak"
+              @click="onQueueAddToResiClicked(q)"
+            />
+          </template>
+          <van-cell
+              @click="onQueueAddToResiClicked(q)"
+            :title="q?.address"
+            :value="(index + 1)"
+          />
+          <template #right>
+            <van-button
+              square
+              style=" height: 100%;"
+              type="danger"
+              text="Hapus"
+              @click="onDeleteQueueClicked(q)"
+            />
+          </template>
+        </van-swipe-cell>
+      </van-list>
+      </div>
+      <!-- Button Bawah -->
+      <template v-if="queue.length > 0">
+        <div style=" padding: 10px; background: #fff; ">
+
+        <div style="padding-bottom: 5px;">
+          <van-button block round size="small" type="danger" @click="onDeleteAllQueue">Hapus semua</van-button>
+        </div>
+        <div style="padding-bottom: 5px;">
+          <van-button block round size="small" type="primary" @click="onPrintQueue">Cetak Antrian</van-button>
+        </div>
+      </div>
+      </template>
+      <template  v-else>
+        <van-divider dashed>Antrian kosong</van-divider>
+      </template>
     </van-popup>
   </van-sticky>
   <van-row>
@@ -110,9 +170,42 @@
             type="primary"
             native-type="button"
             size="small"
+            @click="onAddQueueResi"
+          >
+            + Simpan Resi
+          </van-button>
+        </van-grid-item>
+
+        <van-grid-item>
+        <van-button
+          round
+          block
+          type="danger"
+          native-type="button"
+          size="small"
+          @click="onShowQueueClick"
+        >
+          Resi ({{ queue.length }})
+        </van-button>
+        </van-grid-item>
+      </van-grid>
+      </van-cell-group>
+    </van-col>
+  </van-row>
+  <van-row>
+    <van-col span="24">
+      <van-cell-group inset>
+        <van-grid :column-num="2">
+        <van-grid-item>
+          <van-button
+            round
+            block
+            type="primary"
+            native-type="button"
+            size="small"
             @click="onAddResi"
           >
-            + Tambah Resi ({{ resi.length }})
+            + Tambah ({{ resi.length }})
           </van-button>
         </van-grid-item>
 
@@ -132,7 +225,7 @@
       </van-cell-group>
     </van-col>
   </van-row>
-  <van-row>
+  <van-row style="padding-top: 5px; padding-bottom: 5px;">
     <van-col span="24">
       <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o">
         Atur ukuran saat print : lebar x tinggi = 78x100
@@ -367,7 +460,7 @@
 </template>
 <script setup lang="ts">
 import html2canvas from "html2canvas";
-import { closeToast, showLoadingToast, showNotify } from "vant";
+import { closeToast, showConfirmDialog, showLoadingToast, showNotify } from "vant";
 import { ref, watchEffect } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { liveQuery } from "dexie";
@@ -381,6 +474,7 @@ import localDb from '../../services/local.db';
 const name: any = ref("");
 const selectedIndex: any = ref(null);
 const historyMassal: any = ref([]);
+const queue: any = ref([]);
 const resi: any = ref([]);
 const phone: any = ref("");
 const price: any = ref("");
@@ -393,7 +487,8 @@ const showProviderRow: any = ref(false);
 const showServices: any = ref(false);
 const provider = ref({} as any);
 const seller = ref({} as any);
-const showRight = ref(false);
+const showHistory = ref(false);
+const showQueue = ref(false);
 const showResiActive = ref(false);
 const search: any = ref("");
 
@@ -403,8 +498,37 @@ const getRegex = (query: any) => new RegExp(query, 'i');
 
 // const db = new Dexie("resiMassalDb");
 
+const onQueueAddToResiClicked = async (q: any) => {
+  resi.value.push(q);
+}
+
+const onDeleteAllQueue = async () => {
+  showConfirmDialog({
+    title: 'Hapus antrian',
+    cancelButtonText: "Batal",
+    confirmButtonText: "Ya",
+    message:
+      'Semua data antrian akan di hapus',
+  })
+  .then(async () => {
+    // on confirm
+    queue.value = [];
+    await (localDb as any).queue.clear();
+  })
+  .catch(() => {
+    // on cancel
+  });
+
+  // delete from indexDB
+}
+
+
 const loadHistoryMassal = async () => {
   historyMassal.value = await (localDb as any).historyMassal.toArray();
+};
+
+const loadQueue = async () => {
+  queue.value = await (localDb as any).queue.toArray();
 };
 
 // Menggunakan watchEffect untuk meng-update data ketika input berubah
@@ -428,6 +552,7 @@ onMounted(() => {
   seller.value = sellers[2];
   provider.value = providers[0];
   loadHistoryMassal();
+  loadQueue();
 });
 
 
@@ -438,7 +563,11 @@ const onProviderSelect = (item: any) => {
 
 const onRightClick = () => {
   search.value = "";
-  showRight.value = true;
+  showHistory.value = true;
+};
+
+const onShowQueueClick = () => {
+  showQueue.value = true;
 };
 
 const onResiActiveClick = () => {
@@ -459,11 +588,11 @@ const onItemRightClicked = (historyMassal: any) => {
     provider: JSON.parse(historyMassal.provider),
   });
 
-  showRight.value = false;
+  showHistory.value = false;
 };
 
 const onCancelClicked = () => {
-  showRight.value = false;
+  showHistory.value = false;
 };
 
 const onAddressPaste = () => {
@@ -473,6 +602,14 @@ const onAddressPaste = () => {
 
 const onDeleteResiClicked = (index: any) => {
   resi.value.splice(index, 1);
+};
+
+const onDeleteQueueClicked = (queue: any) => {
+
+  (localDb as any).queue
+    .delete(queue.id);
+
+    loadQueue();
 };
 
 
@@ -512,9 +649,21 @@ const onDeleteHistoryMassalClicked = (id: any) => {
     loadHistoryMassal();
 };
 
+const addHistoryToQueue = async (history: any) => {
+  let cloneHistoryToQueue = {
+    uuid: uuidv4(),
+    address: history.address,
+    service: history.service,
+    price: history.price,
+    provider: history.provider,
+  };
+  const saveQueue = await (localDb as any).queue.add(cloneHistoryToQueue);
+  loadQueue();
+}
+
 const onAddResi = async () => {
   resi.value.push({
-    address: address.value.trim(),
+    historyMassaladdress: address.value.trim(),
     service: service.value,
     price: price.value.trim(),
     provider: provider.value,
@@ -549,6 +698,60 @@ const onAddResi = async () => {
   loadHistoryMassal();
 }
 
+const onAddQueueResi = async () => {
+  // check dulu, jika tidak ada save
+  const checkQueueDb = await (localDb as any).queue
+    .where('address')
+    .equals(address.value.trim())  // Memeriksa apakah ada data dengan alamat yang sama
+    .toArray();
+
+  if (checkQueueDb.length == 0) {
+    // save to indexDB
+    let saveToQueue = {
+      uuid: uuidv4(),
+      address: address.value.trim(),
+      service: service.value.trim(),
+      price: price.value.trim(),
+      is_done: false,
+      provider: JSON.stringify(provider.value),
+    };
+
+    const saveQueue = await (localDb as any).queue.add(saveToQueue);
+    loadQueue();
+  }
+
+
+  // check dulu, jika tidak ada save
+  const checkHistoryMassalDb = await (localDb as any).historyMassal
+    .where('address')
+    .equals(address.value.trim())  // Memeriksa apakah ada data dengan alamat yang sama
+    .toArray();
+
+  if (checkHistoryMassalDb.length == 0) {
+    // save to indexDB
+    let saveToHistoryMassal = {
+      uuid: uuidv4(),
+      address: address.value.trim(),
+      service: service.value.trim(),
+      price: price.value.trim(),
+      provider: JSON.stringify(provider.value),
+    };
+
+    const saveHistoryMassal = await (localDb as any).historyMassal.add(saveToHistoryMassal);
+  }
+
+  address.value = "";
+  service.value = "cash";
+  price.value = "";
+  provider.value = providers[0];
+}
+
+
+
+const onPrintQueue = async () => {
+  resi.value = queue.value;
+  showQueue.value = false;
+}
 const onPrint = async () => {
 
   if (resi.value.length > 0) {
