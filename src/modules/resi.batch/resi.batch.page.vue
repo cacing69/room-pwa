@@ -110,10 +110,10 @@
         <div style=" padding: 10px; background: #fff; ">
 
         <div style="padding-bottom: 5px;">
-          <van-button block round size="small" type="danger" @click="onDeleteAllQueue">Hapus semua</van-button>
+          <van-button block round size="small" type="danger" @click="onDeleteAllQueue">Hapus Semua</van-button>
         </div>
         <div style="padding-bottom: 5px;">
-          <van-button block round size="small" type="primary" @click="onPrintQueue">Cetak Antrian</van-button>
+          <van-button block round size="small" type="primary" @click="onPrintQueue">Print Semua</van-button>
         </div>
       </div>
       </template>
